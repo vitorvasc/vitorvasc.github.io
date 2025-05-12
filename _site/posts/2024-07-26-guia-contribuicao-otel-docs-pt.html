@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Guia: Contribuindo com a Localização da Documentação do O...</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+</noscript>
+
+
+
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="manifest" href="/assets/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#f0f0f0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Vitor Vasconcellos's App">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="msapplication-starturl" content="/">
+  <meta name="application-name" content="Vitor Vasconcellos's App">
+  <meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+
+    <meta name="keywords" content="opentelemetry, localization, portugues, guia, contribuicao">
+
+  <meta name="description" content="Olá, aqui você vai encontrar todas (ou quase todas) as informações para começar a contribuir com a localização da documentação do OpenTelemetry par...">
+  <meta name="robots" content="index, follow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Guia: Contribuindo com a Localização da Documentação do OpenTelemet...">
+
+<meta name="twitter:description" content="Olá, aqui você vai encontrar todas (ou quase todas) as informações para começar a contribuir com a localização da documentação do OpenTelemetry para Português! Como...">
+<meta name="twitter:image" content="http://0.0.0.0:4000/assets/img/posts/2024-07-26-guia-contribuicao-otel-docs-pt.png">
+<meta property="og:site_name" content="Vitor Vasconcellos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Guia: Contribuindo com a Localização da Documen...">
+<meta property="og:description" content="Olá, aqui você vai encontrar todas (ou quase todas) as informações para começar a contribuir com a localização da documentação do OpenTelemetry par...">
+<meta property="og:url" content="http://0.0.0.0:4000/posts/2024-07-26-guia-contribuicao-otel-docs-pt">
+<meta property="og:image" content="http://0.0.0.0:4000/assets/img/posts/2024-07-26-guia-contribuicao-otel-docs-pt.png">
+  <meta property="article:author" content="Vitor Vasconcellos">
+  <meta property="article:section" content="">
+  <meta property="article:tag" content="opentelemetry">
+  <meta property="article:tag" content="localization">
+  <meta property="article:tag" content="portugues">
+  <meta property="article:tag" content="guia">
+  <meta property="article:tag" content="contribuicao">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org"
+  ,"@graph": [
+    {
+      "@type": "Person"
+      ,"@id": "http://0.0.0.0:4000/#person"
+      ,"name": "Vitor Vasconcellos"
+      ,"url": "http://0.0.0.0:4000/tabs/about.html"
+      ,"image": "http://0.0.0.0:4000/assets/img/about/about.jpg"
+      ,"description": "Vitor Vasconcellos is a Software Engineer, open-source contributor and observability enthusiast."
+  },{
+    "@type": "WebSite"
+    ,"@id": "http://0.0.0.0:4000/#website"
+    ,"url": "http://0.0.0.0:4000/"
+    ,"name": "Vitor Vasconcellos"
+    ,"description": "Vitor Vasconcellos is a Software Engineer, open-source contributor and observability enthusiast."
+    ,"publisher": {"@id": "http://0.0.0.0:4000/#person"}
+    ,"inLanguage": "en-US"
+    ,"sameAs": ["https://github.com/vitorvasc","https://www.linkedin.com/in/vvasconcellos","https://bsky.app/profile/vasconcellos.dev"]
+    ,"copyrightHolder" : {"@id": "http://0.0.0.0:4000/#person"}
+    ,"copyrightYear" : "2025"
+  },{
+    "@type": "WebPage"
+    ,"@id": "http://0.0.0.0:4000/posts/2024-07-26-guia-contribuicao-otel-docs-pt#webpage"
+    ,"url": "http://0.0.0.0:4000/posts/2024-07-26-guia-contribuicao-otel-docs-pt"
+    ,"name": "Guia: Contribuindo com a Localização da Documentação do OpenTelemetry para Português"
+    ,"isPartOf": {"@id": "http://0.0.0.0:4000/#website"}
+    ,"breadcrumb": {"@id": "http://0.0.0.0:4000/posts/2024-07-26-guia-contribuicao-otel-docs-pt#breadcrumb"}
+    ,"primaryImageOfPage": "http://0.0.0.0:4000/assets/img/posts/2024-07-26-guia-contribuicao-otel-docs-pt.png"
+    ,"description": "Olá, aqui você vai encontrar todas (ou quase todas) as informações para começar a contribuir com a localização da documentação do OpenTelemetry par..."
+    ,"inLanguage": "en-US"
+    ,"potentialAction": {
+      "@type": "ReadAction"
+      ,"target": "http://0.0.0.0:4000/posts/2024-07-26-guia-contribuicao-otel-docs-pt"
+    }
+  },{
+      "@type": "BreadcrumbList",
+      "@id": "http://0.0.0.0:4000/posts/2024-07-26-guia-contribuicao-otel-docs-pt#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem"
+          ,"position": 1
+          ,"name": "Home"
+          ,"item": "http://0.0.0.0:4000/"
+        },
+        {
+          "@type": "ListItem"
+          ,"position": 2
+          ,"name": "Blog"
+          ,"item": "http://0.0.0.0:4000/tabs/blog/"
+        },
+        {
+          "@type": "ListItem"
+          ,"position": 3
+          ,"name": "Guia: Contribuindo com a Localização da Documentação do OpenTelemetry para Português"
+        }
+      ]
+    },{
+      "@type": "BlogPosting"
+      ,"@id": "http://0.0.0.0:4000/posts/2024-07-26-guia-contribuicao-otel-docs-pt#content"
+      ,"isPartOf": {"@id": "http://0.0.0.0:4000/posts/2024-07-26-guia-contribuicao-otel-docs-pt#webpage"}
+      ,"mainEntityOfPage": {"@id": "http://0.0.0.0:4000/posts/2024-07-26-guia-contribuicao-otel-docs-pt#webpage"}
+      ,"publisher": {"@id": "http://0.0.0.0:4000/#person"}
+      ,"author": {"@id": "http://0.0.0.0:4000/#person"}
+      ,"inLanguage": "en-US"
+      ,"headline": "Guia: Contribuindo com a Localização da Documentação do OpenTelemetry para Português"
+      ,"image": "http://0.0.0.0:4000/assets/img/posts/2024-07-26-guia-contribuicao-otel-docs-pt.png"
+      ,"thumbnailUrl": "http://0.0.0.0:4000/assets/img/posts/2024-07-26-guia-contribuicao-otel-docs-pt.png"
+      ,"articleSection": ["opentelemetry", "localization", "portugues", "guia", "contribuicao"]
+      ,"description": "Olá, aqui você vai encontrar todas (ou quase todas) as informações para começar a contribuir com a localização da documentação do OpenTelemetry par..."
+      ,"copyrightHolder" : {"@id": "http://0.0.0.0:4000/#person"}
+      ,"copyrightYear" : "2025"
+      ,"wordCount": 1191
+      ,"articleBody": "Olá, aqui você vai encontrar todas (ou quase todas) as informações para começar a contribuir com a localização da documentação do OpenTelemetry para Português! Como começar Antes de colocar a mão na massa, recomendamos a leitura da seção Contribuindo, na documentação oficial do OpenTelemetry. Lá você encontrará dicas preciosas sobre como contribuir, padrões e guias de estilo que vão te ajudar bastante! Na sequência deste guia, abordaremos pontos importantes para te guiar durante o processo de contribuição. Sobre a documentação do OpenTelemetry Link para a documentação: https://opentelemetry.io/pt/docs/. Link para o repositório da documentação: https://github.com/open-telemetry/opentelemetry.io As documentações são escritas em Markdown. Sobre o time de localização (Português) Toda a comunicação acontece no canal #otel-localization-ptbr no workspace da CNCF no slack, então antes de tudo, entre no canal! Se você ainda não estiver entrado no workspace, pode solicitar um convite aqui Temos encontros quinzenais via Zoom (quarta-feira, 19:15-19:45 BRT), detalhes da agenda e pauta, podem ser encontrados aqui. Páginas prioritárias para tradução/localização As páginas priorizadas podem ser encontradas através da utilização do filtro lang:pt, no repositório da documentação. Nota: Antes de iniciar uma tradução, verifique que a tradução da página não foi iniciada por outra pessoa! Isso é importante para evitar duplicação de trabalho. Detalhes importantes Alguns detalhes importantes que você deve conferir antes de abrir seu Pull Request: Familiarize-se com os termos do glossário de OpenTelemetry e as suas respectivas traduções para Português. Isso nos ajuda a manter consistência entre as documentações. Caso tenha dúvidas sobre a tradução de um termo, verifique o Glossário de Localização, desenvolvido pelo time. Para garantir que a validação dos links na página funcione corretamente, precisamos manter as âncoras (anchors) sem tradução. Temos uma action do Github que verifica os links da página, caso esteja quebrado gera avisos de Warnings no build, exemplo de âncora: Título: ## O que é Observabilidade? {#what-is-observability} Título: ## Trechos {#span} Título: ## Rastros {#traces} Caso o arquivo original contenha um campo redirects: no cabeçalho, remova. Cada tradução é baseada em um commit da documentação original, em inglês. As páginas traduzidas, obrigatóriamente devem ter um campo chamado default_lang_commit em seu cabeçalho, contendo a hash do commit da documentação original. Por exemplo: title: OpenTelemetry description: &gt;- Telemetria de alta qualidade, abrangente e portátil para permitir uma observabilidade eficaz developer_note: O shortcode blocks/cover (usado abaixo) vai servir como imagem de background para qualquer arquivo de imagem que contenha \"background\" no nome. show_banner: true default_lang_commit: 08799298 Páginas novas Para uma página nova, você precisa executar o seguinte comando para buscar a hash do commit: docker run -it --rm -v$(pwd):/app -w /app --entrypoint \"\" node:latest npm run fix:i18n:new Páginas existentes Antes de iniciar a atualização na localização de uma página existente, recomendamos que você busque a diferença entre a versão original e a versão que você está traduzindo. Isso pode ser feito executando o seguinte comando: npm run check:i18n -- -d &lt;PATH-TO-FILE&gt; Exemplo: Vamos supor que você está traduzindo a página content/pt/docs/languages/go/instrumentation.md. O comando para verificar a diferença é: npm run check:i18n -- -d content/pt/docs/languages/go/instrumentation.md Output: ❯ npm run check:i18n -- -d content/pt/docs/languages/go/instrumentation.md &gt; check:i18n &gt; scripts/check-i18n.sh -d content/pt/docs/languages/go/instrumentation.md Processing paths: content/pt/docs/languages/go/instrumentation.md diff --git a/content/en/docs/languages/go/instrumentation.md b/content/en/docs/languages/go/instrumentation.md index 9a7d8bf7..ace082d7 100644 --- a/content/en/docs/languages/go/instrumentation.md +++ b/content/en/docs/languages/go/instrumentation.md @@ -8,7 +8,7 @@ description: Manual instrumentation for OpenTelemetry Go cSpell:ignore: fatalf logr logrus otlplog otlploghttp sdktrace sighup --- - + ## Setup @@ -49,7 +49,7 @@ func newExporter(ctx context.Context) /* (someExporter.Exporter, error) */ { // Your preferred exporter: console, jaeger, zipkin, OTLP, etc. } -func newTraceProvider(exp sdktrace.SpanExporter) *sdktrace.TracerProvider { +func newTracerProvider(exp sdktrace.SpanExporter) *sdktrace.TracerProvider { // Ensure default SDK resources and the required service name are set. r, err := resource.Merge( resource.Default(), @@ -78,7 +78,7 @@ func main() { } // Create a new tracer provider with a batch span processor and the given exporter. - tp := newTraceProvider(exp) + tp := newTracerProvider(exp) // Handle shutdown properly so nothing leaks. defer func() { _ = tp.Shutdown(ctx) }() @@ -221,7 +221,7 @@ span.AddEvent(\"Cancelled wait due to external signal\", trace.WithAttributes(attr ### Set span status - + ```go import ( @@ -549,10 +549,14 @@ import ( \"go.opentelemetry.io/otel/metric\" ) -var fanSpeedSubscription chan int64 +var ( + fanSpeedSubscription chan int64 + speedGauge metric.Int64Gauge +) func init() { - speedGauge, err := meter.Int64Gauge( + var err error + speedGauge, err = meter.Int64Gauge( \"cpu.fan.speed\", metric.WithDescription(\"Speed of CPU fan\"), metric.WithUnit(\"RPM\"), DRIFTED files: 1 out of 1 Nota: O comando acima irá retornar as linhas que foram alteradas. Considere adicionar esta diferença na descrição do seu pull request! Isso facilita a validação das revisões :) Exemplo: Pull Request #6783 Após verificar a diferença, você pode iniciar a atualização na localização da página. Ao finalizar, não se esqueça de atualizar o default_lang_commit com o hash do commit da documentação original! Isso pode ser feito executando o seguinte comando: npm run fix:i18n:status E finalmente, garanta que a o campo drifted_from_default também foi atualizado e removido do cabeçalho. Isso pode ser feito executando o seguinte comando: npm run fix:i18n:status Mais detalhes sobre como atualizar a tradução podem ser encontrados aqui. Passo a Passo Após estar familiarizado com o processo de contribuição, siga o passo a passo abaixo para fazer sua primeira contribuição. Pesquise se já existe uma issue aberta para a documentação que quer localizar (pode usar esse filtro de busca), se já existir uma issue e alguém trabalhando, procure outra página. Caso não exista issue aberta para a página que quer localizar, pode criar uma, seguindo o padrão de título: [pt] Localize &lt;caminho do arquivo que você vai trabalhar&gt; Faça o fork do repositório da documentação: https://github.com/open-telemetry/opentelemetry.io Faça o clone do seu fork para sua máquina local, exemplo: git clone git@github.com:edsoncelio/opentelemetry.io.git Crie uma branch a partir da branch main para fazer sua tradução, exemplo: git checkout -b adiciona_traducao_traces Com a branch criada, faça toda a sua tradução, sempre lembrando de fazer o push para o seu fork remoto, exemplo: git add . git commit -m \"docs: adiciona traducao de traces\" git push origin adiciona_traducao_traces Sempre antes de abrir um Pull Request, execute o lint, assim não vai quebrar nas checagens automáticas: docker run -it --rm -v$(pwd):/app -w /app --entrypoint \"\" node:latest npx prettier --write . Quando finalizar, ou apenas quiser solicitar uma revisão, abre o Pull Request para a branch main. Para essa etapa, sugerimos que use o prefixo [pt]no título, assim mantemos consistência, por exemplo: [pt] Localize content/pt/docs/concepts/components.md Envie o PR no canal do slack #otel-localization-ptbr. Aguarde as interações para revisão, é esperado que tenha bastante, não se assuste :) ID ausente no Commit O problema é que o autor dos commits não está vinculado à conta do usuário no GitHub e isso é necessário para que o EasyCLA identifique o usuário e conceda autorização. Geralmente ajustar as configurações globais do GitHub resolve o problema. git commit --amend --author=\"FirstName LastName &lt;emailaddress&gt;\" --no-edit git push --force Caso Contrário faça rebase do commit: Primeiro identifique qual commit você precisa ajustar. git rebase -i &lt;SHA-Resumido-Commit&gt;^ Isso abrirá um editor, mude o comando pick para edit no commit que deseja corrigir: pick &lt;SHA-Resumido-Commit&gt; feat: mensagem de exemplo do commit Salve e feche o editor. Agora, atualize o autor do commit com o comando abaixo, substituindo pelo nome e e-mail corretos: git commit --amend --author=\"FirstName LastName &lt;emailaddress&gt;\" --no-edit"
+    }
+  ]
+}</script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="/assets/css/main.css" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v0.4.1/dist/bootstrap-toc.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
+<link href="/assets/css/nav-media.css" rel="stylesheet">
+
+  </head>
+
+  <body >
+    <script src="/assets/js/color-scheme-attr-init.js" data-mode="false"></script>
+    <nav class="navbar navbar-default top-nav">
+  <div class="navbar-header">
+    <button type="button" aria-label="Side menu" class="navbar-toggle collapsed pull-left top-nav-menu-toggle" data-toggle="collapse" data-target="#id_top-nav-menu-toggle" aria-expanded="false">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand top-nav-brand" href="/" translate="no">Vitor Vasconcellos</a>
+    </div>
+  <div class="color_scheme_switch_top_holder" data-toggle="tooltip" data-placement="bottom" title="Color scheme">
+  <label class="color-scheme-switch hover-effect">
+    <input type="checkbox" class="checkbox_color_switch" />
+    <span></span>
+  </label>
+</div>
+
+  
+</nav>
+<nav id="side-nav-container">
+  <div class="side-nav">
+    <div class="side-nav-brand">
+      <img src="/assets/img/default/profile_pic.png" alt="">
+      <div class="brand-holder">
+        <a href="/" translate="no">Vitor Vasconcellos</a>
+        </div>
+      <p>&nbsp;Software Engineer at @mercadolibre. Open-source contributor. I like observability things.</p>
+      <br>
+    </div>
+    <br>
+    <a href="javascript:void(0);" class="side-nav-close" role="button" rel="nofollow">
+        <i class="fa fa-angle-double-left fa-2x" aria-hidden="true"></i>
+      </a>
+    <hr>
+    <br>
+    <div class="side-nav-buttons">
+      <ul class="nav nav-pills nav-stacked">
+        <li ><a href="/" class=" hover-effect"><i class="fa-fw fa fa-home" aria-hidden="true"></i>Home</a></li><li ><a href="/tabs/blog/" class="active-page hover-effect"><i class="fa-fw fa fa-pencil-square-o" aria-hidden="true"></i>Blog</a></li><li ><a href="/tabs/about.html" class=" hover-effect"><i class="fa-fw fa fa-user-o" aria-hidden="true"></i>About</a></li></ul>
+    </div>
+    <br>
+    <br><div class="contact-container">
+  <hr>
+  <h3>Contact</h3>
+  <ul><li><a href="https://github.com/vitorvasc" aria-label="github" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><i class="fa fa-github" aria-hidden="true"></i></a></li><li>
+      <a href="javascript:void(0);" aria-label="email" class="hover-effect-big" onclick="setAddress('hi', 'vasconcellos.dev');"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li><li><a href="https://www.linkedin.com/in/vvasconcellos" aria-label="linkedin" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li><li><a href="https://bsky.app/profile/vasconcellos.dev" aria-label="bluesky" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><img src="/assets/img/default/bsky.svg" alt="bluesky"/></a></li></ul>
+</div>
+
+    <hr id="toc-view-top">
+    <div class="side-nav-footer" translate="no">
+        <p>&copy; 2025 Vitor Vasconcellos.</p>
+      </div>
+  </div>
+  <div class="side-nav-bottom-buttons-container">
+    <hr>
+    <ul>
+      <li><div class="color_scheme_switch_side_holder" data-toggle="tooltip" data-placement="top" title="Color scheme">
+  <label class="color-scheme-switch hover-effect">
+    <input type="checkbox" class="checkbox_color_switch" />
+    <span></span>
+  </label>
+</div>
+</li><li><div class="cookie-icon hover-effect" onclick="CookieConsent.showSettings();" data-toggle="tooltip" data-placement="top" title="Cookie settings">
+  <div class="cookie-wrapper">
+    <i class="fa fa-circle bitten-cookie" aria-hidden="true"></i>
+    <i class="fa fa-circle small-ellipse-icon" aria-hidden="true"></i>
+    <i class="fa fa-spinner inner-icon" aria-hidden="true"></i>
+    <i class="fa fa-circle-thin outer-icon" aria-hidden="true"></i>
+  </div>
+</div>
+</li></ul>
+  </div></nav>
+<div id="toc-container" class="movable">
+  <div class="panel panel-default">
+    <div class="panel-heading" data-toggle="tooltip" data-placement="top" title="Drag to move">
+      Contents
+      <span class="pull-right">
+        <a href="javascript:void(0);" aria-label="Close" role="button" rel="nofollow" class="close-button" onclick="document.getElementById('toc-container').style.display = 'none';">
+          <i class="fa fa-times" data-toggle="tooltip" data-placement="bottom" title="Close"></i>
+        </a>
+      </span>
+    </div>
+    <div class="panel-body">
+      <nav id="table-of-contents"></nav>
+    </div>
+  </div>
+</div>
+<div id="main-wrapper">
+      <div class="main-container"><div class="multipurpose-container post-container">
+  <div class="post-title"><h1>Guia: Contribuindo com a Localização da Documentação do OpenTelemetry para Português</h1></div><div class="meta">
+  <small>
+    &nbsp;<i class="fa fa-calendar"></i>&nbsp;&nbsp;Jul 26, 2024
+  </small>
+  <small>
+    &nbsp;&nbsp;&nbsp;<span><i class="fa fa-clock-o"></i>&nbsp;7 min read</span>
+  </small>
+  </div>
+<hr/>
+  <div class="markdown-style">
+    <p>Olá, aqui você vai encontrar todas (ou quase todas) as informações para começar
+a contribuir com a localização da documentação do OpenTelemetry para Português!</p>
+
+<h2 id="como-começar">Como começar</h2>
+
+<p>Antes de colocar a mão na massa, recomendamos a leitura da seção <a href="https://opentelemetry.io/pt/docs/contributing/" target="_blank">Contribuindo</a>, na documentação oficial do OpenTelemetry. Lá você encontrará dicas preciosas sobre como contribuir, padrões e guias de estilo que vão te ajudar bastante!</p>
+
+<p>Na sequência deste guia, abordaremos pontos importantes para te guiar durante o processo de contribuição.</p>
+
+<h2 id="sobre-a-documentação-do-opentelemetry">Sobre a documentação do OpenTelemetry</h2>
+
+<ul>
+  <li>Link para a documentação: <a href="https://opentelemetry.io/pt/docs/" target="_blank">https://opentelemetry.io/pt/docs/</a>.</li>
+  <li>Link para o repositório da documentação: <a href="https://github.com/open-telemetry/opentelemetry.io" target="_blank">https://github.com/open-telemetry/opentelemetry.io</a></li>
+  <li>As documentações são escritas em <a href="https://www.markdownguide.org/basic-syntax/" target="_blank">Markdown</a>.</li>
+</ul>
+
+<h2 id="sobre-o-time-de-localização-português">Sobre o time de localização (Português)</h2>
+
+<ul>
+  <li>Toda a comunicação acontece no canal <a href="https://cloud-native.slack.com/archives/C076LET8YSK" target="_blank">#otel-localization-ptbr</a> no workspace da CNCF no slack, então antes de tudo, entre no canal!
+    <ul>
+      <li>Se você ainda não estiver entrado no workspace, pode solicitar um convite <a href="https://communityinviter.com/apps/cloud-native/cncf" target="_blank">aqui</a></li>
+    </ul>
+  </li>
+  <li>Temos encontros quinzenais via Zoom (quarta-feira, 19:15-19:45 BRT), detalhes da agenda e pauta, podem ser encontrados <a href="https://docs.google.com/document/d/1W1jJ4OTm53sbOp7CrbNBMvR_2Z8TQRCkwejqD4f21SE/edit" target="_blank">aqui</a>.</li>
+</ul>
+
+<h2 id="páginas-prioritárias-para-traduçãolocalização">Páginas prioritárias para tradução/localização</h2>
+
+<p>As páginas priorizadas podem ser encontradas através da utilização do filtro <a href="https://github.com/open-telemetry/opentelemetry.io/issues?q=is%3Aissue%20state%3Aopen%20label%3Alang%3Apt" target="_blank"><code class="language-plaintext highlighter-rouge">lang:pt</code></a>, no repositório da documentação.</p>
+
+<blockquote>
+  <p>Nota: Antes de iniciar uma tradução, verifique que a tradução da página não foi iniciada por outra pessoa! Isso é importante para evitar duplicação de trabalho.</p>
+</blockquote>
+
+<h2 id="detalhes-importantes">Detalhes importantes</h2>
+
+<p>Alguns detalhes importantes que você deve conferir antes de abrir seu <em>Pull Request</em>:</p>
+
+<ul>
+  <li>Familiarize-se com os termos do <a href="https://opentelemetry.io/docs/concepts/glossary/" target="_blank">glossário</a> de OpenTelemetry e as suas respectivas <a href="https://opentelemetry.io/pt/docs/concepts/glossary/" target="_blank">traduções</a> para Português. Isso nos ajuda a manter consistência entre as documentações.
+    <ul>
+      <li>Caso tenha dúvidas sobre a tradução de um termo, verifique o <a href="https://docs.google.com/document/d/1kyu6HgdsM3-iDyf3OuRmfw4SwNJy9BVui6nn5JsKb5I/edit?tab=t.0#heading=h.o389kqcsmupl" target="_blank">Glossário de Localização</a>, desenvolvido pelo time.</li>
+    </ul>
+  </li>
+  <li>Para garantir que a validação dos links na página funcione corretamente, precisamos manter as âncoras (<em>anchors</em>) sem tradução.<br />
+Temos uma action do Github que verifica os links da página, caso esteja quebrado gera avisos de <code class="language-plaintext highlighter-rouge">Warnings</code> no build, exemplo de âncora:</li>
+</ul>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Título: ## O que é Observabilidade? {#what-is-observability}
+
+Título: ## Trechos {#span}
+
+Título: ## Rastros {#traces}
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Caso o arquivo original contenha um campo <code class="language-plaintext highlighter-rouge">redirects:</code> no cabeçalho, remova.</p>
+  </li>
+  <li>
+    <p>Cada tradução é baseada em um commit da documentação original, em inglês. As páginas traduzidas, obrigatóriamente devem ter um campo chamado <code class="language-plaintext highlighter-rouge">default_lang_commit</code> em seu cabeçalho, contendo a hash do commit da documentação original. Por exemplo:</p>
+  </li>
+</ul>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code>title: OpenTelemetry
+description: &gt;-
+Telemetria de alta qualidade, abrangente e portátil para permitir uma observabilidade eficaz
+developer_note:
+O shortcode blocks/cover (usado abaixo) vai servir como imagem de background
+para qualquer arquivo de imagem que contenha "background" no nome.
+show_banner: true
+default_lang_commit: 08799298
+</code></pre></div></div>
+
+<h3 id="páginas-novas">Páginas novas</h3>
+
+<p>Para uma página nova, você precisa executar o seguinte comando para buscar a hash do commit:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span>  <span class="nt">--rm</span> <span class="nt">-v</span><span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>:/app <span class="nt">-w</span> /app  <span class="nt">--entrypoint</span> <span class="s2">""</span> node:latest npm run fix:i18n:new
+</code></pre></div></div>
+
+<h3 id="páginas-existentes">Páginas existentes</h3>
+
+<p>Antes de iniciar a atualização na localização de uma página existente, recomendamos que você busque a diferença entre a versão original e a versão que você está traduzindo. Isso pode ser feito executando o seguinte comando:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run check:i18n <span class="nt">--</span> <span class="nt">-d</span> &lt;PATH-TO-FILE&gt;
+</code></pre></div></div>
+
+<p><strong>Exemplo:</strong></p>
+
+<p>Vamos supor que você está traduzindo a página <code class="language-plaintext highlighter-rouge">content/pt/docs/languages/go/instrumentation.md</code>. O comando para verificar a diferença é:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run check:i18n <span class="nt">--</span> <span class="nt">-d</span> content/pt/docs/languages/go/instrumentation.md
+</code></pre></div></div>
+
+<p>Output:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">❯</span> npm run check:i18n -- -d content/pt/docs/languages/go/instrumentation.md
+
+&gt; check:i18n
+<span class="gi">&gt; scripts/check-i18n.sh -d content/pt/docs/languages/go/instrumentation.md
+</span>
+Processing paths: content/pt/docs/languages/go/instrumentation.md
+<span class="gh">diff --git a/content/en/docs/languages/go/instrumentation.md b/content/en/docs/languages/go/instrumentation.md
+index 9a7d8bf7..ace082d7 100644
+</span><span class="gd">--- a/content/en/docs/languages/go/instrumentation.md
+</span><span class="gi">+++ b/content/en/docs/languages/go/instrumentation.md
+</span><span class="p">@@ -8,7 +8,7 @@</span> description: Manual instrumentation for OpenTelemetry Go
+ cSpell:ignore: fatalf logr logrus otlplog otlploghttp sdktrace sighup
+ ---
+
+-
+<span class="gi">+
+</span>
+ ## Setup
+
+@@ -49,7 +49,7 @@ func newExporter(ctx context.Context)  /* (someExporter.Exporter, error) */ {
+        // Your preferred exporter: console, jaeger, zipkin, OTLP, etc.
+ }
+
+-func newTraceProvider(exp sdktrace.SpanExporter) *sdktrace.TracerProvider {
+<span class="gi">+func newTracerProvider(exp sdktrace.SpanExporter) *sdktrace.TracerProvider {
+</span>        // Ensure default SDK resources and the required service name are set.
+        r, err := resource.Merge(
+                resource.Default(),
+<span class="p">@@ -78,7 +78,7 @@</span> func main() {
+        }
+
+        // Create a new tracer provider with a batch span processor and the given exporter.
+<span class="gd">-       tp := newTraceProvider(exp)
+</span><span class="gi">+       tp := newTracerProvider(exp)
+</span>
+        // Handle shutdown properly so nothing leaks.
+        defer func() { _ = tp.Shutdown(ctx) }()
+<span class="p">@@ -221,7 +221,7 @@</span> span.AddEvent("Cancelled wait due to external signal", trace.WithAttributes(attr
+
+ ### Set span status
+
+-
+<span class="gi">+
+</span>
+ ```go
+ import (
+<span class="p">@@ -549,10 +549,14 @@</span> import (
+        "go.opentelemetry.io/otel/metric"
+ )
+
+-var fanSpeedSubscription chan int64
+<span class="gi">+var (
++  fanSpeedSubscription chan int64
++  speedGauge metric.Int64Gauge
++)
+</span>
+ func init() {
+<span class="gd">-       speedGauge, err := meter.Int64Gauge(
+</span><span class="gi">+       var err error
++       speedGauge, err = meter.Int64Gauge(
+</span>                "cpu.fan.speed",
+                metric.WithDescription("Speed of CPU fan"),
+                metric.WithUnit("RPM"),
+<span class="p">DRIFTED files: 1 out of 1
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>Nota: O comando acima irá retornar as linhas que foram alteradas. Considere adicionar esta diferença na descrição do seu pull request! Isso facilita a validação das revisões :)
+Exemplo: <a href="https://github.com/open-telemetry/opentelemetry.io/pull/6783" target="_blank">Pull Request #6783</a></p>
+</blockquote>
+
+<p>Após verificar a diferença, você pode iniciar a atualização na localização da página.</p>
+
+<p>Ao finalizar, não se esqueça de atualizar o <code class="language-plaintext highlighter-rouge">default_lang_commit</code> com o hash do commit da documentação original! Isso pode ser feito executando o seguinte comando:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run fix:i18n:status
+</code></pre></div></div>
+
+<p>E finalmente, garanta que a o campo <code class="language-plaintext highlighter-rouge">drifted_from_default</code> também foi atualizado e removido do cabeçalho. Isso pode ser feito executando o seguinte comando:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run fix:i18n:status
+</code></pre></div></div>
+
+<p>Mais detalhes sobre como atualizar a tradução podem ser encontrados <a href="https://opentelemetry.io/docs/contributing/localization/#track-changes" target="_blank">aqui</a>.</p>
+
+<h2 id="passo-a-passo">Passo a Passo</h2>
+
+<p>Após estar familiarizado com o processo de contribuição, siga o passo a passo abaixo para fazer sua primeira contribuição.</p>
+
+<ol>
+  <li>Pesquise se já existe uma issue aberta para a documentação que quer localizar (pode usar <a href="https://github.com/open-telemetry/opentelemetry.io/issues?q=is%3Aopen+is%3Aissue+label%3Alang%3Apt" target="_blank">esse</a> filtro de busca), se já existir uma issue e alguém trabalhando, procure outra página.</li>
+  <li>
+    <p>Caso não exista issue aberta para a página que quer localizar, pode criar uma, seguindo o padrão de título: <code class="language-plaintext highlighter-rouge">[pt] Localize &lt;caminho do arquivo que você vai trabalhar&gt;</code></p>
+  </li>
+  <li>
+    <p>Faça o fork do repositório da documentação: <code class="language-plaintext highlighter-rouge">https://github.com/open-telemetry/opentelemetry.io</code></p>
+  </li>
+  <li>Faça o clone do seu fork para sua máquina local, exemplo:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git@github.com:edsoncelio/opentelemetry.io.git
+</code></pre></div></div>
+
+<ol>
+  <li>Crie uma branch a partir da branch <code class="language-plaintext highlighter-rouge">main</code> para fazer sua tradução, exemplo:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout <span class="nt">-b</span> adiciona_traducao_traces
+</code></pre></div></div>
+
+<ol>
+  <li>Com a branch criada, faça toda a sua tradução, sempre lembrando de fazer o push para o seu fork remoto, exemplo:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="nb">.</span>
+git commit <span class="nt">-m</span> <span class="s2">"docs: adiciona traducao de traces"</span>
+git push origin adiciona_traducao_traces
+</code></pre></div></div>
+
+<ol>
+  <li>Sempre antes de abrir um <em>Pull Request</em>, execute o <em>lint</em>, assim não vai quebrar nas checagens automáticas:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span>  <span class="nt">--rm</span> <span class="nt">-v</span><span class="si">$(</span><span class="nb">pwd</span><span class="si">)</span>:/app <span class="nt">-w</span> /app  <span class="nt">--entrypoint</span> <span class="s2">""</span> node:latest npx prettier <span class="nt">--write</span> <span class="nb">.</span>
+</code></pre></div></div>
+
+<ol>
+  <li>Quando finalizar, ou apenas quiser solicitar uma revisão, abre o <em>Pull Request</em> para a branch main.<br />
+Para essa etapa, sugerimos que use o prefixo <code class="language-plaintext highlighter-rouge">[pt]</code>no título, assim mantemos consistência, por exemplo:</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>pt] Localize content/pt/docs/concepts/components.md
+</code></pre></div></div>
+
+<ol>
+  <li>Envie o PR no canal do slack <code class="language-plaintext highlighter-rouge">#otel-localization-ptbr</code>.</li>
+  <li>Aguarde as interações para revisão, é esperado que tenha bastante, não se assuste :)</li>
+</ol>
+
+<h2 id="id-ausente-no-commit">ID ausente no Commit</h2>
+
+<p>O problema é que o autor dos commits não está vinculado à conta do usuário no GitHub e isso é necessário para que o EasyCLA identifique o usuário e conceda autorização.</p>
+
+<p><img class="lozad imgViewer mfp-zoom" data-mfp-src="https://github.com/user-attachments/assets/525f72b0-09ef-42dc-86f2-9ede4e7e3fc2" data-src="https://github.com/user-attachments/assets/525f72b0-09ef-42dc-86f2-9ede4e7e3fc2" alt="image" /></p>
+
+<p>Geralmente ajustar as configurações globais do GitHub resolve o problema.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit <span class="nt">--amend</span> <span class="nt">--author</span><span class="o">=</span><span class="s2">"FirstName LastName &lt;emailaddress&gt;"</span> <span class="nt">--no-edit</span>
+
+git push <span class="nt">--force</span>
+</code></pre></div></div>
+
+<h3 id="caso-contrário-faça-rebase-do-commit">Caso Contrário faça rebase do commit:</h3>
+
+<p>Primeiro identifique qual commit você precisa ajustar.</p>
+
+<p><img class="lozad imgViewer mfp-zoom" data-mfp-src="https://github.com/user-attachments/assets/ac173020-0bd0-4e22-a980-b7489b3ea0a1" data-src="https://github.com/user-attachments/assets/ac173020-0bd0-4e22-a980-b7489b3ea0a1" alt="image" /></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git rebase <span class="nt">-i</span> &lt;SHA-Resumido-Commit&gt;^
+</code></pre></div></div>
+
+<p>Isso abrirá um editor, mude o comando <code class="language-plaintext highlighter-rouge">pick</code> para <code class="language-plaintext highlighter-rouge">edit</code> no commit que deseja corrigir:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pick &lt;SHA-Resumido-Commit&gt; feat: mensagem de exemplo <span class="k">do </span>commit
+</code></pre></div></div>
+
+<p>Salve e feche o editor.</p>
+
+<p>Agora, atualize o autor do commit com o comando abaixo, substituindo pelo nome e e-mail corretos:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit <span class="nt">--amend</span> <span class="nt">--author</span><span class="o">=</span><span class="s2">"FirstName LastName &lt;emailaddress&gt;"</span> <span class="nt">--no-edit</span>
+</code></pre></div></div>
+<hr>
+<div class="share-holder">
+  <span class="share-label">Share on: </span>
+  <ul class="share-buttons">
+    
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2024-07-26-guia-contribuicao-otel-docs-pt&amp;text=Guia:%20Contribuindo%20com%20a%20Localiza%C3%A7%C3%A3o%20da%20Documenta%C3%A7%C3%A3o%20do%20OpenTelemetry%20para%20Portugu%C3%AAs%20-%20Vitor%20Vasconcellos" aria-label="Twitter" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Twitter" class="hover-effect-big">
+          <i class="fa fa-twitter-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2024-07-26-guia-contribuicao-otel-docs-pt" aria-label="Facebook" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Facebook" class="hover-effect-big">
+          <i class="fa fa-facebook-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://t.me/share/url?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2024-07-26-guia-contribuicao-otel-docs-pt&amp;text=Guia:%20Contribuindo%20com%20a%20Localiza%C3%A7%C3%A3o%20da%20Documenta%C3%A7%C3%A3o%20do%20OpenTelemetry%20para%20Portugu%C3%AAs%20-%20Vitor%20Vasconcellos" aria-label="Telegram" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Telegram" class="hover-effect-big">
+          <i class="fa fa-telegram fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2024-07-26-guia-contribuicao-otel-docs-pt" aria-label="LinkedIn" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="LinkedIn" class="hover-effect-big">
+          <i class="fa fa-linkedin-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="mailto:?subject=Guia:%20Contribuindo%20com%20a%20Localiza%C3%A7%C3%A3o%20da%20Documenta%C3%A7%C3%A3o%20do%20OpenTelemetry%20para%20Portugu%C3%AAs%20-%20Vitor%20Vasconcellos&amp;body=Guia:%20Contribuindo%20com%20a%20Localiza%C3%A7%C3%A3o%20da%20Documenta%C3%A7%C3%A3o%20do%20OpenTelemetry%20para%20Portugu%C3%AAs%20-%20Vitor%20Vasconcellos%20http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2024-07-26-guia-contribuicao-otel-docs-pt" aria-label="Email" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Email" class="hover-effect-big">
+          <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="javascript:void(0);" aria-label="Copy link" role="button" onclick="copyToClipboard('http://0.0.0.0:4000/posts/2024-07-26-guia-contribuicao-otel-docs-pt', 'Link copied!')" id="copytoclipboard" data-toggle="tooltip" data-placement="top" title="Copy link" class="hover-effect-big">
+          <i class="fa fa-link fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+</div>
+</div>
+
+</div><div class="footer-wrapper">
+  <div class="footer-container">
+    <footer translate="no">
+      <div class="footer-text footer-text-centered long-copyright">
+          <p>&copy; 2025 Vitor Vasconcellos. </p><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" data-tooltip-no-hide title="Except where otherwise noted, content on this web site is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.">
+              <img src="/assets/img/default/cc/cc.svg" alt="cc" width="12" height="12">&nbsp;<img src="/assets/img/default/cc/by.svg" alt="by" width="12" height="12">&nbsp;<img src="/assets/img/default/cc/sa.svg" alt="sa" width="12" height="12">&nbsp;<p>Some rights reserved.</p>
+            </a></div>
+      <p class="footer-powered"><span>Pwrd by </span><a href="https://github.com/MrGreensWorkshop/MrGreen-JekyllTheme" target="_blank" rel="noopener noreferrer">Mr. Green</a></p>
+    </footer>
+  </div>
+</div>
+<div class="scroll-to-top-container">
+        <a id="scroll-to-top" href="#main-wrapper" role="button" aria-label="Back to top" class="hover-effect"><i class="fa fa-angle-up"></i></a>
+      </div></div>
+
+    <div class="searchbox-container">
+  <form id="searchbox-form" autocomplete="off">
+    <input type="search" id="search-box" placeholder="Search"
+    onkeyup="if(this.value!==''){document.getElementById('search-results').style.display = 'block';}"
+    onfocusout="this.value='';"
+    onblur="setTimeout(function(){ document.getElementById('search-results').style.display = 'none'; }, 100);">
+    <ul id="search-results" ></ul>
+  </form>
+</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v0.4.1/dist/bootstrap-toc.min.js"></script>
+
+<script src="/assets/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script>
+      $('.imgViewer[data-no-image-viewer]').css("cursor", "unset");
+      $(function () {
+        $('.imgViewer:not([data-no-image-viewer])').magnificPopup({
+          type: 'image'
+          ,image: {
+            titleSrc: 'alt'
+            /* Error message */
+            ,tError: "The image could not be loaded.<br><br>%url%"
+            /* Set to null to disable zoom out cursor. */
+            /*,cursor: null */
+          }
+          ,closeOnContentClick: true
+          ,showCloseBtn: false
+          ,zoom: {
+            /* By default it's false, so don't forget to enable it */
+            enabled: true
+            /* duration of the effect, in milliseconds */
+            ,duration: 300
+            /* CSS transition easing function */
+            ,easing: 'ease-in-out'
+          }
+        });
+      });
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js"></script>
+    <script>
+      /* lazy loads elements with default selector as '.lozad' */
+      const observer = lozad();
+      observer.observe();
+    </script>
+
+
+
+
+
+<script src="/assets/js/simple-jekyll-search-1.9.2.min.js"></script><script>
+  function loadSearch(jsonData, searchParam) {
+    if (!jsonData) jsonData = '/query/search.json';
+    var searchInput = document.getElementById('search-box');
+
+    const simpleJekyllSearch = SimpleJekyllSearch({
+      searchInput: searchInput
+      ,resultsContainer: document.getElementById('search-results')
+      ,json: jsonData
+      ,searchResultTemplate: '<li> <a href="{url}"> <div> <div class="title">{title}</div> <div class="date">{date}</div> <div style="clear: both;"></div> </div> </a></li>'
+      ,noResultsText: '<li>No results were found.</li>'
+      ,limit: 10
+      ,fuzzy: false
+      ,formSubmit: document.getElementById('searchbox-form')
+    });
+
+    if (searchParam) {
+      searchInput.value = searchParam;
+      searchInput.focus();
+      searchInput.disabled=false;
+      setTimeout(function(){
+        simpleJekyllSearch.search(searchParam);
+      }, 400);
+    }
+  }
+
+  </script>
+
+<script>
+    function isEmpty(value) {
+      if (value === "" || value === null || typeof value === "undefined") return true;
+      return false;
+    }
+
+    function getQueryParam (param, mach = true) {
+      var queryString = window.location.search.substring(1);
+      if (isEmpty(queryString)) return null;
+      var queries = queryString.split("&");
+      for (var i in queries) {
+        var pair = decodeURIComponent(queries[i]).split("=");
+        if (mach == true){
+          if (pair[0] == param) {
+            if (isEmpty(pair[1]) === false) return pair[1];
+          }
+        }else{
+          return pair;
+        }
+        break;
+      }
+      return null;
+    }
+
+    const searchParam = getQueryParam('search');
+
+    (async () => {
+      let resp = await fetch('/query/search.json');
+      if (!resp.ok) return;
+      let jsonData = await resp.json();
+      loadSearch(jsonData, searchParam);
+    })();
+  </script>
+
+
+
+<script>
+  CookieConsent.consentSettingHtml = "<div class=\"consent-settings\"> <h5>Cookie settings</h5> <br> <p class=\"info-text\">This website uses cookies to optimize site functionality. It will be activated with your approval. Please click each item below for cookie policy. Check <a href=\"/privacy-policy.html\">Privacy policy</a>.</p> <table> <tr> <td onclick=\"$('.info[data-consent-info=necessary]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Strictly necessary cookies</p> </td> <td> <span class=\"active_text\">Always active</span></td> </tr> </table> <div class=\"info\" data-consent-info=\"necessary\"> <p>These cookies are essential for the website function and cannot be disable. They are usually set when site function like color scheme etc. is changed. These cookies do not store any personally identifiable information. Enables storage related to security such as authentication functionality, fraud prevention, and other user protection. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=analytics]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Performance cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" checked=\"checked\" data-consent=\"analytics\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"analytics\"> <p>Enables storage (such as cookies) related to analytics e.g. visit duration. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=preferences]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Functionality cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" data-consent=\"preferences\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"preferences\"> <p>Enables storage that supports the functionality of the website or app e.g. language settings. Enables storage related to personalization e.g. video recommendations. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=advertising]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Targeting and advertising cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" data-consent=\"advertising\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"advertising\"> <p>Enables storage (such as cookies) related to advertising. </p> </div> <br> <div class=\"button-holder\"> <a href=\"javascript:void(0);\" class=\"btn-base btn-left\" onclick=\"CookieConsent.consentSettingDone('deny');\" role=\"button\" rel=\"nofollow\">Deny</a> <a href=\"javascript:void(0);\" class=\"btn-base btn-priority\" onclick=\"CookieConsent.consentSettingDone('accept');\" role=\"button\" rel=\"nofollow\">Allow all</a> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentSettingDone('save');\" role=\"button\" rel=\"nofollow\">Allow selection</a> </div> </div>";
+  CookieConsent.consentSettingSlideType = 'slideBoxTopToDown';
+  CookieConsent.consentBarHtml = "<div class=\"consent-bar\"> <a class=\"close-button\" href=\"javascript:void(0);\" onclick=\"CookieConsent.hideConsentBar();\" aria-label=\"Close\" role=\"button\" rel=\"nofollow\"><i class=\"fa-fw fa fa-times\"></i></a> <p>This website uses cookies to optimize site functionality. It will be activated with your approval. Check <a href=\"/privacy-policy.html\">Privacy policy</a>.</p> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentBarDone('deny');\" role=\"button\" rel=\"nofollow\">Deny</a> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentBarDone('settings');\" role=\"button\" rel=\"nofollow\">Customize</a> <a href=\"javascript:void(0);\" class=\"btn-base btn-priority\" onclick=\"CookieConsent.consentBarDone('accept');\" role=\"button\" rel=\"nofollow\">Allow all</a> </div>";
+  CookieConsent.consent_items = JSON.parse('{"necessary":{"group":["security_storage"],"value":"granted","wait_for_update":500,"cookie_domain":"","no_check_box":true},"analytics":{"group":["analytics_storage"],"value":"denied"},"preferences":{"group":["functionality_storage","personalization_storage"],"value":"denied"},"advertising":{"group":["ad_storage"],"value":"denied"}}');
+  CookieConsent.hideConsentBarWithSaveButton = true;
+
+  const consent_settings = CookieConsent.getConsentSettings();
+  const default_configs = JSON.parse('{"anonymize_ip":true,"ads_data_redaction":true,"cookie_flags":"SameSite=None;Secure"}');
+</script>
+<script>
+  SlidingMsgBox.html = "<div class=\"slideBox\"> <a class=\"close-button\" href=\"javascript:void(0);\" aria-label=\"Close\" role=\"button\" rel=\"nofollow\"><i class=\"fa-fw fa fa-times\"></i></a> </div>";
+</script>
+</body>
+</html>
+

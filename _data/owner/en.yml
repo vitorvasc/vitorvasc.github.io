@@ -48,10 +48,10 @@ meta_common_description: "Vitor Vasconcellos is a Software Engineer, open-source
 # the order of the items will be shown as here.
 # comment to remove any contact item
 contacts:
-  - github: "https://github.com/vitorvasc"
+  - github: "vitorvasc"
   - email: "hi@vasconcellos.dev"
-  - linkedin: "https://www.linkedin.com/in/vvasconcellos"
-  - bluesky: "https://bsky.app/profile/vasconcellos.dev"
+  - linkedin: "vvasconcellos"
+  - bluesky: "vasconcellos.dev"
   #- twitter: ""
   #- mastodon: ""
   #- instagram: ""
