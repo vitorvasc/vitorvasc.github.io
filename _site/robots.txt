@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: http://0.0.0.0:4000/https://vasconcellos.dev/assets/sitemap.xml
+Sitemap: http://0.0.0.0:4000/assets/sitemap.xml

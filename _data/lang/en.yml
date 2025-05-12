@@ -175,7 +175,7 @@ privacy-policy:
 constants:
   greetings: Hello
   welcome: Welcome
-  sample: Sample
+  sample: Software Engineer at @mercadolibre. Open-source contributor. I like observability things.
 
 # for contact form
 contact_form:

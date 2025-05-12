@@ -4,19 +4,19 @@
   "description": "Vitor Vasconcellos is a Software Engineer, open-source contributor and observability enthusiast.",
   "icons": [
   {
-    "src": "https://vasconcellos.dev/assets/img/favicons/android-chrome-192x192.png",
+    "src": "/assets/img/favicons/android-chrome-192x192.png",
     "sizes": "192x192",
     "type": "image/png",
     "purpose": "any maskable"
   },
   {
-    "src": "https://vasconcellos.dev/assets/img/favicons/android-chrome-512x512.png",
+    "src": "/assets/img/favicons/android-chrome-512x512.png",
     "sizes": "512x512",
     "type": "image/png",
     "purpose": "any maskable"
   }
   ],
-  "start_url": "https://vasconcellos.dev/",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "any",
   "theme_color": "#808080",
