@@ -25,13 +25,6 @@ layout: default
         | replace: site.data.conf.main.brand_replace, site.data.owner[lng].brand
         | replace: site.data.conf.main.greetings_replace, site.data.lang[lng].constants.greetings
         | replace: site.data.conf.main.welcome_replace, site.data.lang[lng].constants.welcome }}
-      {%- if site.data.owner[lng].home.top_header_line2 %}
-        <br>
-        {{ site.data.owner[lng].home.top_header_line2
-          | replace: site.data.conf.main.brand_replace, site.data.owner[lng].brand
-          | replace: site.data.conf.main.greetings_replace, site.data.lang[lng].constants.greetings
-          | replace: site.data.conf.main.welcome_replace, site.data.lang[lng].constants.welcome }}
-      {% endif -%}
     </div>
   </div>
   <div class="home-intro-text markdown-style">

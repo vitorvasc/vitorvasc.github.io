@@ -136,7 +136,7 @@ post-list:
 
 # for home layout
 home:
-  title: Welcome
+  title: Hi there! 👋🏼
   button_name: Home
   new_posts_title: New Articles
   new_posts_show_more_button: View More ...
@@ -173,8 +173,8 @@ privacy-policy:
 
 # constants to be replaced for
 constants:
-  greetings: Hello
-  welcome: Welcome
+  greetings: Hi there! 👋🏼
+  welcome: Hi there! 👋🏼
   sample: Software Engineer at @mercadolibre. Open-source contributor. I like observability things.
 
 # for contact form
