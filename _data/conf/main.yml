@@ -25,7 +25,7 @@ default_lng: en
 # to prevent adding languages with no folder
 # single language disables language switch
 # language order is linked to array order
-language_switch_lang_list: [en, ja, pt, fr, zh, ko, tr]
+language_switch_lang_list: [en]
 
 # if the opened page is not in the user's language list,
 # suggest language(s) matching with the one(s) in browser language list and user language list.
@@ -274,7 +274,7 @@ meta:
   add_meta_date: false
   # please note that google does not use keywords, but other search engines may.
   keywords: true
-  google_site_verify: false
+  google_site_verify: true
   twitter_card: true
   open_graph: true
   open_graph_locale: true

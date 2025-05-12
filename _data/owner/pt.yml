@@ -2,13 +2,13 @@
 # Owner's Personal Information
 ###########################################################
 # This is your brand name
-brand: "Sua Marca"
+brand: "Vitor Vasconcellos"
 
 # text below the brand name
 brand_sub_text: "$site_sample"
 
 # used for seo meta post author (if it's not defined in post)
-name: "Seu Nome"
+name: "Vitor Vasconcellos"
 
 # home page top header texts
 home:
@@ -42,7 +42,7 @@ creative_commons:
 # seo meta this is needed for each language
 # If meta_description is not defined in front matter, it's created from (post / page) content,
 # if it has no content, this will be used for page description. It is also used in manifest.json
-meta_common_description: "Descrição Meta."
+meta_common_description: "Vitor Vasconcellos é um Engenheiro de Software, contribuinte de código aberto e entusiasta de observabilidade."
 
 # contact options (side nav bottom and about page)
 # the order of the items will be shown as here.
@@ -76,7 +76,7 @@ comments:
 
 # if no id is provided, this feature will be disabled.
 # make sure your environment does not match with google.analytics.ignore in _data/conf/main.yml
-google_analytics_id: ""
+google_analytics_id: "G-6M2PR33SWR"
 
 # there are different ways to verify web page. One is adding this as meta into html.
 # make sure you set meta.google_site_verify: true in _data/conf/main.yml
