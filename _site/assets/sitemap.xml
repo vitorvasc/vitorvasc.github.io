@@ -6,10 +6,17 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
 xmlns:xhtml="http://www.w3.org/1999/xhtml"
 xmlns:image="https://www.google.com/schemas/sitemap-image/1.1">
   <url>
+    <loc>http://0.0.0.0:4000/posts/2025-05-26-7-days-otel-day-01-introduction-to-observability-and-otel</loc>
+    <image:image>
+      <image:loc>http://0.0.0.0:4000/assets/img/posts/2025-05-26-7-days-otel-day-01-introduction-to-observability-and-otel.png</image:loc>
+      <image:title>7 Days of OpenTelemetry: Day 01 - Introduction to Observability and OpenTelemetry</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>http://0.0.0.0:4000/posts/2024-07-26-guia-contribuicao-otel-docs-pt</loc>
     <image:image>
       <image:loc>http://0.0.0.0:4000/assets/img/posts/2024-07-26-guia-contribuicao-otel-docs-pt.png</image:loc>
-      <image:title>Guia: Contribuindo com a Localização da Documentação do OpenTelemetry para Português</image:title>
+      <image:title>[pt-BR] Guia: Contribuindo com a Localização da Documentação do OpenTelemetry para Português</image:title>
     </image:image>
   </url>
   <url>
