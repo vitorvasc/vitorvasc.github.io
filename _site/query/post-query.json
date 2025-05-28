@@ -12,6 +12,18 @@
     ,"date"     : "May 27, 2025"
     ,"year"     : "2025"
     },{
+    "title"     : "7 Days of OpenTelemetry: Day 03 - Setting Up the OpenTelemetry Collector"
+    ,"title_sub": "Day 3: Setting Up the OpenTelemetry Collector Welcome to Day 3 of our “7 Days of OpenTelemetry” challenge! In the previous days, we covered the..."
+    ,"category" : ""
+    ,"tags"     : "opentelemetry, observability, 7-days-of-opentelemetry"
+    ,"url"      : "/posts/2025-05-27-7-days-otel-day-03-setting-up-collector"
+    ,"image"    : "/assets/img/posts/2025-05-27-7-days-otel-day-03-setting-up-collector.png"
+    ,"max_width": ""
+    ,"display"  : ""
+    ,"read_time": "9 min read"
+    ,"date"     : "May 27, 2025"
+    ,"year"     : "2025"
+    },{
     "title"     : "7 Days of OpenTelemetry: Day 01 - Introduction to Observability and OpenTelemetry"
     ,"title_sub": "Day 1: Introduction to Observability and OpenTelemetry Welcome to the first day of our “7 Days of OpenTelemetry” challenge! Over the next week, we’ll take..."
     ,"category" : ""
