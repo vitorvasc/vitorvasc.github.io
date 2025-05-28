@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "7 Days of OpenTelemetry: Day 03 - Setting Up the OpenTelemetry Collector"
+title: "7 Days of OpenTelemetry: Day 3 - Setting Up the OpenTelemetry Collector"
 date: 2025-05-27
 author: "Vitor Vasconcellos"
 lang: en
-img: ":2025-05-27-7-days-otel-day-03-setting-up-collector.png"
+img: ":2025-05-27-7-days-otel-day-3-setting-up-collector.png"
 categories: [OpenTelemetry, Observability, 7 Days of OpenTelemetry]
 tags: [opentelemetry, observability, 7-days-of-opentelemetry]
 ---

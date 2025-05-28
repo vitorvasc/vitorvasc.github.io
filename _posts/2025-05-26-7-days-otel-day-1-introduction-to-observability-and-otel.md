@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "7 Days of OpenTelemetry: Day 01 - Introduction to Observability and OpenTelemetry"
+title: "7 Days of OpenTelemetry: Day 1 - Introduction to Observability and OpenTelemetry"
 date: 2025-05-26
 author: "Vitor Vasconcellos"
 lang: en
-img: ":2025-05-26-7-days-otel-day-01-introduction-to-observability-and-otel.png"
+img: ":2025-05-26-7-days-otel-day-1-introduction-to-observability-and-otel.png"
 categories: [OpenTelemetry, Observability, 7 Days of OpenTelemetry]
 tags: [opentelemetry, observability, 7-days-of-opentelemetry]
 ---

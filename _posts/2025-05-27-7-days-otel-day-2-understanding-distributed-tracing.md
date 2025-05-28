@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "7 Days of OpenTelemetry: Day 02 - Understanding Distributed Tracing"
+title: "7 Days of OpenTelemetry: Day 2 - Understanding Distributed Tracing"
 date: 2025-05-27
 author: "Vitor Vasconcellos"
 lang: en
-img: ":2025-05-27-7-days-otel-day-02-understanding-distributed-tracing.png"
+img: ":2025-05-27-7-days-otel-day-2-understanding-distributed-tracing.png"
 categories: [OpenTelemetry, Observability, 7 Days of OpenTelemetry]
 tags: [opentelemetry, observability, 7-days-of-opentelemetry]
 ---
