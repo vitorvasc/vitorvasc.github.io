@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>7 Days of OpenTelemetry: Day 4 - Your First OpenTelemetry...</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+</noscript>
+
+
+
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="manifest" href="/assets/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#f0f0f0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Vitor Vasconcellos's App">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="msapplication-starturl" content="/">
+  <meta name="application-name" content="Vitor Vasconcellos's App">
+  <meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+
+    <meta name="keywords" content="opentelemetry, observability, 7-days-of-opentelemetry">
+
+  <meta name="description" content="Day 4: Your First OpenTelemetry Instrumentation Welcome to Day 4 of our “7 Days of OpenTelemetry” challenge! In the previous days, we covered the f...">
+  <meta name="robots" content="index, follow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7 Days of OpenTelemetry: Day 4 - Your First OpenTelemetry Instrumen...">
+
+<meta name="twitter:description" content="Day 4: Your First OpenTelemetry Instrumentation Welcome to Day 4 of our “7 Days of OpenTelemetry” challenge! In the previous days, we covered the fundamentals...">
+<meta name="twitter:image" content="http://0.0.0.0:4000/assets/img/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation.png">
+<meta property="og:site_name" content="Vitor Vasconcellos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7 Days of OpenTelemetry: Day 4 - Your First Ope...">
+<meta property="og:description" content="Day 4: Your First OpenTelemetry Instrumentation Welcome to Day 4 of our “7 Days of OpenTelemetry” challenge! In the previous days, we covered the f...">
+<meta property="og:url" content="http://0.0.0.0:4000/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy">
+<meta property="og:image" content="http://0.0.0.0:4000/assets/img/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation.png">
+  <meta property="article:author" content="Vitor Vasconcellos">
+  <meta property="article:section" content="">
+  <meta property="article:tag" content="opentelemetry">
+  <meta property="article:tag" content="observability">
+  <meta property="article:tag" content="7-days-of-opentelemetry">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org"
+  ,"@graph": [
+    {
+      "@type": "Person"
+      ,"@id": "http://0.0.0.0:4000/#person"
+      ,"name": "Vitor Vasconcellos"
+      ,"url": "http://0.0.0.0:4000/tabs/about.html"
+      ,"image": "http://0.0.0.0:4000/assets/img/about/about.jpg"
+      ,"description": "Vitor Vasconcellos is a Software Engineer, open-source contributor and observability enthusiast."
+  },{
+    "@type": "WebSite"
+    ,"@id": "http://0.0.0.0:4000/#website"
+    ,"url": "http://0.0.0.0:4000/"
+    ,"name": "Vitor Vasconcellos"
+    ,"description": "Vitor Vasconcellos is a Software Engineer, open-source contributor and observability enthusiast."
+    ,"publisher": {"@id": "http://0.0.0.0:4000/#person"}
+    ,"inLanguage": "en-US"
+    ,"sameAs": ["https://github.com/vitorvasc","https://www.linkedin.com/in/vvasconcellos","https://bsky.app/profile/vasconcellos.dev"]
+    ,"copyrightHolder" : {"@id": "http://0.0.0.0:4000/#person"}
+    ,"copyrightYear" : "2025"
+  },{
+    "@type": "WebPage"
+    ,"@id": "http://0.0.0.0:4000/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy#webpage"
+    ,"url": "http://0.0.0.0:4000/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy"
+    ,"name": "7 Days of OpenTelemetry: Day 4 - Your First OpenTelemetry Instrumentation"
+    ,"isPartOf": {"@id": "http://0.0.0.0:4000/#website"}
+    ,"breadcrumb": {"@id": "http://0.0.0.0:4000/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy#breadcrumb"}
+    ,"primaryImageOfPage": "http://0.0.0.0:4000/assets/img/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation.png"
+    ,"description": "Day 4: Your First OpenTelemetry Instrumentation Welcome to Day 4 of our “7 Days of OpenTelemetry” challenge! In the previous days, we covered the f..."
+    ,"inLanguage": "en-US"
+    ,"potentialAction": {
+      "@type": "ReadAction"
+      ,"target": "http://0.0.0.0:4000/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy"
+    }
+  },{
+      "@type": "BreadcrumbList",
+      "@id": "http://0.0.0.0:4000/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem"
+          ,"position": 1
+          ,"name": "Home"
+          ,"item": "http://0.0.0.0:4000/"
+        },
+        {
+          "@type": "ListItem"
+          ,"position": 2
+          ,"name": "Blog"
+          ,"item": "http://0.0.0.0:4000/tabs/blog/"
+        },
+        {
+          "@type": "ListItem"
+          ,"position": 3
+          ,"name": "7 Days of OpenTelemetry: Day 4 - Your First OpenTelemetry Instrumentation"
+        }
+      ]
+    },{
+      "@type": "BlogPosting"
+      ,"@id": "http://0.0.0.0:4000/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy#content"
+      ,"isPartOf": {"@id": "http://0.0.0.0:4000/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy#webpage"}
+      ,"mainEntityOfPage": {"@id": "http://0.0.0.0:4000/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy#webpage"}
+      ,"publisher": {"@id": "http://0.0.0.0:4000/#person"}
+      ,"author": {"@id": "http://0.0.0.0:4000/#person"}
+      ,"inLanguage": "en-US"
+      ,"headline": "7 Days of OpenTelemetry: Day 4 - Your First OpenTelemetry Instrumentation"
+      ,"image": "http://0.0.0.0:4000/assets/img/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation.png"
+      ,"thumbnailUrl": "http://0.0.0.0:4000/assets/img/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation.png"
+      ,"articleSection": ["opentelemetry", "observability", "7-days-of-opentelemetry"]
+      ,"description": "Day 4: Your First OpenTelemetry Instrumentation Welcome to Day 4 of our “7 Days of OpenTelemetry” challenge! In the previous days, we covered the f..."
+      ,"copyrightHolder" : {"@id": "http://0.0.0.0:4000/#person"}
+      ,"copyrightYear" : "2025"
+      ,"wordCount": 1594
+      ,"articleBody": "Day 4: Your First OpenTelemetry Instrumentation Welcome to Day 4 of our “7 Days of OpenTelemetry” challenge! In the previous days, we covered the fundamentals of observability and distributed tracing, and we set up the OpenTelemetry Collector. Today, we’ll implement our first OpenTelemetry instrumentation in a Go application and see the resulting traces in our Collector’s debug output. Manual Instrumentation Basics OpenTelemetry provides two main approaches to instrumentation: Manual instrumentation: Explicitly adding tracing code to your application Automatic instrumentation: Using pre-built integrations for common frameworks and libraries We’ll start with manual instrumentation to understand the core concepts, then explore automatic instrumentation in tomorrow’s installment. Setting Up a Simple Go Application Let’s create a simple HTTP server in Go that we’ll instrument with OpenTelemetry. First, create a new directory for our application: mkdir -p otel-demo/cmd/server cd otel-demo Initialize a Go module: go mod init github.com/yourusername/otel-demo Now, create a basic HTTP server in cmd/server/main.go: package main import ( \"fmt\" \"log\" \"net/http\" \"time\" ) func main() { http.HandleFunc(\"/\", handleRoot) http.HandleFunc(\"/hello\", handleHello) fmt.Println(\"Server starting on :8080...\") if err := http.ListenAndServe(\":8080\", nil); err != nil { log.Fatalf(\"Server failed to start: %v\", err) } } func handleRoot(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, \"Welcome to the OpenTelemetry demo!\\n\") } func handleHello(w http.ResponseWriter, r *http.Request) { // Simulate some work time.Sleep(50 * time.Millisecond) name := r.URL.Query().Get(\"name\") if name == \"\" { name = \"Guest\" } // Simulate a database call userID := fetchUserID(name) fmt.Fprintf(w, \"Hello, %s (ID: %s)!\\n\", name, userID) } func fetchUserID(name string) string { // Simulate a database query time.Sleep(100 * time.Millisecond) return fmt.Sprintf(\"user-%d\", len(name)*7) } This simple server has two endpoints: /: Returns a welcome message /hello: Takes an optional name parameter, simulates some work, and returns a greeting Let’s run the server to make sure it works: go run cmd/server/main.go You should see “Server starting on :8080…” in the console. In a separate terminal, test the server: curl http://localhost:8080/ curl http://localhost:8080/hello?name=Alice You should see the expected responses. Now, let’s add OpenTelemetry instrumentation to this application. Adding OpenTelemetry Dependencies First, we need to add the necessary OpenTelemetry packages to our Go module: go get go.opentelemetry.io/otel \\ go.opentelemetry.io/otel/trace \\ go.opentelemetry.io/otel/sdk \\ go.opentelemetry.io/otel/exporters/otlp/otlptrace \\ go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc These packages provide: The OpenTelemetry API The tracing API The OpenTelemetry SDK The OTLP exporter for traces The gRPC implementation of the OTLP exporter Initializing the OpenTelemetry SDK Now, let’s create a new file cmd/server/telemetry.go to initialize the OpenTelemetry SDK: package main import ( \"context\" \"log\" \"time\" \"go.opentelemetry.io/otel\" \"go.opentelemetry.io/otel/exporters/otlp/otlptrace\" \"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc\" \"go.opentelemetry.io/otel/propagation\" \"go.opentelemetry.io/otel/sdk/resource\" sdktrace \"go.opentelemetry.io/otel/sdk/trace\" semconv \"go.opentelemetry.io/otel/semconv/v1.4.0\" \"google.golang.org/grpc\" \"google.golang.org/grpc/credentials/insecure\" ) // initTracer initializes the OpenTelemetry tracer func initTracer() func(context.Context) error { // Create a new OTLP exporter ctx := context.Background() // Configure the exporter to use gRPC and connect to the Collector exporter, err := otlptrace.New( ctx, otlptracegrpc.NewClient( otlptracegrpc.WithInsecure(), otlptracegrpc.WithEndpoint(\"localhost:4317\"), otlptracegrpc.WithDialOption(grpc.WithBlock()), ), ) if err != nil { log.Fatalf(\"Failed to create exporter: %v\", err) } // Configure the resource with service information res, err := resource.New(ctx, resource.WithAttributes( semconv.ServiceNameKey.String(\"otel-demo-service\"), semconv.ServiceVersionKey.String(\"0.1.0\"), ), ) if err != nil { log.Fatalf(\"Failed to create resource: %v\", err) } // Configure the trace provider with the exporter and resource tp := sdktrace.NewTracerProvider( sdktrace.WithSampler(sdktrace.AlwaysSample()), sdktrace.WithBatcher(exporter), sdktrace.WithResource(res), ) // Set the global trace provider otel.SetTracerProvider(tp) // Set the global propagator otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator( propagation.TraceContext{}, propagation.Baggage{}, )) // Return a function to shut down the exporter when the application exits return func(ctx context.Context) error { ctx, cancel := context.WithTimeout(ctx, 5*time.Second) defer cancel() return tp.Shutdown(ctx) } } This code: Creates an OTLP exporter that connects to our Collector Configures a resource with service information Creates a trace provider with the exporter and resource Sets the global trace provider and propagator Returns a shutdown function to clean up resources Instrumenting the HTTP Server Now, let’s update our main.go file to use the tracer: package main import ( \"context\" \"fmt\" \"log\" \"net/http\" \"os\" \"os/signal\" \"time\" \"go.opentelemetry.io/otel\" \"go.opentelemetry.io/otel/attribute\" \"go.opentelemetry.io/otel/trace\" ) // Name of the tracer const tracerName = \"github.com/yourusername/otel-demo\" func main() { // Initialize the tracer shutdown := initTracer() defer func() { if err := shutdown(context.Background()); err != nil { log.Fatalf(\"Error shutting down tracer: %v\", err) } }() // Set up HTTP handlers http.HandleFunc(\"/\", handleRoot) http.HandleFunc(\"/hello\", handleHello) // Start the server in a goroutine go func() { fmt.Println(\"Server starting on :8080...\") if err := http.ListenAndServe(\":8080\", nil); err != nil &amp;&amp; err != http.ErrServerClosed { log.Fatalf(\"Server failed to start: %v\", err) } }() // Wait for interrupt signal sigCh := make(chan os.Signal, 1) signal.Notify(sigCh, os.Interrupt) &lt;-sigCh fmt.Println(\"Shutting down...\") } func handleRoot(w http.ResponseWriter, r *http.Request) { // Get the tracer tracer := otel.Tracer(tracerName) // Create a span for this handler ctx, span := tracer.Start(r.Context(), \"handleRoot\") defer span.End() // Add attributes to the span span.SetAttributes( attribute.String(\"http.method\", r.Method), attribute.String(\"http.path\", r.URL.Path), ) // Use the context with the span _ = ctx // In a real app, you'd pass this to downstream functions fmt.Fprintf(w, \"Welcome to the OpenTelemetry demo!\\n\") } func handleHello(w http.ResponseWriter, r *http.Request) { // Get the tracer tracer := otel.Tracer(tracerName) // Create a span for this handler ctx, span := tracer.Start(r.Context(), \"handleHello\") defer span.End() // Add attributes to the span span.SetAttributes( attribute.String(\"http.method\", r.Method), attribute.String(\"http.path\", r.URL.Path), ) // Simulate some work time.Sleep(50 * time.Millisecond) // Get the name parameter name := r.URL.Query().Get(\"name\") if name == \"\" { name = \"Guest\" } // Add the name as an attribute span.SetAttributes(attribute.String(\"user.name\", name)) // Record an event span.AddEvent(\"Processing request\", trace.WithAttributes( attribute.String(\"event.type\", \"process\"), attribute.String(\"user.name\", name), )) // Call fetchUserID with the context containing the span userID := fetchUserID(ctx, name) fmt.Fprintf(w, \"Hello, %s (ID: %s)!\\n\", name, userID) } func fetchUserID(ctx context.Context, name string) string { // Get the tracer tracer := otel.Tracer(tracerName) // Create a child span for the database operation ctx, span := tracer.Start(ctx, \"fetchUserID\") defer span.End() // Add attributes to the span span.SetAttributes(attribute.String(\"db.operation\", \"query\")) // Simulate a database query time.Sleep(100 * time.Millisecond) // Generate a user ID userID := fmt.Sprintf(\"user-%d\", len(name)*7) // Add the result as an attribute span.SetAttributes(attribute.String(\"db.result\", userID)) return userID } This updated code: Initializes the tracer in the main function Creates spans for each handler and the database operation Adds attributes and events to the spans Propagates context between functions Running the Instrumented Application Now, let’s run our instrumented application: go run cmd/server/*.go You should see “Server starting on :8080…” in the console. In a separate terminal, make some requests to the server: curl http://localhost:8080/ curl http://localhost:8080/hello?name=Alice curl http://localhost:8080/hello?name=Bob Viewing Traces in the Collector Now, let’s check the Collector logs to see the traces: docker-compose -f otel-collector/docker-compose.yaml logs You should see detailed trace information in the logs, including: The service name (otel-demo-service) The span names (handleRoot, handleHello, fetchUserID) The attributes we added The events we recorded The timing information Congratulations! You’ve successfully instrumented a Go application with OpenTelemetry and sent traces to the Collector. Understanding the Instrumentation Let’s break down the key components of our instrumentation: Tracer Initialization tracer := otel.Tracer(tracerName) This gets a tracer instance from the global provider, using a name that identifies our module. Span Creation ctx, span := tracer.Start(r.Context(), \"handleHello\") defer span.End() This creates a new span with the given name and makes it a child of any span in the incoming context. The defer span.End() ensures the span is properly closed when the function returns. Adding Attributes span.SetAttributes( attribute.String(\"http.method\", r.Method), attribute.String(\"http.path\", r.URL.Path), ) Attributes provide additional context about the operation. They’re key-value pairs that help you understand what happened during the span. Recording Events span.AddEvent(\"Processing request\", trace.WithAttributes( attribute.String(\"event.type\", \"process\"), attribute.String(\"user.name\", name), )) Events are time-stamped logs within a span. They’re useful for recording specific actions or state changes. Context Propagation userID := fetchUserID(ctx, name) Passing the context to downstream functions allows them to create child spans that are properly connected to the parent span. Best Practices for Manual Instrumentation Based on our example, here are some best practices for manual instrumentation: Use Descriptive Span Names: Choose names that clearly identify the operation being performed. Add Relevant Attributes: Include attributes that provide context about the operation, such as HTTP method, path, user ID, etc. Record Significant Events: Use events to mark important points in the span’s lifetime. Propagate Context: Always pass the context to downstream functions to maintain the trace. Handle Errors: Record errors in spans to make debugging easier. Use Semantic Conventions: Follow OpenTelemetry’s semantic conventions for attribute names to ensure consistency. Limit Cardinality: Be careful with high-cardinality attributes (like user IDs) that can explode the number of unique traces. Clean Up Resources: Always close spans and shut down the tracer provider when your application exits. Cross-Language Implementation While our example uses Go, the concepts apply to all languages supported by OpenTelemetry. Here’s a quick comparison of how span creation looks in different languages: Go ctx, span := tracer.Start(ctx, \"spanName\") defer span.End() Java Span span = tracer.spanBuilder(\"spanName\").startSpan(); try (Scope scope = span.makeCurrent()) { // Your code here } finally { span.end(); } Python with tracer.start_as_current_span(\"spanName\") as span: # Your code here JavaScript const span = tracer.startSpan(\"spanName\"); try { // Your code here } finally { span.end(); } The API details vary, but the core concepts (tracers, spans, attributes, events) are consistent across languages. Conclusion In this installment, we’ve implemented our first OpenTelemetry instrumentation in a Go application and sent traces to the Collector we set up yesterday. We’ve learned how to: Initialize the OpenTelemetry SDK Create spans for operations Add attributes and events to spans Propagate context between functions View traces in the Collector This manual instrumentation gives us complete control over what we trace and what information we include. However, it requires adding code to every operation we want to trace. In tomorrow’s installment, we’ll explore automatic instrumentation, which can reduce the amount of code we need to write while still providing comprehensive tracing. Stay tuned, and happy tracing!"
+    }
+  ]
+}</script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="/assets/css/main.css" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v0.4.1/dist/bootstrap-toc.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
+<link href="/assets/css/nav-media.css" rel="stylesheet">
+
+  </head>
+
+  <body >
+    <script src="/assets/js/color-scheme-attr-init.js" data-mode="false"></script>
+    <nav class="navbar navbar-default top-nav">
+  <div class="navbar-header">
+    <button type="button" aria-label="Side menu" class="navbar-toggle collapsed pull-left top-nav-menu-toggle" data-toggle="collapse" data-target="#id_top-nav-menu-toggle" aria-expanded="false">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand top-nav-brand" href="/" translate="no">Vitor Vasconcellos</a>
+    </div>
+  <div class="color_scheme_switch_top_holder" data-toggle="tooltip" data-placement="bottom" title="Color scheme">
+  <label class="color-scheme-switch hover-effect">
+    <input type="checkbox" class="checkbox_color_switch" />
+    <span></span>
+  </label>
+</div>
+
+  
+</nav>
+<nav id="side-nav-container">
+  <div class="side-nav">
+    <div class="side-nav-brand">
+      <img src="/assets/img/default/profile_pic.png" alt="">
+      <div class="brand-holder">
+        <a href="/" translate="no">Vitor Vasconcellos</a>
+        </div>
+      <p>&nbsp;Software Engineer at @mercadolibre. Open-source contributor. I like observability things.</p>
+      <br>
+    </div>
+    <br>
+    <a href="javascript:void(0);" class="side-nav-close" role="button" rel="nofollow">
+        <i class="fa fa-angle-double-left fa-2x" aria-hidden="true"></i>
+      </a>
+    <hr>
+    <br>
+    <div class="side-nav-buttons">
+      <ul class="nav nav-pills nav-stacked">
+        <li ><a href="/" class=" hover-effect"><i class="fa-fw fa fa-home" aria-hidden="true"></i>Home</a></li><li ><a href="/tabs/blog/" class="active-page hover-effect"><i class="fa-fw fa fa-pencil-square-o" aria-hidden="true"></i>Blog</a></li><li ><a href="/tabs/about.html" class=" hover-effect"><i class="fa-fw fa fa-user-o" aria-hidden="true"></i>About</a></li></ul>
+    </div>
+    <br>
+    <br><div class="contact-container">
+  <hr>
+  <h3>Contact</h3>
+  <ul><li><a href="https://github.com/vitorvasc" aria-label="github" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><i class="fa fa-github" aria-hidden="true"></i></a></li><li>
+      <a href="javascript:void(0);" aria-label="email" class="hover-effect-big" onclick="setAddress('hi', 'vasconcellos.dev');"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li><li><a href="https://www.linkedin.com/in/vvasconcellos" aria-label="linkedin" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li><li><a href="https://bsky.app/profile/vasconcellos.dev" aria-label="bluesky" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><img src="/assets/img/default/bsky.svg" alt="bluesky"/></a></li></ul>
+</div>
+
+    <hr id="toc-view-top">
+    <div class="side-nav-footer" translate="no">
+        <p>&copy; 2025 Vitor Vasconcellos.</p>
+      </div>
+  </div>
+  <div class="side-nav-bottom-buttons-container">
+    <hr>
+    <ul>
+      <li><div class="color_scheme_switch_side_holder" data-toggle="tooltip" data-placement="top" title="Color scheme">
+  <label class="color-scheme-switch hover-effect">
+    <input type="checkbox" class="checkbox_color_switch" />
+    <span></span>
+  </label>
+</div>
+</li><li><div class="cookie-icon hover-effect" onclick="CookieConsent.showSettings();" data-toggle="tooltip" data-placement="top" title="Cookie settings">
+  <div class="cookie-wrapper">
+    <i class="fa fa-circle bitten-cookie" aria-hidden="true"></i>
+    <i class="fa fa-circle small-ellipse-icon" aria-hidden="true"></i>
+    <i class="fa fa-spinner inner-icon" aria-hidden="true"></i>
+    <i class="fa fa-circle-thin outer-icon" aria-hidden="true"></i>
+  </div>
+</div>
+</li></ul>
+  </div></nav>
+<div id="toc-container" class="movable">
+  <div class="panel panel-default">
+    <div class="panel-heading" data-toggle="tooltip" data-placement="top" title="Drag to move">
+      Contents
+      <span class="pull-right">
+        <a href="javascript:void(0);" aria-label="Close" role="button" rel="nofollow" class="close-button" onclick="document.getElementById('toc-container').style.display = 'none';">
+          <i class="fa fa-times" data-toggle="tooltip" data-placement="bottom" title="Close"></i>
+        </a>
+      </span>
+    </div>
+    <div class="panel-body">
+      <nav id="table-of-contents"></nav>
+    </div>
+  </div>
+</div>
+<div id="main-wrapper">
+      <div class="main-container"><div class="multipurpose-container post-container">
+  <div class="post-title"><h1>7 Days of OpenTelemetry: Day 4 - Your First OpenTelemetry Instrumentation</h1></div><div class="meta">
+  <small>
+    &nbsp;<i class="fa fa-calendar"></i>&nbsp;&nbsp;May 29, 2025
+  </small>
+  <small>
+    &nbsp;&nbsp;&nbsp;<span><i class="fa fa-clock-o"></i>&nbsp;14 min read</span>
+  </small>
+  </div>
+<hr/>
+  <div class="markdown-style">
+    <h2 id="day-4-your-first-opentelemetry-instrumentation">Day 4: Your First OpenTelemetry Instrumentation</h2>
+
+<p>Welcome to Day 4 of our “7 Days of OpenTelemetry” challenge! In the previous days, we covered the fundamentals of observability and distributed tracing, and we set up the OpenTelemetry Collector. Today, we’ll implement our first OpenTelemetry instrumentation in a Go application and see the resulting traces in our Collector’s debug output.</p>
+
+<h3 id="manual-instrumentation-basics">Manual Instrumentation Basics</h3>
+
+<p>OpenTelemetry provides two main approaches to instrumentation:</p>
+
+<ol>
+  <li><strong>Manual instrumentation</strong>: Explicitly adding tracing code to your application</li>
+  <li><strong>Automatic instrumentation</strong>: Using pre-built integrations for common frameworks and libraries</li>
+</ol>
+
+<p>We’ll start with manual instrumentation to understand the core concepts, then explore automatic instrumentation in tomorrow’s installment.</p>
+
+<h3 id="setting-up-a-simple-go-application">Setting Up a Simple Go Application</h3>
+
+<p>Let’s create a simple HTTP server in Go that we’ll instrument with OpenTelemetry. First, create a new directory for our application:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> otel-demo/cmd/server
+<span class="nb">cd </span>otel-demo
+</code></pre></div></div>
+
+<p>Initialize a Go module:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go mod init github.com/yourusername/otel-demo
+</code></pre></div></div>
+
+<p>Now, create a basic HTTP server in <code class="language-plaintext highlighter-rouge">cmd/server/main.go</code>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"log"</span>
+	<span class="s">"net/http"</span>
+	<span class="s">"time"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">http</span><span class="o">.</span><span class="n">HandleFunc</span><span class="p">(</span><span class="s">"/"</span><span class="p">,</span> <span class="n">handleRoot</span><span class="p">)</span>
+	<span class="n">http</span><span class="o">.</span><span class="n">HandleFunc</span><span class="p">(</span><span class="s">"/hello"</span><span class="p">,</span> <span class="n">handleHello</span><span class="p">)</span>
+
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Server starting on :8080..."</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">ListenAndServe</span><span class="p">(</span><span class="s">":8080"</span><span class="p">,</span> <span class="no">nil</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Server failed to start: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">handleRoot</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Fprintf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Welcome to the OpenTelemetry demo!</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">handleHello</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c">// Simulate some work</span>
+	<span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">50</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span>
+	
+	<span class="n">name</span> <span class="o">:=</span> <span class="n">r</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">Query</span><span class="p">()</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">"name"</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s">""</span> <span class="p">{</span>
+		<span class="n">name</span> <span class="o">=</span> <span class="s">"Guest"</span>
+	<span class="p">}</span>
+	
+	<span class="c">// Simulate a database call</span>
+	<span class="n">userID</span> <span class="o">:=</span> <span class="n">fetchUserID</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+	
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Fprintf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Hello, %s (ID: %s)!</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">userID</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">fetchUserID</span><span class="p">(</span><span class="n">name</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="c">// Simulate a database query</span>
+	<span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">100</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"user-%d"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">*</span><span class="m">7</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This simple server has two endpoints:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">/</code>: Returns a welcome message</li>
+  <li><code class="language-plaintext highlighter-rouge">/hello</code>: Takes an optional <code class="language-plaintext highlighter-rouge">name</code> parameter, simulates some work, and returns a greeting</li>
+</ul>
+
+<p>Let’s run the server to make sure it works:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go run cmd/server/main.go
+</code></pre></div></div>
+
+<p>You should see “Server starting on :8080…” in the console. In a separate terminal, test the server:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl http://localhost:8080/
+curl http://localhost:8080/hello?name<span class="o">=</span>Alice
+</code></pre></div></div>
+
+<p>You should see the expected responses. Now, let’s add OpenTelemetry instrumentation to this application.</p>
+
+<h3 id="adding-opentelemetry-dependencies">Adding OpenTelemetry Dependencies</h3>
+
+<p>First, we need to add the necessary OpenTelemetry packages to our Go module:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go get go.opentelemetry.io/otel <span class="se">\</span>
+       go.opentelemetry.io/otel/trace <span class="se">\</span>
+       go.opentelemetry.io/otel/sdk <span class="se">\</span>
+       go.opentelemetry.io/otel/exporters/otlp/otlptrace <span class="se">\</span>
+       go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc
+</code></pre></div></div>
+
+<p>These packages provide:</p>
+<ul>
+  <li>The OpenTelemetry API</li>
+  <li>The tracing API</li>
+  <li>The OpenTelemetry SDK</li>
+  <li>The OTLP exporter for traces</li>
+  <li>The gRPC implementation of the OTLP exporter</li>
+</ul>
+
+<h3 id="initializing-the-opentelemetry-sdk">Initializing the OpenTelemetry SDK</h3>
+
+<p>Now, let’s create a new file <code class="language-plaintext highlighter-rouge">cmd/server/telemetry.go</code> to initialize the OpenTelemetry SDK:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"context"</span>
+	<span class="s">"log"</span>
+	<span class="s">"time"</span>
+
+	<span class="s">"go.opentelemetry.io/otel"</span>
+	<span class="s">"go.opentelemetry.io/otel/exporters/otlp/otlptrace"</span>
+	<span class="s">"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"</span>
+	<span class="s">"go.opentelemetry.io/otel/propagation"</span>
+	<span class="s">"go.opentelemetry.io/otel/sdk/resource"</span>
+	<span class="n">sdktrace</span> <span class="s">"go.opentelemetry.io/otel/sdk/trace"</span>
+	<span class="n">semconv</span> <span class="s">"go.opentelemetry.io/otel/semconv/v1.4.0"</span>
+	<span class="s">"google.golang.org/grpc"</span>
+	<span class="s">"google.golang.org/grpc/credentials/insecure"</span>
+<span class="p">)</span>
+
+<span class="c">// initTracer initializes the OpenTelemetry tracer</span>
+<span class="k">func</span> <span class="n">initTracer</span><span class="p">()</span> <span class="k">func</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="c">// Create a new OTLP exporter</span>
+	<span class="n">ctx</span> <span class="o">:=</span> <span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">()</span>
+	
+	<span class="c">// Configure the exporter to use gRPC and connect to the Collector</span>
+	<span class="n">exporter</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">otlptrace</span><span class="o">.</span><span class="n">New</span><span class="p">(</span>
+		<span class="n">ctx</span><span class="p">,</span>
+		<span class="n">otlptracegrpc</span><span class="o">.</span><span class="n">NewClient</span><span class="p">(</span>
+			<span class="n">otlptracegrpc</span><span class="o">.</span><span class="n">WithInsecure</span><span class="p">(),</span>
+			<span class="n">otlptracegrpc</span><span class="o">.</span><span class="n">WithEndpoint</span><span class="p">(</span><span class="s">"localhost:4317"</span><span class="p">),</span>
+			<span class="n">otlptracegrpc</span><span class="o">.</span><span class="n">WithDialOption</span><span class="p">(</span><span class="n">grpc</span><span class="o">.</span><span class="n">WithBlock</span><span class="p">()),</span>
+		<span class="p">),</span>
+	<span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Failed to create exporter: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="c">// Configure the resource with service information</span>
+	<span class="n">res</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">resource</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span>
+		<span class="n">resource</span><span class="o">.</span><span class="n">WithAttributes</span><span class="p">(</span>
+			<span class="n">semconv</span><span class="o">.</span><span class="n">ServiceNameKey</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"otel-demo-service"</span><span class="p">),</span>
+			<span class="n">semconv</span><span class="o">.</span><span class="n">ServiceVersionKey</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"0.1.0"</span><span class="p">),</span>
+		<span class="p">),</span>
+	<span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Failed to create resource: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="c">// Configure the trace provider with the exporter and resource</span>
+	<span class="n">tp</span> <span class="o">:=</span> <span class="n">sdktrace</span><span class="o">.</span><span class="n">NewTracerProvider</span><span class="p">(</span>
+		<span class="n">sdktrace</span><span class="o">.</span><span class="n">WithSampler</span><span class="p">(</span><span class="n">sdktrace</span><span class="o">.</span><span class="n">AlwaysSample</span><span class="p">()),</span>
+		<span class="n">sdktrace</span><span class="o">.</span><span class="n">WithBatcher</span><span class="p">(</span><span class="n">exporter</span><span class="p">),</span>
+		<span class="n">sdktrace</span><span class="o">.</span><span class="n">WithResource</span><span class="p">(</span><span class="n">res</span><span class="p">),</span>
+	<span class="p">)</span>
+
+	<span class="c">// Set the global trace provider</span>
+	<span class="n">otel</span><span class="o">.</span><span class="n">SetTracerProvider</span><span class="p">(</span><span class="n">tp</span><span class="p">)</span>
+	
+	<span class="c">// Set the global propagator</span>
+	<span class="n">otel</span><span class="o">.</span><span class="n">SetTextMapPropagator</span><span class="p">(</span><span class="n">propagation</span><span class="o">.</span><span class="n">NewCompositeTextMapPropagator</span><span class="p">(</span>
+		<span class="n">propagation</span><span class="o">.</span><span class="n">TraceContext</span><span class="p">{},</span>
+		<span class="n">propagation</span><span class="o">.</span><span class="n">Baggage</span><span class="p">{},</span>
+	<span class="p">))</span>
+
+	<span class="c">// Return a function to shut down the exporter when the application exits</span>
+	<span class="k">return</span> <span class="k">func</span><span class="p">(</span><span class="n">ctx</span> <span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+		<span class="n">ctx</span><span class="p">,</span> <span class="n">cancel</span> <span class="o">:=</span> <span class="n">context</span><span class="o">.</span><span class="n">WithTimeout</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="m">5</span><span class="o">*</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span>
+		<span class="k">defer</span> <span class="n">cancel</span><span class="p">()</span>
+		<span class="k">return</span> <span class="n">tp</span><span class="o">.</span><span class="n">Shutdown</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This code:</p>
+<ol>
+  <li>Creates an OTLP exporter that connects to our Collector</li>
+  <li>Configures a resource with service information</li>
+  <li>Creates a trace provider with the exporter and resource</li>
+  <li>Sets the global trace provider and propagator</li>
+  <li>Returns a shutdown function to clean up resources</li>
+</ol>
+
+<h3 id="instrumenting-the-http-server">Instrumenting the HTTP Server</h3>
+
+<p>Now, let’s update our <code class="language-plaintext highlighter-rouge">main.go</code> file to use the tracer:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"context"</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"log"</span>
+	<span class="s">"net/http"</span>
+	<span class="s">"os"</span>
+	<span class="s">"os/signal"</span>
+	<span class="s">"time"</span>
+
+	<span class="s">"go.opentelemetry.io/otel"</span>
+	<span class="s">"go.opentelemetry.io/otel/attribute"</span>
+	<span class="s">"go.opentelemetry.io/otel/trace"</span>
+<span class="p">)</span>
+
+<span class="c">// Name of the tracer</span>
+<span class="k">const</span> <span class="n">tracerName</span> <span class="o">=</span> <span class="s">"github.com/yourusername/otel-demo"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c">// Initialize the tracer</span>
+	<span class="n">shutdown</span> <span class="o">:=</span> <span class="n">initTracer</span><span class="p">()</span>
+	<span class="k">defer</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">shutdown</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">());</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Error shutting down tracer: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
+
+	<span class="c">// Set up HTTP handlers</span>
+	<span class="n">http</span><span class="o">.</span><span class="n">HandleFunc</span><span class="p">(</span><span class="s">"/"</span><span class="p">,</span> <span class="n">handleRoot</span><span class="p">)</span>
+	<span class="n">http</span><span class="o">.</span><span class="n">HandleFunc</span><span class="p">(</span><span class="s">"/hello"</span><span class="p">,</span> <span class="n">handleHello</span><span class="p">)</span>
+
+	<span class="c">// Start the server in a goroutine</span>
+	<span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Server starting on :8080..."</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">ListenAndServe</span><span class="p">(</span><span class="s">":8080"</span><span class="p">,</span> <span class="no">nil</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="o">&amp;&amp;</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">http</span><span class="o">.</span><span class="n">ErrServerClosed</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Server failed to start: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
+
+	<span class="c">// Wait for interrupt signal</span>
+	<span class="n">sigCh</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="n">os</span><span class="o">.</span><span class="n">Signal</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+	<span class="n">signal</span><span class="o">.</span><span class="n">Notify</span><span class="p">(</span><span class="n">sigCh</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">Interrupt</span><span class="p">)</span>
+	<span class="o">&lt;-</span><span class="n">sigCh</span>
+
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Shutting down..."</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">handleRoot</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c">// Get the tracer</span>
+	<span class="n">tracer</span> <span class="o">:=</span> <span class="n">otel</span><span class="o">.</span><span class="n">Tracer</span><span class="p">(</span><span class="n">tracerName</span><span class="p">)</span>
+	
+	<span class="c">// Create a span for this handler</span>
+	<span class="n">ctx</span><span class="p">,</span> <span class="n">span</span> <span class="o">:=</span> <span class="n">tracer</span><span class="o">.</span><span class="n">Start</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">Context</span><span class="p">(),</span> <span class="s">"handleRoot"</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="n">span</span><span class="o">.</span><span class="n">End</span><span class="p">()</span>
+	
+	<span class="c">// Add attributes to the span</span>
+	<span class="n">span</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span>
+		<span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"http.method"</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">Method</span><span class="p">),</span>
+		<span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"http.path"</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">Path</span><span class="p">),</span>
+	<span class="p">)</span>
+	
+	<span class="c">// Use the context with the span</span>
+	<span class="n">_</span> <span class="o">=</span> <span class="n">ctx</span> <span class="c">// In a real app, you'd pass this to downstream functions</span>
+	
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Fprintf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Welcome to the OpenTelemetry demo!</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">handleHello</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c">// Get the tracer</span>
+	<span class="n">tracer</span> <span class="o">:=</span> <span class="n">otel</span><span class="o">.</span><span class="n">Tracer</span><span class="p">(</span><span class="n">tracerName</span><span class="p">)</span>
+	
+	<span class="c">// Create a span for this handler</span>
+	<span class="n">ctx</span><span class="p">,</span> <span class="n">span</span> <span class="o">:=</span> <span class="n">tracer</span><span class="o">.</span><span class="n">Start</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">Context</span><span class="p">(),</span> <span class="s">"handleHello"</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="n">span</span><span class="o">.</span><span class="n">End</span><span class="p">()</span>
+	
+	<span class="c">// Add attributes to the span</span>
+	<span class="n">span</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span>
+		<span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"http.method"</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">Method</span><span class="p">),</span>
+		<span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"http.path"</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">Path</span><span class="p">),</span>
+	<span class="p">)</span>
+	
+	<span class="c">// Simulate some work</span>
+	<span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">50</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span>
+	
+	<span class="c">// Get the name parameter</span>
+	<span class="n">name</span> <span class="o">:=</span> <span class="n">r</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">Query</span><span class="p">()</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">"name"</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s">""</span> <span class="p">{</span>
+		<span class="n">name</span> <span class="o">=</span> <span class="s">"Guest"</span>
+	<span class="p">}</span>
+	
+	<span class="c">// Add the name as an attribute</span>
+	<span class="n">span</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"user.name"</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+	
+	<span class="c">// Record an event</span>
+	<span class="n">span</span><span class="o">.</span><span class="n">AddEvent</span><span class="p">(</span><span class="s">"Processing request"</span><span class="p">,</span> <span class="n">trace</span><span class="o">.</span><span class="n">WithAttributes</span><span class="p">(</span>
+		<span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"event.type"</span><span class="p">,</span> <span class="s">"process"</span><span class="p">),</span>
+		<span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"user.name"</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span>
+	<span class="p">))</span>
+	
+	<span class="c">// Call fetchUserID with the context containing the span</span>
+	<span class="n">userID</span> <span class="o">:=</span> <span class="n">fetchUserID</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+	
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Fprintf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Hello, %s (ID: %s)!</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">userID</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">fetchUserID</span><span class="p">(</span><span class="n">ctx</span> <span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">name</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="c">// Get the tracer</span>
+	<span class="n">tracer</span> <span class="o">:=</span> <span class="n">otel</span><span class="o">.</span><span class="n">Tracer</span><span class="p">(</span><span class="n">tracerName</span><span class="p">)</span>
+	
+	<span class="c">// Create a child span for the database operation</span>
+	<span class="n">ctx</span><span class="p">,</span> <span class="n">span</span> <span class="o">:=</span> <span class="n">tracer</span><span class="o">.</span><span class="n">Start</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">"fetchUserID"</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="n">span</span><span class="o">.</span><span class="n">End</span><span class="p">()</span>
+	
+	<span class="c">// Add attributes to the span</span>
+	<span class="n">span</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"db.operation"</span><span class="p">,</span> <span class="s">"query"</span><span class="p">))</span>
+	
+	<span class="c">// Simulate a database query</span>
+	<span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">100</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span>
+	
+	<span class="c">// Generate a user ID</span>
+	<span class="n">userID</span> <span class="o">:=</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"user-%d"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">*</span><span class="m">7</span><span class="p">)</span>
+	
+	<span class="c">// Add the result as an attribute</span>
+	<span class="n">span</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"db.result"</span><span class="p">,</span> <span class="n">userID</span><span class="p">))</span>
+	
+	<span class="k">return</span> <span class="n">userID</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This updated code:</p>
+<ol>
+  <li>Initializes the tracer in the <code class="language-plaintext highlighter-rouge">main</code> function</li>
+  <li>Creates spans for each handler and the database operation</li>
+  <li>Adds attributes and events to the spans</li>
+  <li>Propagates context between functions</li>
+</ol>
+
+<h3 id="running-the-instrumented-application">Running the Instrumented Application</h3>
+
+<p>Now, let’s run our instrumented application:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go run cmd/server/<span class="k">*</span>.go
+</code></pre></div></div>
+
+<p>You should see “Server starting on :8080…” in the console. In a separate terminal, make some requests to the server:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl http://localhost:8080/
+curl http://localhost:8080/hello?name<span class="o">=</span>Alice
+curl http://localhost:8080/hello?name<span class="o">=</span>Bob
+</code></pre></div></div>
+
+<h3 id="viewing-traces-in-the-collector">Viewing Traces in the Collector</h3>
+
+<p>Now, let’s check the Collector logs to see the traces:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose <span class="nt">-f</span> otel-collector/docker-compose.yaml logs
+</code></pre></div></div>
+
+<p>You should see detailed trace information in the logs, including:</p>
+<ul>
+  <li>The service name (<code class="language-plaintext highlighter-rouge">otel-demo-service</code>)</li>
+  <li>The span names (<code class="language-plaintext highlighter-rouge">handleRoot</code>, <code class="language-plaintext highlighter-rouge">handleHello</code>, <code class="language-plaintext highlighter-rouge">fetchUserID</code>)</li>
+  <li>The attributes we added</li>
+  <li>The events we recorded</li>
+  <li>The timing information</li>
+</ul>
+
+<p>Congratulations! You’ve successfully instrumented a Go application with OpenTelemetry and sent traces to the Collector.</p>
+
+<h3 id="understanding-the-instrumentation">Understanding the Instrumentation</h3>
+
+<p>Let’s break down the key components of our instrumentation:</p>
+
+<h4 id="tracer-initialization">Tracer Initialization</h4>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tracer</span> <span class="o">:=</span> <span class="n">otel</span><span class="o">.</span><span class="n">Tracer</span><span class="p">(</span><span class="n">tracerName</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This gets a tracer instance from the global provider, using a name that identifies our module.</p>
+
+<h4 id="span-creation">Span Creation</h4>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ctx</span><span class="p">,</span> <span class="n">span</span> <span class="o">:=</span> <span class="n">tracer</span><span class="o">.</span><span class="n">Start</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">Context</span><span class="p">(),</span> <span class="s">"handleHello"</span><span class="p">)</span>
+<span class="k">defer</span> <span class="n">span</span><span class="o">.</span><span class="n">End</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>This creates a new span with the given name and makes it a child of any span in the incoming context. The <code class="language-plaintext highlighter-rouge">defer span.End()</code> ensures the span is properly closed when the function returns.</p>
+
+<h4 id="adding-attributes">Adding Attributes</h4>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">span</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span>
+    <span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"http.method"</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">Method</span><span class="p">),</span>
+    <span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"http.path"</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">Path</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Attributes provide additional context about the operation. They’re key-value pairs that help you understand what happened during the span.</p>
+
+<h4 id="recording-events">Recording Events</h4>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">span</span><span class="o">.</span><span class="n">AddEvent</span><span class="p">(</span><span class="s">"Processing request"</span><span class="p">,</span> <span class="n">trace</span><span class="o">.</span><span class="n">WithAttributes</span><span class="p">(</span>
+    <span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"event.type"</span><span class="p">,</span> <span class="s">"process"</span><span class="p">),</span>
+    <span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"user.name"</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span>
+<span class="p">))</span>
+</code></pre></div></div>
+
+<p>Events are time-stamped logs within a span. They’re useful for recording specific actions or state changes.</p>
+
+<h4 id="context-propagation">Context Propagation</h4>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">userID</span> <span class="o">:=</span> <span class="n">fetchUserID</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Passing the context to downstream functions allows them to create child spans that are properly connected to the parent span.</p>
+
+<h3 id="best-practices-for-manual-instrumentation">Best Practices for Manual Instrumentation</h3>
+
+<p>Based on our example, here are some best practices for manual instrumentation:</p>
+
+<ol>
+  <li>
+    <p><strong>Use Descriptive Span Names</strong>: Choose names that clearly identify the operation being performed.</p>
+  </li>
+  <li>
+    <p><strong>Add Relevant Attributes</strong>: Include attributes that provide context about the operation, such as HTTP method, path, user ID, etc.</p>
+  </li>
+  <li>
+    <p><strong>Record Significant Events</strong>: Use events to mark important points in the span’s lifetime.</p>
+  </li>
+  <li>
+    <p><strong>Propagate Context</strong>: Always pass the context to downstream functions to maintain the trace.</p>
+  </li>
+  <li>
+    <p><strong>Handle Errors</strong>: Record errors in spans to make debugging easier.</p>
+  </li>
+  <li>
+    <p><strong>Use Semantic Conventions</strong>: Follow OpenTelemetry’s semantic conventions for attribute names to ensure consistency.</p>
+  </li>
+  <li>
+    <p><strong>Limit Cardinality</strong>: Be careful with high-cardinality attributes (like user IDs) that can explode the number of unique traces.</p>
+  </li>
+  <li>
+    <p><strong>Clean Up Resources</strong>: Always close spans and shut down the tracer provider when your application exits.</p>
+  </li>
+</ol>
+
+<h3 id="cross-language-implementation">Cross-Language Implementation</h3>
+
+<p>While our example uses Go, the concepts apply to all languages supported by OpenTelemetry. Here’s a quick comparison of how span creation looks in different languages:</p>
+
+<h4 id="go">Go</h4>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ctx</span><span class="p">,</span> <span class="n">span</span> <span class="o">:=</span> <span class="n">tracer</span><span class="o">.</span><span class="n">Start</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">"spanName"</span><span class="p">)</span>
+<span class="k">defer</span> <span class="n">span</span><span class="o">.</span><span class="n">End</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h4 id="java">Java</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Span</span> <span class="n">span</span> <span class="o">=</span> <span class="n">tracer</span><span class="o">.</span><span class="na">spanBuilder</span><span class="o">(</span><span class="s">"spanName"</span><span class="o">).</span><span class="na">startSpan</span><span class="o">();</span>
+<span class="k">try</span> <span class="o">(</span><span class="nc">Scope</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">span</span><span class="o">.</span><span class="na">makeCurrent</span><span class="o">())</span> <span class="o">{</span>
+    <span class="c1">// Your code here</span>
+<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+    <span class="n">span</span><span class="o">.</span><span class="na">end</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="python">Python</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">tracer</span><span class="p">.</span><span class="n">start_as_current_span</span><span class="p">(</span><span class="s">"spanName"</span><span class="p">)</span> <span class="k">as</span> <span class="n">span</span><span class="p">:</span>
+    <span class="c1"># Your code here
+</span></code></pre></div></div>
+
+<h4 id="javascript">JavaScript</h4>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">span</span> <span class="o">=</span> <span class="nx">tracer</span><span class="p">.</span><span class="nx">startSpan</span><span class="p">(</span><span class="dl">"</span><span class="s2">spanName</span><span class="dl">"</span><span class="p">);</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="c1">// Your code here</span>
+<span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+    <span class="nx">span</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The API details vary, but the core concepts (tracers, spans, attributes, events) are consistent across languages.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>In this installment, we’ve implemented our first OpenTelemetry instrumentation in a Go application and sent traces to the Collector we set up yesterday. We’ve learned how to:</p>
+
+<ol>
+  <li>Initialize the OpenTelemetry SDK</li>
+  <li>Create spans for operations</li>
+  <li>Add attributes and events to spans</li>
+  <li>Propagate context between functions</li>
+  <li>View traces in the Collector</li>
+</ol>
+
+<p>This manual instrumentation gives us complete control over what we trace and what information we include. However, it requires adding code to every operation we want to trace.</p>
+
+<p>In tomorrow’s installment, we’ll explore automatic instrumentation, which can reduce the amount of code we need to write while still providing comprehensive tracing.</p>
+
+<p>Stay tuned, and happy tracing!</p>
+<hr>
+<div class="share-holder">
+  <span class="share-label">Share on: </span>
+  <ul class="share-buttons">
+    
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%2520copy&amp;text=7%20Days%20of%20OpenTelemetry:%20Day%204%20-%20Your%20First%20OpenTelemetry%20Instrumentation%20-%20Vitor%20Vasconcellos" aria-label="Twitter" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Twitter" class="hover-effect-big">
+          <i class="fa fa-twitter-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%2520copy" aria-label="Facebook" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Facebook" class="hover-effect-big">
+          <i class="fa fa-facebook-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://t.me/share/url?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%2520copy&amp;text=7%20Days%20of%20OpenTelemetry:%20Day%204%20-%20Your%20First%20OpenTelemetry%20Instrumentation%20-%20Vitor%20Vasconcellos" aria-label="Telegram" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Telegram" class="hover-effect-big">
+          <i class="fa fa-telegram fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%2520copy" aria-label="LinkedIn" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="LinkedIn" class="hover-effect-big">
+          <i class="fa fa-linkedin-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="mailto:?subject=7%20Days%20of%20OpenTelemetry:%20Day%204%20-%20Your%20First%20OpenTelemetry%20Instrumentation%20-%20Vitor%20Vasconcellos&amp;body=7%20Days%20of%20OpenTelemetry:%20Day%204%20-%20Your%20First%20OpenTelemetry%20Instrumentation%20-%20Vitor%20Vasconcellos%20http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%2520copy" aria-label="Email" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Email" class="hover-effect-big">
+          <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="javascript:void(0);" aria-label="Copy link" role="button" onclick="copyToClipboard('http://0.0.0.0:4000/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy', 'Link copied!')" id="copytoclipboard" data-toggle="tooltip" data-placement="top" title="Copy link" class="hover-effect-big">
+          <i class="fa fa-link fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+</div>
+</div>
+
+    <div class="pagination_wrapper">
+  <nav aria-label="Page navigation">
+    <ul class="pagination" style="opacity:0">
+    <li><a href="javascript:void(0);" role="button">1</a></li></ul>
+  </nav>
+</div>
+
+</div><div class="footer-wrapper">
+  <div class="footer-container">
+    <footer translate="no">
+      <div class="footer-text footer-text-centered long-copyright">
+          <p>&copy; 2025 Vitor Vasconcellos. </p><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" data-tooltip-no-hide title="Except where otherwise noted, content on this web site is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.">
+              <img src="/assets/img/default/cc/cc.svg" alt="cc" width="12" height="12">&nbsp;<img src="/assets/img/default/cc/by.svg" alt="by" width="12" height="12">&nbsp;<img src="/assets/img/default/cc/sa.svg" alt="sa" width="12" height="12">&nbsp;<p>Some rights reserved.</p>
+            </a></div>
+      <p class="footer-powered"><span>Pwrd by </span><a href="https://github.com/MrGreensWorkshop/MrGreen-JekyllTheme" target="_blank" rel="noopener noreferrer">Mr. Green</a></p>
+    </footer>
+  </div>
+</div>
+<div class="scroll-to-top-container">
+        <a id="scroll-to-top" href="#main-wrapper" role="button" aria-label="Back to top" class="hover-effect"><i class="fa fa-angle-up"></i></a>
+      </div></div>
+
+    <div class="searchbox-container">
+  <form id="searchbox-form" autocomplete="off">
+    <input type="search" id="search-box" placeholder="Search"
+    onkeyup="if(this.value!==''){document.getElementById('search-results').style.display = 'block';}"
+    onfocusout="this.value='';"
+    onblur="setTimeout(function(){ document.getElementById('search-results').style.display = 'none'; }, 100);">
+    <ul id="search-results" ></ul>
+  </form>
+</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v0.4.1/dist/bootstrap-toc.min.js"></script>
+
+<script src="/assets/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script>
+      $('.imgViewer[data-no-image-viewer]').css("cursor", "unset");
+      $(function () {
+        $('.imgViewer:not([data-no-image-viewer])').magnificPopup({
+          type: 'image'
+          ,image: {
+            titleSrc: 'alt'
+            /* Error message */
+            ,tError: "The image could not be loaded.<br><br>%url%"
+            /* Set to null to disable zoom out cursor. */
+            /*,cursor: null */
+          }
+          ,closeOnContentClick: true
+          ,showCloseBtn: false
+          ,zoom: {
+            /* By default it's false, so don't forget to enable it */
+            enabled: true
+            /* duration of the effect, in milliseconds */
+            ,duration: 300
+            /* CSS transition easing function */
+            ,easing: 'ease-in-out'
+          }
+        });
+      });
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js"></script>
+    <script>
+      /* lazy loads elements with default selector as '.lozad' */
+      const observer = lozad();
+      observer.observe();
+    </script>
+
+<script>
+      PagerPageNumbers.setProperties({
+        paginatorListContainerName: ".pagination_wrapper .pagination"
+        ,pageList: ["/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy", "/posts/2025-05-28-7-days-otel-day-3-setting-up-collector", "/posts/2025-05-27-7-days-otel-day-2-understanding-distributed-tracing", "/posts/2025-05-26-7-days-otel-day-1-introduction-to-observability-and-opentelemetrytel", "/posts/2024-07-26-guia-contribuicao-otel-docs-pt"]
+        ,firstButtonName: "First"
+        ,lastButtonName: "Last"
+        ,prevButtonName: "«"
+        ,nextButtonName: "»"
+      });
+    </script>
+
+
+
+<script src="/assets/js/simple-jekyll-search-1.9.2.min.js"></script><script>
+  function loadSearch(jsonData, searchParam) {
+    if (!jsonData) jsonData = '/query/search.json';
+    var searchInput = document.getElementById('search-box');
+
+    const simpleJekyllSearch = SimpleJekyllSearch({
+      searchInput: searchInput
+      ,resultsContainer: document.getElementById('search-results')
+      ,json: jsonData
+      ,searchResultTemplate: '<li> <a href="{url}"> <div> <div class="title">{title}</div> <div class="date">{date}</div> <div style="clear: both;"></div> </div> </a></li>'
+      ,noResultsText: '<li>No results were found.</li>'
+      ,limit: 10
+      ,fuzzy: false
+      ,formSubmit: document.getElementById('searchbox-form')
+    });
+
+    if (searchParam) {
+      searchInput.value = searchParam;
+      searchInput.focus();
+      searchInput.disabled=false;
+      setTimeout(function(){
+        simpleJekyllSearch.search(searchParam);
+      }, 400);
+    }
+  }
+
+  </script>
+
+<script>
+    function isEmpty(value) {
+      if (value === "" || value === null || typeof value === "undefined") return true;
+      return false;
+    }
+
+    function getQueryParam (param, mach = true) {
+      var queryString = window.location.search.substring(1);
+      if (isEmpty(queryString)) return null;
+      var queries = queryString.split("&");
+      for (var i in queries) {
+        var pair = decodeURIComponent(queries[i]).split("=");
+        if (mach == true){
+          if (pair[0] == param) {
+            if (isEmpty(pair[1]) === false) return pair[1];
+          }
+        }else{
+          return pair;
+        }
+        break;
+      }
+      return null;
+    }
+
+    const searchParam = getQueryParam('search');
+
+    (async () => {
+      let resp = await fetch('/query/search.json');
+      if (!resp.ok) return;
+      let jsonData = await resp.json();
+      loadSearch(jsonData, searchParam);
+    })();
+  </script>
+
+
+
+<script>
+  CookieConsent.consentSettingHtml = "<div class=\"consent-settings\"> <h5>Cookie settings</h5> <br> <p class=\"info-text\">This website uses cookies to optimize site functionality. It will be activated with your approval. Please click each item below for cookie policy. Check <a href=\"/privacy-policy.html\">Privacy policy</a>.</p> <table> <tr> <td onclick=\"$('.info[data-consent-info=necessary]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Strictly necessary cookies</p> </td> <td> <span class=\"active_text\">Always active</span></td> </tr> </table> <div class=\"info\" data-consent-info=\"necessary\"> <p>These cookies are essential for the website function and cannot be disable. They are usually set when site function like color scheme etc. is changed. These cookies do not store any personally identifiable information. Enables storage related to security such as authentication functionality, fraud prevention, and other user protection. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=analytics]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Performance cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" checked=\"checked\" data-consent=\"analytics\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"analytics\"> <p>Enables storage (such as cookies) related to analytics e.g. visit duration. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=preferences]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Functionality cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" data-consent=\"preferences\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"preferences\"> <p>Enables storage that supports the functionality of the website or app e.g. language settings. Enables storage related to personalization e.g. video recommendations. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=advertising]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Targeting and advertising cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" data-consent=\"advertising\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"advertising\"> <p>Enables storage (such as cookies) related to advertising. </p> </div> <br> <div class=\"button-holder\"> <a href=\"javascript:void(0);\" class=\"btn-base btn-left\" onclick=\"CookieConsent.consentSettingDone('deny');\" role=\"button\" rel=\"nofollow\">Deny</a> <a href=\"javascript:void(0);\" class=\"btn-base btn-priority\" onclick=\"CookieConsent.consentSettingDone('accept');\" role=\"button\" rel=\"nofollow\">Allow all</a> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentSettingDone('save');\" role=\"button\" rel=\"nofollow\">Allow selection</a> </div> </div>";
+  CookieConsent.consentSettingSlideType = 'slideBoxTopToDown';
+  CookieConsent.consentBarHtml = "<div class=\"consent-bar\"> <a class=\"close-button\" href=\"javascript:void(0);\" onclick=\"CookieConsent.hideConsentBar();\" aria-label=\"Close\" role=\"button\" rel=\"nofollow\"><i class=\"fa-fw fa fa-times\"></i></a> <p>This website uses cookies to optimize site functionality. It will be activated with your approval. Check <a href=\"/privacy-policy.html\">Privacy policy</a>.</p> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentBarDone('deny');\" role=\"button\" rel=\"nofollow\">Deny</a> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentBarDone('settings');\" role=\"button\" rel=\"nofollow\">Customize</a> <a href=\"javascript:void(0);\" class=\"btn-base btn-priority\" onclick=\"CookieConsent.consentBarDone('accept');\" role=\"button\" rel=\"nofollow\">Allow all</a> </div>";
+  CookieConsent.consent_items = JSON.parse('{"necessary":{"group":["security_storage"],"value":"granted","wait_for_update":500,"cookie_domain":"","no_check_box":true},"analytics":{"group":["analytics_storage"],"value":"denied"},"preferences":{"group":["functionality_storage","personalization_storage"],"value":"denied"},"advertising":{"group":["ad_storage"],"value":"denied"}}');
+  CookieConsent.hideConsentBarWithSaveButton = true;
+
+  const consent_settings = CookieConsent.getConsentSettings();
+  const default_configs = JSON.parse('{"anonymize_ip":true,"ads_data_redaction":true,"cookie_flags":"SameSite=None;Secure"}');
+</script>
+<script>
+  SlidingMsgBox.html = "<div class=\"slideBox\"> <a class=\"close-button\" href=\"javascript:void(0);\" aria-label=\"Close\" role=\"button\" rel=\"nofollow\"><i class=\"fa-fw fa fa-times\"></i></a> </div>";
+</script>
+</body>
+</html>
+

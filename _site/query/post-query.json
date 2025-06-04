@@ -1,5 +1,17 @@
 [
     {
+    "title"     : "7 Days of OpenTelemetry: Day 4 - Your First OpenTelemetry Instrumentation"
+    ,"title_sub": "Day 4: Your First OpenTelemetry Instrumentation Welcome to Day 4 of our “7 Days of OpenTelemetry” challenge! In the previous days, we covered the fundamentals..."
+    ,"category" : ""
+    ,"tags"     : "opentelemetry, observability, 7-days-of-opentelemetry"
+    ,"url"      : "/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy"
+    ,"image"    : "/assets/img/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation.png"
+    ,"max_width": ""
+    ,"display"  : ""
+    ,"read_time": "14 min read"
+    ,"date"     : "May 29, 2025"
+    ,"year"     : "2025"
+    },{
     "title"     : "7 Days of OpenTelemetry: Day 3 - Setting Up the OpenTelemetry Collector"
     ,"title_sub": "Day 3: Setting Up the OpenTelemetry Collector Welcome to Day 3 of our “7 Days of OpenTelemetry” challenge! In the previous days, we covered the..."
     ,"category" : ""
