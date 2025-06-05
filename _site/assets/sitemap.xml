@@ -6,6 +6,27 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
 xmlns:xhtml="http://www.w3.org/1999/xhtml"
 xmlns:image="https://www.google.com/schemas/sitemap-image/1.1">
   <url>
+    <loc>http://0.0.0.0:4000/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis</loc>
+    <image:image>
+      <image:loc>http://0.0.0.0:4000/assets/img/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis.png</image:loc>
+      <image:title>7 Days of OpenTelemetry: Day 7 - Visualization and Analysis</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>http://0.0.0.0:4000/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation</loc>
+    <image:image>
+      <image:loc>http://0.0.0.0:4000/assets/img/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation.png</image:loc>
+      <image:title>7 Days of OpenTelemetry: Day 6 - Context Propagation and Logs Correlation</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>http://0.0.0.0:4000/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy</loc>
+    <image:image>
+      <image:loc>http://0.0.0.0:4000/assets/img/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration.png</image:loc>
+      <image:title>7 Days of OpenTelemetry: Day 5 - Automatic Instrumentation and Framework Integration</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>http://0.0.0.0:4000/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy</loc>
     <image:image>
       <image:loc>http://0.0.0.0:4000/assets/img/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation.png</image:loc>
@@ -54,6 +75,9 @@ xmlns:image="https://www.google.com/schemas/sitemap-image/1.1">
   </url>
   <url>
     <loc>http://0.0.0.0:4000/tabs/projects.html</loc>
+  </url>
+  <url>
+    <loc>http://0.0.0.0:4000/tabs/blog/2/</loc>
   </url>
 </urlset>
 

@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>7 Days of OpenTelemetry: Day 5 - Automatic Instrumentatio...</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+</noscript>
+
+
+
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="manifest" href="/assets/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#f0f0f0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Vitor Vasconcellos's App">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="msapplication-starturl" content="/">
+  <meta name="application-name" content="Vitor Vasconcellos's App">
+  <meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+
+    <meta name="keywords" content="opentelemetry, observability, 7-days-of-opentelemetry">
+
+  <meta name="description" content="Day 5: Automatic Instrumentation and Framework Integration Welcome to Day 5 of our “7 Days of OpenTelemetry” challenge! Yesterday, we implemented m...">
+  <meta name="robots" content="index, follow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7 Days of OpenTelemetry: Day 5 - Automatic Instrumentation and Fram...">
+
+<meta name="twitter:description" content="Day 5: Automatic Instrumentation and Framework Integration Welcome to Day 5 of our “7 Days of OpenTelemetry” challenge! Yesterday, we implemented manual instrumentation in a...">
+<meta name="twitter:image" content="http://0.0.0.0:4000/assets/img/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration.png">
+<meta property="og:site_name" content="Vitor Vasconcellos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7 Days of OpenTelemetry: Day 5 - Automatic Inst...">
+<meta property="og:description" content="Day 5: Automatic Instrumentation and Framework Integration Welcome to Day 5 of our “7 Days of OpenTelemetry” challenge! Yesterday, we implemented m...">
+<meta property="og:url" content="http://0.0.0.0:4000/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy">
+<meta property="og:image" content="http://0.0.0.0:4000/assets/img/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration.png">
+  <meta property="article:author" content="Vitor Vasconcellos">
+  <meta property="article:section" content="">
+  <meta property="article:tag" content="opentelemetry">
+  <meta property="article:tag" content="observability">
+  <meta property="article:tag" content="7-days-of-opentelemetry">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org"
+  ,"@graph": [
+    {
+      "@type": "Person"
+      ,"@id": "http://0.0.0.0:4000/#person"
+      ,"name": "Vitor Vasconcellos"
+      ,"url": "http://0.0.0.0:4000/tabs/about.html"
+      ,"image": "http://0.0.0.0:4000/assets/img/about/about.jpg"
+      ,"description": "Vitor Vasconcellos is a Software Engineer, open-source contributor and observability enthusiast."
+  },{
+    "@type": "WebSite"
+    ,"@id": "http://0.0.0.0:4000/#website"
+    ,"url": "http://0.0.0.0:4000/"
+    ,"name": "Vitor Vasconcellos"
+    ,"description": "Vitor Vasconcellos is a Software Engineer, open-source contributor and observability enthusiast."
+    ,"publisher": {"@id": "http://0.0.0.0:4000/#person"}
+    ,"inLanguage": "en-US"
+    ,"sameAs": ["https://github.com/vitorvasc","https://www.linkedin.com/in/vvasconcellos","https://bsky.app/profile/vasconcellos.dev"]
+    ,"copyrightHolder" : {"@id": "http://0.0.0.0:4000/#person"}
+    ,"copyrightYear" : "2025"
+  },{
+    "@type": "WebPage"
+    ,"@id": "http://0.0.0.0:4000/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy#webpage"
+    ,"url": "http://0.0.0.0:4000/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy"
+    ,"name": "7 Days of OpenTelemetry: Day 5 - Automatic Instrumentation and Framework Integration"
+    ,"isPartOf": {"@id": "http://0.0.0.0:4000/#website"}
+    ,"breadcrumb": {"@id": "http://0.0.0.0:4000/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy#breadcrumb"}
+    ,"primaryImageOfPage": "http://0.0.0.0:4000/assets/img/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration.png"
+    ,"description": "Day 5: Automatic Instrumentation and Framework Integration Welcome to Day 5 of our “7 Days of OpenTelemetry” challenge! Yesterday, we implemented m..."
+    ,"inLanguage": "en-US"
+    ,"potentialAction": {
+      "@type": "ReadAction"
+      ,"target": "http://0.0.0.0:4000/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy"
+    }
+  },{
+      "@type": "BreadcrumbList",
+      "@id": "http://0.0.0.0:4000/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem"
+          ,"position": 1
+          ,"name": "Home"
+          ,"item": "http://0.0.0.0:4000/"
+        },
+        {
+          "@type": "ListItem"
+          ,"position": 2
+          ,"name": "Blog"
+          ,"item": "http://0.0.0.0:4000/tabs/blog/"
+        },
+        {
+          "@type": "ListItem"
+          ,"position": 3
+          ,"name": "7 Days of OpenTelemetry: Day 5 - Automatic Instrumentation and Framework Integration"
+        }
+      ]
+    },{
+      "@type": "BlogPosting"
+      ,"@id": "http://0.0.0.0:4000/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy#content"
+      ,"isPartOf": {"@id": "http://0.0.0.0:4000/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy#webpage"}
+      ,"mainEntityOfPage": {"@id": "http://0.0.0.0:4000/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy#webpage"}
+      ,"publisher": {"@id": "http://0.0.0.0:4000/#person"}
+      ,"author": {"@id": "http://0.0.0.0:4000/#person"}
+      ,"inLanguage": "en-US"
+      ,"headline": "7 Days of OpenTelemetry: Day 5 - Automatic Instrumentation and Framework Integration"
+      ,"image": "http://0.0.0.0:4000/assets/img/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration.png"
+      ,"thumbnailUrl": "http://0.0.0.0:4000/assets/img/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration.png"
+      ,"articleSection": ["opentelemetry", "observability", "7-days-of-opentelemetry"]
+      ,"description": "Day 5: Automatic Instrumentation and Framework Integration Welcome to Day 5 of our “7 Days of OpenTelemetry” challenge! Yesterday, we implemented m..."
+      ,"copyrightHolder" : {"@id": "http://0.0.0.0:4000/#person"}
+      ,"copyrightYear" : "2025"
+      ,"wordCount": 2566
+      ,"articleBody": "Day 5: Automatic Instrumentation and Framework Integration Welcome to Day 5 of our “7 Days of OpenTelemetry” challenge! Yesterday, we implemented manual instrumentation in a Go application. Today, we’ll explore automatic instrumentation, which can significantly reduce the amount of code you need to write while still providing comprehensive tracing. What is Automatic Instrumentation? Automatic instrumentation uses pre-built integrations to add tracing to common frameworks and libraries without requiring you to modify your application code directly. This approach has several benefits: Reduced Development Effort: Less code to write and maintain Consistent Coverage: Standard operations are traced consistently Best Practices: Implementations follow OpenTelemetry’s recommended patterns Reduced Risk: Less chance of introducing bugs in your instrumentation code While manual instrumentation gives you complete control, automatic instrumentation provides a quick way to get started and cover common scenarios. Automatic Instrumentation in Go In Go, automatic instrumentation is implemented through instrumentation packages that wrap standard libraries and popular frameworks. Let’s explore how to use these packages to instrument our application. Setting Up a More Complex Application Let’s create a more complex application that uses multiple components we can instrument automatically: HTTP server and client Database connection gRPC service First, let’s create the necessary directories: mkdir -p otel-demo-auto/cmd/server mkdir -p otel-demo-auto/internal/database mkdir -p otel-demo-auto/internal/grpc cd otel-demo-auto Initialize a Go module: go mod init github.com/yourusername/otel-demo-auto Adding Dependencies We’ll need several packages for our application and its instrumentation: # Core OpenTelemetry packages go get go.opentelemetry.io/otel \\ go.opentelemetry.io/otel/trace \\ go.opentelemetry.io/otel/sdk \\ go.opentelemetry.io/otel/exporters/otlp/otlptrace \\ go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc # Instrumentation packages go get go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp \\ go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc \\ go.opentelemetry.io/contrib/instrumentation/database/sql/otelsql # Other dependencies go get google.golang.org/grpc \\ github.com/mattn/go-sqlite3 Setting Up the Telemetry First, let’s create a telemetry initialization file similar to yesterday’s example. Create internal/telemetry/telemetry.go: package telemetry import ( \"context\" \"log\" \"time\" \"go.opentelemetry.io/otel\" \"go.opentelemetry.io/otel/exporters/otlp/otlptrace\" \"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc\" \"go.opentelemetry.io/otel/propagation\" \"go.opentelemetry.io/otel/sdk/resource\" sdktrace \"go.opentelemetry.io/otel/sdk/trace\" semconv \"go.opentelemetry.io/otel/semconv/v1.4.0\" \"google.golang.org/grpc\" \"google.golang.org/grpc/credentials/insecure\" ) // InitTracer initializes the OpenTelemetry tracer func InitTracer() func(context.Context) error { ctx := context.Background() // Configure the exporter to use gRPC and connect to the Collector exporter, err := otlptrace.New( ctx, otlptracegrpc.NewClient( otlptracegrpc.WithInsecure(), otlptracegrpc.WithEndpoint(\"localhost:4317\"), otlptracegrpc.WithDialOption(grpc.WithBlock()), ), ) if err != nil { log.Fatalf(\"Failed to create exporter: %v\", err) } // Configure the resource with service information res, err := resource.New(ctx, resource.WithAttributes( semconv.ServiceNameKey.String(\"otel-demo-auto-service\"), semconv.ServiceVersionKey.String(\"0.1.0\"), ), ) if err != nil { log.Fatalf(\"Failed to create resource: %v\", err) } // Configure the trace provider with the exporter and resource tp := sdktrace.NewTracerProvider( sdktrace.WithSampler(sdktrace.AlwaysSample()), sdktrace.WithBatcher(exporter), sdktrace.WithResource(res), ) // Set the global trace provider otel.SetTracerProvider(tp) // Set the global propagator otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator( propagation.TraceContext{}, propagation.Baggage{}, )) // Return a function to shut down the exporter when the application exits return func(ctx context.Context) error { ctx, cancel := context.WithTimeout(ctx, 5*time.Second) defer cancel() return tp.Shutdown(ctx) } } Implementing the Database Layer Now, let’s create a simple database layer with automatic instrumentation. Create internal/database/database.go: package database import ( \"context\" \"database/sql\" \"log\" \"os\" _ \"github.com/mattn/go-sqlite3\" \"go.opentelemetry.io/contrib/instrumentation/database/sql/otelsql\" ) // UserRepository handles database operations for users type UserRepository struct { db *sql.DB } // NewUserRepository creates a new UserRepository func NewUserRepository() (*UserRepository, error) { // Remove any existing database file os.Remove(\"./users.db\") // Create a new database connection with OpenTelemetry instrumentation db, err := otelsql.Open(\"sqlite3\", \"./users.db\", otelsql.WithAttributes( // Add attributes to identify this database connection // in your telemetry data map[string]string{ \"db.system\": \"sqlite\", \"db.name\": \"users\", \"db.user\": \"demo\", \"db.instance\": \"local\", }, ), ) if err != nil { return nil, err } // Initialize the database if err := initDB(db); err != nil { db.Close() return nil, err } return &amp;UserRepository{db: db}, nil } // Close closes the database connection func (r *UserRepository) Close() error { return r.db.Close() } // initDB creates the necessary tables func initDB(db *sql.DB) error { _, err := db.Exec(` CREATE TABLE IF NOT EXISTS users ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, email TEXT UNIQUE ) `) if err != nil { return err } // Insert some sample data _, err = db.Exec(` INSERT INTO users (name, email) VALUES ('Alice', 'alice@example.com'), ('Bob', 'bob@example.com'), ('Charlie', 'charlie@example.com') `) return err } // GetUserByName retrieves a user by name func (r *UserRepository) GetUserByName(ctx context.Context, name string) (int64, string, error) { var id int64 var email string // The query will be automatically traced by the otelsql instrumentation err := r.db.QueryRowContext(ctx, \"SELECT id, email FROM users WHERE name = ?\", name).Scan(&amp;id, &amp;email) if err != nil { if err == sql.ErrNoRows { // Insert a new user if not found result, err := r.db.ExecContext(ctx, \"INSERT INTO users (name, email) VALUES (?, ?)\", name, name+\"@example.com\") if err != nil { return 0, \"\", err } id, err = result.LastInsertId() if err != nil { return 0, \"\", err } return id, name+\"@example.com\", nil } return 0, \"\", err } return id, email, nil } // GetAllUsers retrieves all users func (r *UserRepository) GetAllUsers(ctx context.Context) ([]map[string]interface{}, error) { // The query will be automatically traced by the otelsql instrumentation rows, err := r.db.QueryContext(ctx, \"SELECT id, name, email FROM users\") if err != nil { return nil, err } defer rows.Close() var users []map[string]interface{} for rows.Next() { var id int64 var name, email string if err := rows.Scan(&amp;id, &amp;name, &amp;email); err != nil { return nil, err } users = append(users, map[string]interface{}{ \"id\": id, \"name\": name, \"email\": email, }) } if err := rows.Err(); err != nil { return nil, err } return users, nil } This code: Uses otelsql to automatically instrument SQL operations Creates a simple user repository with CRUD operations Adds custom attributes to identify the database in telemetry data Implementing the gRPC Service Now, let’s create a simple gRPC service with automatic instrumentation. First, create internal/grpc/service.proto: syntax = \"proto3\"; package userservice; option go_package = \"github.com/yourusername/otel-demo-auto/internal/grpc\"; service UserService { rpc GetUserDetails (UserRequest) returns (UserResponse); } message UserRequest { string name = 1; } message UserResponse { int64 id = 1; string name = 2; string email = 3; } You’ll need to install the Protocol Buffers compiler and the Go plugin to generate the gRPC code. Once installed, run: protoc --go_out=. --go-grpc_out=. internal/grpc/service.proto Now, let’s implement the gRPC service in internal/grpc/server.go: package grpc import ( \"context\" \"log\" \"net\" \"github.com/yourusername/otel-demo-auto/internal/database\" \"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc\" \"google.golang.org/grpc\" ) // Server implements the gRPC server type Server struct { UnimplementedUserServiceServer userRepo *database.UserRepository server *grpc.Server } // NewServer creates a new gRPC server func NewServer(userRepo *database.UserRepository) *Server { // Create a new gRPC server with OpenTelemetry interceptors grpcServer := grpc.NewServer( grpc.UnaryInterceptor(otelgrpc.UnaryServerInterceptor()), grpc.StreamInterceptor(otelgrpc.StreamServerInterceptor()), ) server := &amp;Server{ userRepo: userRepo, server: grpcServer, } // Register the service RegisterUserServiceServer(grpcServer, server) return server } // Start starts the gRPC server func (s *Server) Start() error { lis, err := net.Listen(\"tcp\", \":50051\") if err != nil { return err } log.Println(\"gRPC server listening on :50051\") return s.server.Serve(lis) } // Stop stops the gRPC server func (s *Server) Stop() { s.server.GracefulStop() } // GetUserDetails implements the GetUserDetails RPC method func (s *Server) GetUserDetails(ctx context.Context, req *UserRequest) (*UserResponse, error) { // Get user details from the database id, email, err := s.userRepo.GetUserByName(ctx, req.Name) if err != nil { return nil, err } return &amp;UserResponse{ Id: id, Name: req.Name, Email: email, }, nil } This code: Uses otelgrpc interceptors to automatically instrument gRPC operations Creates a simple user service that interacts with our database Implements the gRPC service interface Implementing the HTTP Server Finally, let’s create an HTTP server that uses both the database and gRPC service. Create cmd/server/main.go: package main import ( \"context\" \"encoding/json\" \"fmt\" \"log\" \"net/http\" \"os\" \"os/signal\" \"time\" \"github.com/yourusername/otel-demo-auto/internal/database\" grpcservice \"github.com/yourusername/otel-demo-auto/internal/grpc\" \"github.com/yourusername/otel-demo-auto/internal/telemetry\" \"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc\" \"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp\" \"google.golang.org/grpc\" \"google.golang.org/grpc/credentials/insecure\" ) func main() { // Initialize OpenTelemetry shutdown := telemetry.InitTracer() defer func() { if err := shutdown(context.Background()); err != nil { log.Fatalf(\"Error shutting down tracer: %v\", err) } }() // Initialize the database userRepo, err := database.NewUserRepository() if err != nil { log.Fatalf(\"Failed to initialize database: %v\", err) } defer userRepo.Close() // Start the gRPC server in a goroutine grpcServer := grpcservice.NewServer(userRepo) go func() { if err := grpcServer.Start(); err != nil { log.Fatalf(\"Failed to start gRPC server: %v\", err) } }() defer grpcServer.Stop() // Create a gRPC client with OpenTelemetry instrumentation grpcConn, err := grpc.Dial( \"localhost:50051\", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()), grpc.WithStreamInterceptor(otelgrpc.StreamClientInterceptor()), ) if err != nil { log.Fatalf(\"Failed to connect to gRPC server: %v\", err) } defer grpcConn.Close() grpcClient := grpcservice.NewUserServiceClient(grpcConn) // Set up HTTP handlers // Wrap each handler with otelhttp for automatic instrumentation http.Handle(\"/\", otelhttp.NewHandler(http.HandlerFunc(handleRoot), \"handleRoot\")) http.Handle(\"/users\", otelhttp.NewHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { handleUsers(w, r, userRepo) }), \"handleUsers\")) http.Handle(\"/user\", otelhttp.NewHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { handleUser(w, r, grpcClient) }), \"handleUser\")) // Start the HTTP server in a goroutine server := &amp;http.Server{Addr: \":8080\"} go func() { fmt.Println(\"HTTP server starting on :8080...\") if err := server.ListenAndServe(); err != nil &amp;&amp; err != http.ErrServerClosed { log.Fatalf(\"HTTP server failed to start: %v\", err) } }() // Wait for interrupt signal sigCh := make(chan os.Signal, 1) signal.Notify(sigCh, os.Interrupt) &lt;-sigCh fmt.Println(\"Shutting down...\") // Gracefully shut down the HTTP server ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second) defer cancel() if err := server.Shutdown(ctx); err != nil { log.Fatalf(\"HTTP server shutdown failed: %v\", err) } } func handleRoot(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, \"Welcome to the OpenTelemetry Auto-Instrumentation Demo!\\n\") fmt.Fprintf(w, \"Available endpoints:\\n\") fmt.Fprintf(w, \"- /users: List all users\\n\") fmt.Fprintf(w, \"- /user?name=&lt;n&gt;: Get user details\\n\") } func handleUsers(w http.ResponseWriter, r *http.Request, userRepo *database.UserRepository) { users, err := userRepo.GetAllUsers(r.Context()) if err != nil { http.Error(w, err.Error(), http.StatusInternalServerError) return } w.Header().Set(\"Content-Type\", \"application/json\") json.NewEncoder(w).Encode(map[string]interface{}{ \"users\": users, }) } func handleUser(w http.ResponseWriter, r *http.Request, client grpcservice.UserServiceClient) { name := r.URL.Query().Get(\"name\") if name == \"\" { http.Error(w, \"Missing name parameter\", http.StatusBadRequest) return } // Call the gRPC service resp, err := client.GetUserDetails(r.Context(), &amp;grpcservice.UserRequest{Name: name}) if err != nil { http.Error(w, err.Error(), http.StatusInternalServerError) return } w.Header().Set(\"Content-Type\", \"application/json\") json.NewEncoder(w).Encode(map[string]interface{}{ \"id\": resp.Id, \"name\": resp.Name, \"email\": resp.Email, }) } This code: Uses otelhttp to automatically instrument HTTP handlers Uses otelgrpc to automatically instrument the gRPC client Creates three endpoints: /: A welcome page /users: Lists all users from the database /user: Gets user details via the gRPC service Running the Application Now, let’s run our application: go run cmd/server/main.go You should see output indicating that both the HTTP and gRPC servers have started. In a separate terminal, make some requests to the server: curl http://localhost:8080/ curl http://localhost:8080/users curl http://localhost:8080/user?name=Alice curl http://localhost:8080/user?name=Dave Viewing Traces in the Collector Now, let’s check the Collector logs to see the traces: docker-compose -f otel-collector/docker-compose.yaml logs You should see detailed trace information in the logs, including: HTTP requests and responses gRPC calls Database queries The relationships between these operations The automatic instrumentation has created a comprehensive trace of each request’s journey through our system, without requiring us to add explicit tracing code to our application logic. Understanding Automatic Instrumentation Let’s break down the key components of our automatic instrumentation: HTTP Instrumentation http.Handle(\"/users\", otelhttp.NewHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { handleUsers(w, r, userRepo) }), \"handleUsers\")) The otelhttp package provides a handler wrapper that: Creates a span for each incoming request Adds HTTP-specific attributes (method, URL, status code, etc.) Propagates context to the handler function Ends the span when the request is complete gRPC Instrumentation // Server-side grpcServer := grpc.NewServer( grpc.UnaryInterceptor(otelgrpc.UnaryServerInterceptor()), grpc.StreamInterceptor(otelgrpc.StreamServerInterceptor()), ) // Client-side grpcConn, err := grpc.Dial( \"localhost:50051\", grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()), grpc.WithStreamInterceptor(otelgrpc.StreamClientInterceptor()), ) The otelgrpc package provides interceptors for both client and server that: Create spans for each RPC call Add gRPC-specific attributes (method, status, etc.) Propagate context between client and server End spans when the RPC call is complete Database Instrumentation db, err := otelsql.Open(\"sqlite3\", \"./users.db\", otelsql.WithAttributes( map[string]string{ \"db.system\": \"sqlite\", \"db.name\": \"users\", \"db.user\": \"demo\", \"db.instance\": \"local\", }, ), ) The otelsql package provides a wrapper around the standard database/sql package that: Creates spans for database operations (queries, executions, etc.) Adds database-specific attributes (query, operation type, etc.) Propagates context to the database driver Ends spans when the database operation is complete Combining Manual and Automatic Instrumentation While automatic instrumentation is powerful, you may still want to add manual instrumentation for specific business logic. Let’s modify our handleUser function to include some manual instrumentation: func handleUser(w http.ResponseWriter, r *http.Request, client grpcservice.UserServiceClient) { // Get the current context, which already has the span from otelhttp ctx := r.Context() // Get a tracer tracer := otel.Tracer(\"github.com/yourusername/otel-demo-auto/cmd/server\") // Create a child span for parameter validation ctx, validateSpan := tracer.Start(ctx, \"validateUserParams\") name := r.URL.Query().Get(\"name\") if name == \"\" { validateSpan.SetStatus(codes.Error, \"Missing name parameter\") validateSpan.End() http.Error(w, \"Missing name parameter\", http.StatusBadRequest) return } // Add an attribute to the span validateSpan.SetAttributes(attribute.String(\"user.name\", name)) // End the validation span validateSpan.End() // Create a span for the gRPC call (this will be a parent of the automatic gRPC client span) ctx, grpcSpan := tracer.Start(ctx, \"callUserService\") // Call the gRPC service (this will create its own span as a child of grpcSpan) resp, err := client.GetUserDetails(ctx, &amp;grpcservice.UserRequest{Name: name}) if err != nil { grpcSpan.SetStatus(codes.Error, err.Error()) grpcSpan.End() http.Error(w, err.Error(), http.StatusInternalServerError) return } // Add the result to the span grpcSpan.SetAttributes(attribute.Int64(\"user.id\", resp.Id)) // End the gRPC span grpcSpan.End() // Create a span for response formatting ctx, formatSpan := tracer.Start(ctx, \"formatResponse\") w.Header().Set(\"Content-Type\", \"application/json\") json.NewEncoder(w).Encode(map[string]interface{}{ \"id\": resp.Id, \"name\": resp.Name, \"email\": resp.Email, }) // End the format span formatSpan.End() } This combined approach gives you the best of both worlds: Automatic instrumentation for standard operations Manual instrumentation for business-specific logic A complete trace that shows the entire request flow Cross-Language Implementation While our examples use Go, OpenTelemetry provides automatic instrumentation for many languages. Here’s a quick comparison of how automatic instrumentation works in other languages: Java In Java, automatic instrumentation can be added using the Java agent: java -javaagent:opentelemetry-javaagent.jar \\ -Dotel.service.name=my-service \\ -Dotel.traces.exporter=otlp \\ -Dotel.exporter.otlp.endpoint=http://localhost:4317 \\ -jar my-application.jar This automatically instruments many popular Java frameworks and libraries, including: Spring JDBC Hibernate Apache HTTP Client Netty gRPC Python In Python, automatic instrumentation can be added using the opentelemetry-instrument command: opentelemetry-instrument \\ --service_name my-service \\ --traces_exporter otlp \\ --exporter_otlp_endpoint http://localhost:4317 \\ python my_application.py This automatically instruments many popular Python frameworks and libraries, including: Flask Django SQLAlchemy Requests aiohttp gRPC Node.js In Node.js, automatic instrumentation can be added using the @opentelemetry/auto-instrumentations-node package: const { NodeSDK } = require('@opentelemetry/sdk-node'); const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node'); const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-proto'); const sdk = new NodeSDK({ traceExporter: new OTLPTraceExporter({ url: 'http://localhost:4317', }), instrumentations: [getNodeAutoInstrumentations()] }); sdk.start(); This automatically instruments many popular Node.js frameworks and libraries, including: Express Koa Fastify MongoDB MySQL Redis gRPC Best Practices for Automatic Instrumentation Based on our exploration, here are some best practices for using automatic instrumentation: Start with Automatic, Add Manual as Needed: Begin with automatic instrumentation for standard components, then add manual instrumentation for business-specific logic. Use Consistent Naming: Use consistent naming conventions for spans and attributes across both automatic and manual instrumentation. Add Custom Attributes: Enhance automatic spans with custom attributes that provide business context. Monitor Performance Impact: While automatic instrumentation is designed to be lightweight, monitor its performance impact in your application. Keep Dependencies Updated: Regularly update your OpenTelemetry dependencies to benefit from improvements and bug fixes. Understand What’s Being Traced: Familiarize yourself with what each automatic instrumentation package traces to avoid gaps in coverage. Configure Sampling Appropriately: Use sampling to control the volume of traces generated, especially in high-traffic applications. Conclusion In this installment, we’ve explored automatic instrumentation in OpenTelemetry. We’ve seen how to: Use pre-built integrations to instrument HTTP, gRPC, and database operations Combine automatic and manual instrumentation for comprehensive tracing Understand how automatic instrumentation works across different languages Automatic instrumentation provides a quick and easy way to add tracing to your applications, especially when using common frameworks and libraries. By combining it with manual instrumentation, you can create a complete picture of your application’s behavior. In tomorrow’s installment, we’ll explore context propagation and logs correlation, which are essential for creating a complete observability picture in distributed systems. Stay tuned, and happy tracing!"
+    }
+  ]
+}</script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="/assets/css/main.css" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v0.4.1/dist/bootstrap-toc.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
+<link href="/assets/css/nav-media.css" rel="stylesheet">
+
+  </head>
+
+  <body >
+    <script src="/assets/js/color-scheme-attr-init.js" data-mode="false"></script>
+    <nav class="navbar navbar-default top-nav">
+  <div class="navbar-header">
+    <button type="button" aria-label="Side menu" class="navbar-toggle collapsed pull-left top-nav-menu-toggle" data-toggle="collapse" data-target="#id_top-nav-menu-toggle" aria-expanded="false">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand top-nav-brand" href="/" translate="no">Vitor Vasconcellos</a>
+    </div>
+  <div class="color_scheme_switch_top_holder" data-toggle="tooltip" data-placement="bottom" title="Color scheme">
+  <label class="color-scheme-switch hover-effect">
+    <input type="checkbox" class="checkbox_color_switch" />
+    <span></span>
+  </label>
+</div>
+
+  
+</nav>
+<nav id="side-nav-container">
+  <div class="side-nav">
+    <div class="side-nav-brand">
+      <img src="/assets/img/default/profile_pic.png" alt="">
+      <div class="brand-holder">
+        <a href="/" translate="no">Vitor Vasconcellos</a>
+        </div>
+      <p>&nbsp;Software Engineer at @mercadolibre. Open-source contributor. I like observability things.</p>
+      <br>
+    </div>
+    <br>
+    <a href="javascript:void(0);" class="side-nav-close" role="button" rel="nofollow">
+        <i class="fa fa-angle-double-left fa-2x" aria-hidden="true"></i>
+      </a>
+    <hr>
+    <br>
+    <div class="side-nav-buttons">
+      <ul class="nav nav-pills nav-stacked">
+        <li ><a href="/" class=" hover-effect"><i class="fa-fw fa fa-home" aria-hidden="true"></i>Home</a></li><li ><a href="/tabs/blog/" class="active-page hover-effect"><i class="fa-fw fa fa-pencil-square-o" aria-hidden="true"></i>Blog</a></li><li ><a href="/tabs/about.html" class=" hover-effect"><i class="fa-fw fa fa-user-o" aria-hidden="true"></i>About</a></li></ul>
+    </div>
+    <br>
+    <br><div class="contact-container">
+  <hr>
+  <h3>Contact</h3>
+  <ul><li><a href="https://github.com/vitorvasc" aria-label="github" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><i class="fa fa-github" aria-hidden="true"></i></a></li><li>
+      <a href="javascript:void(0);" aria-label="email" class="hover-effect-big" onclick="setAddress('hi', 'vasconcellos.dev');"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li><li><a href="https://www.linkedin.com/in/vvasconcellos" aria-label="linkedin" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li><li><a href="https://bsky.app/profile/vasconcellos.dev" aria-label="bluesky" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><img src="/assets/img/default/bsky.svg" alt="bluesky"/></a></li></ul>
+</div>
+
+    <hr id="toc-view-top">
+    <div class="side-nav-footer" translate="no">
+        <p>&copy; 2025 Vitor Vasconcellos.</p>
+      </div>
+  </div>
+  <div class="side-nav-bottom-buttons-container">
+    <hr>
+    <ul>
+      <li><div class="color_scheme_switch_side_holder" data-toggle="tooltip" data-placement="top" title="Color scheme">
+  <label class="color-scheme-switch hover-effect">
+    <input type="checkbox" class="checkbox_color_switch" />
+    <span></span>
+  </label>
+</div>
+</li><li><div class="cookie-icon hover-effect" onclick="CookieConsent.showSettings();" data-toggle="tooltip" data-placement="top" title="Cookie settings">
+  <div class="cookie-wrapper">
+    <i class="fa fa-circle bitten-cookie" aria-hidden="true"></i>
+    <i class="fa fa-circle small-ellipse-icon" aria-hidden="true"></i>
+    <i class="fa fa-spinner inner-icon" aria-hidden="true"></i>
+    <i class="fa fa-circle-thin outer-icon" aria-hidden="true"></i>
+  </div>
+</div>
+</li></ul>
+  </div></nav>
+<div id="toc-container" class="movable">
+  <div class="panel panel-default">
+    <div class="panel-heading" data-toggle="tooltip" data-placement="top" title="Drag to move">
+      Contents
+      <span class="pull-right">
+        <a href="javascript:void(0);" aria-label="Close" role="button" rel="nofollow" class="close-button" onclick="document.getElementById('toc-container').style.display = 'none';">
+          <i class="fa fa-times" data-toggle="tooltip" data-placement="bottom" title="Close"></i>
+        </a>
+      </span>
+    </div>
+    <div class="panel-body">
+      <nav id="table-of-contents"></nav>
+    </div>
+  </div>
+</div>
+<div id="main-wrapper">
+      <div class="main-container"><div class="multipurpose-container post-container">
+  <div class="post-title"><h1>7 Days of OpenTelemetry: Day 5 - Automatic Instrumentation and Framework Integration</h1></div><div class="meta">
+  <small>
+    &nbsp;<i class="fa fa-calendar"></i>&nbsp;&nbsp;May 30, 2025
+  </small>
+  <small>
+    &nbsp;&nbsp;&nbsp;<span><i class="fa fa-clock-o"></i>&nbsp;24 min read</span>
+  </small>
+  </div>
+<hr/>
+  <div class="markdown-style">
+    <h2 id="day-5-automatic-instrumentation-and-framework-integration">Day 5: Automatic Instrumentation and Framework Integration</h2>
+
+<p>Welcome to Day 5 of our “7 Days of OpenTelemetry” challenge! Yesterday, we implemented manual instrumentation in a Go application. Today, we’ll explore automatic instrumentation, which can significantly reduce the amount of code you need to write while still providing comprehensive tracing.</p>
+
+<h3 id="what-is-automatic-instrumentation">What is Automatic Instrumentation?</h3>
+
+<p>Automatic instrumentation uses pre-built integrations to add tracing to common frameworks and libraries without requiring you to modify your application code directly. This approach has several benefits:</p>
+
+<ol>
+  <li><strong>Reduced Development Effort</strong>: Less code to write and maintain</li>
+  <li><strong>Consistent Coverage</strong>: Standard operations are traced consistently</li>
+  <li><strong>Best Practices</strong>: Implementations follow OpenTelemetry’s recommended patterns</li>
+  <li><strong>Reduced Risk</strong>: Less chance of introducing bugs in your instrumentation code</li>
+</ol>
+
+<p>While manual instrumentation gives you complete control, automatic instrumentation provides a quick way to get started and cover common scenarios.</p>
+
+<h3 id="automatic-instrumentation-in-go">Automatic Instrumentation in Go</h3>
+
+<p>In Go, automatic instrumentation is implemented through instrumentation packages that wrap standard libraries and popular frameworks. Let’s explore how to use these packages to instrument our application.</p>
+
+<h3 id="setting-up-a-more-complex-application">Setting Up a More Complex Application</h3>
+
+<p>Let’s create a more complex application that uses multiple components we can instrument automatically:</p>
+
+<ol>
+  <li>HTTP server and client</li>
+  <li>Database connection</li>
+  <li>gRPC service</li>
+</ol>
+
+<p>First, let’s create the necessary directories:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> otel-demo-auto/cmd/server
+<span class="nb">mkdir</span> <span class="nt">-p</span> otel-demo-auto/internal/database
+<span class="nb">mkdir</span> <span class="nt">-p</span> otel-demo-auto/internal/grpc
+<span class="nb">cd </span>otel-demo-auto
+</code></pre></div></div>
+
+<p>Initialize a Go module:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go mod init github.com/yourusername/otel-demo-auto
+</code></pre></div></div>
+
+<h3 id="adding-dependencies">Adding Dependencies</h3>
+
+<p>We’ll need several packages for our application and its instrumentation:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Core OpenTelemetry packages</span>
+go get go.opentelemetry.io/otel <span class="se">\</span>
+       go.opentelemetry.io/otel/trace <span class="se">\</span>
+       go.opentelemetry.io/otel/sdk <span class="se">\</span>
+       go.opentelemetry.io/otel/exporters/otlp/otlptrace <span class="se">\</span>
+       go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc
+
+<span class="c"># Instrumentation packages</span>
+go get go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp <span class="se">\</span>
+       go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc <span class="se">\</span>
+       go.opentelemetry.io/contrib/instrumentation/database/sql/otelsql
+
+<span class="c"># Other dependencies</span>
+go get google.golang.org/grpc <span class="se">\</span>
+       github.com/mattn/go-sqlite3
+</code></pre></div></div>
+
+<h3 id="setting-up-the-telemetry">Setting Up the Telemetry</h3>
+
+<p>First, let’s create a telemetry initialization file similar to yesterday’s example. Create <code class="language-plaintext highlighter-rouge">internal/telemetry/telemetry.go</code>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">telemetry</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"context"</span>
+	<span class="s">"log"</span>
+	<span class="s">"time"</span>
+
+	<span class="s">"go.opentelemetry.io/otel"</span>
+	<span class="s">"go.opentelemetry.io/otel/exporters/otlp/otlptrace"</span>
+	<span class="s">"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"</span>
+	<span class="s">"go.opentelemetry.io/otel/propagation"</span>
+	<span class="s">"go.opentelemetry.io/otel/sdk/resource"</span>
+	<span class="n">sdktrace</span> <span class="s">"go.opentelemetry.io/otel/sdk/trace"</span>
+	<span class="n">semconv</span> <span class="s">"go.opentelemetry.io/otel/semconv/v1.4.0"</span>
+	<span class="s">"google.golang.org/grpc"</span>
+	<span class="s">"google.golang.org/grpc/credentials/insecure"</span>
+<span class="p">)</span>
+
+<span class="c">// InitTracer initializes the OpenTelemetry tracer</span>
+<span class="k">func</span> <span class="n">InitTracer</span><span class="p">()</span> <span class="k">func</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="n">ctx</span> <span class="o">:=</span> <span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">()</span>
+	
+	<span class="c">// Configure the exporter to use gRPC and connect to the Collector</span>
+	<span class="n">exporter</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">otlptrace</span><span class="o">.</span><span class="n">New</span><span class="p">(</span>
+		<span class="n">ctx</span><span class="p">,</span>
+		<span class="n">otlptracegrpc</span><span class="o">.</span><span class="n">NewClient</span><span class="p">(</span>
+			<span class="n">otlptracegrpc</span><span class="o">.</span><span class="n">WithInsecure</span><span class="p">(),</span>
+			<span class="n">otlptracegrpc</span><span class="o">.</span><span class="n">WithEndpoint</span><span class="p">(</span><span class="s">"localhost:4317"</span><span class="p">),</span>
+			<span class="n">otlptracegrpc</span><span class="o">.</span><span class="n">WithDialOption</span><span class="p">(</span><span class="n">grpc</span><span class="o">.</span><span class="n">WithBlock</span><span class="p">()),</span>
+		<span class="p">),</span>
+	<span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Failed to create exporter: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="c">// Configure the resource with service information</span>
+	<span class="n">res</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">resource</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span>
+		<span class="n">resource</span><span class="o">.</span><span class="n">WithAttributes</span><span class="p">(</span>
+			<span class="n">semconv</span><span class="o">.</span><span class="n">ServiceNameKey</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"otel-demo-auto-service"</span><span class="p">),</span>
+			<span class="n">semconv</span><span class="o">.</span><span class="n">ServiceVersionKey</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"0.1.0"</span><span class="p">),</span>
+		<span class="p">),</span>
+	<span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Failed to create resource: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="c">// Configure the trace provider with the exporter and resource</span>
+	<span class="n">tp</span> <span class="o">:=</span> <span class="n">sdktrace</span><span class="o">.</span><span class="n">NewTracerProvider</span><span class="p">(</span>
+		<span class="n">sdktrace</span><span class="o">.</span><span class="n">WithSampler</span><span class="p">(</span><span class="n">sdktrace</span><span class="o">.</span><span class="n">AlwaysSample</span><span class="p">()),</span>
+		<span class="n">sdktrace</span><span class="o">.</span><span class="n">WithBatcher</span><span class="p">(</span><span class="n">exporter</span><span class="p">),</span>
+		<span class="n">sdktrace</span><span class="o">.</span><span class="n">WithResource</span><span class="p">(</span><span class="n">res</span><span class="p">),</span>
+	<span class="p">)</span>
+
+	<span class="c">// Set the global trace provider</span>
+	<span class="n">otel</span><span class="o">.</span><span class="n">SetTracerProvider</span><span class="p">(</span><span class="n">tp</span><span class="p">)</span>
+	
+	<span class="c">// Set the global propagator</span>
+	<span class="n">otel</span><span class="o">.</span><span class="n">SetTextMapPropagator</span><span class="p">(</span><span class="n">propagation</span><span class="o">.</span><span class="n">NewCompositeTextMapPropagator</span><span class="p">(</span>
+		<span class="n">propagation</span><span class="o">.</span><span class="n">TraceContext</span><span class="p">{},</span>
+		<span class="n">propagation</span><span class="o">.</span><span class="n">Baggage</span><span class="p">{},</span>
+	<span class="p">))</span>
+
+	<span class="c">// Return a function to shut down the exporter when the application exits</span>
+	<span class="k">return</span> <span class="k">func</span><span class="p">(</span><span class="n">ctx</span> <span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+		<span class="n">ctx</span><span class="p">,</span> <span class="n">cancel</span> <span class="o">:=</span> <span class="n">context</span><span class="o">.</span><span class="n">WithTimeout</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="m">5</span><span class="o">*</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span>
+		<span class="k">defer</span> <span class="n">cancel</span><span class="p">()</span>
+		<span class="k">return</span> <span class="n">tp</span><span class="o">.</span><span class="n">Shutdown</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="implementing-the-database-layer">Implementing the Database Layer</h3>
+
+<p>Now, let’s create a simple database layer with automatic instrumentation. Create <code class="language-plaintext highlighter-rouge">internal/database/database.go</code>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">database</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"context"</span>
+	<span class="s">"database/sql"</span>
+	<span class="s">"log"</span>
+	<span class="s">"os"</span>
+
+	<span class="n">_</span> <span class="s">"github.com/mattn/go-sqlite3"</span>
+	<span class="s">"go.opentelemetry.io/contrib/instrumentation/database/sql/otelsql"</span>
+<span class="p">)</span>
+
+<span class="c">// UserRepository handles database operations for users</span>
+<span class="k">type</span> <span class="n">UserRepository</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">db</span> <span class="o">*</span><span class="n">sql</span><span class="o">.</span><span class="n">DB</span>
+<span class="p">}</span>
+
+<span class="c">// NewUserRepository creates a new UserRepository</span>
+<span class="k">func</span> <span class="n">NewUserRepository</span><span class="p">()</span> <span class="p">(</span><span class="o">*</span><span class="n">UserRepository</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c">// Remove any existing database file</span>
+	<span class="n">os</span><span class="o">.</span><span class="n">Remove</span><span class="p">(</span><span class="s">"./users.db"</span><span class="p">)</span>
+
+	<span class="c">// Create a new database connection with OpenTelemetry instrumentation</span>
+	<span class="n">db</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">otelsql</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s">"sqlite3"</span><span class="p">,</span> <span class="s">"./users.db"</span><span class="p">,</span>
+		<span class="n">otelsql</span><span class="o">.</span><span class="n">WithAttributes</span><span class="p">(</span>
+			<span class="c">// Add attributes to identify this database connection</span>
+			<span class="c">// in your telemetry data</span>
+			<span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+				<span class="s">"db.system"</span><span class="o">:</span>  <span class="s">"sqlite"</span><span class="p">,</span>
+				<span class="s">"db.name"</span><span class="o">:</span>    <span class="s">"users"</span><span class="p">,</span>
+				<span class="s">"db.user"</span><span class="o">:</span>    <span class="s">"demo"</span><span class="p">,</span>
+				<span class="s">"db.instance"</span><span class="o">:</span> <span class="s">"local"</span><span class="p">,</span>
+			<span class="p">},</span>
+		<span class="p">),</span>
+	<span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="no">nil</span><span class="p">,</span> <span class="n">err</span>
+	<span class="p">}</span>
+
+	<span class="c">// Initialize the database</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">initDB</span><span class="p">(</span><span class="n">db</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">db</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+		<span class="k">return</span> <span class="no">nil</span><span class="p">,</span> <span class="n">err</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="o">&amp;</span><span class="n">UserRepository</span><span class="p">{</span><span class="n">db</span><span class="o">:</span> <span class="n">db</span><span class="p">},</span> <span class="no">nil</span>
+<span class="p">}</span>
+
+<span class="c">// Close closes the database connection</span>
+<span class="k">func</span> <span class="p">(</span><span class="n">r</span> <span class="o">*</span><span class="n">UserRepository</span><span class="p">)</span> <span class="n">Close</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="c">// initDB creates the necessary tables</span>
+<span class="k">func</span> <span class="n">initDB</span><span class="p">(</span><span class="n">db</span> <span class="o">*</span><span class="n">sql</span><span class="o">.</span><span class="n">DB</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">db</span><span class="o">.</span><span class="n">Exec</span><span class="p">(</span><span class="s">`
+		CREATE TABLE IF NOT EXISTS users (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			name TEXT NOT NULL,
+			email TEXT UNIQUE
+		)
+	`</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="n">err</span>
+	<span class="p">}</span>
+
+	<span class="c">// Insert some sample data</span>
+	<span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Exec</span><span class="p">(</span><span class="s">`
+		INSERT INTO users (name, email) VALUES 
+		('Alice', 'alice@example.com'),
+		('Bob', 'bob@example.com'),
+		('Charlie', 'charlie@example.com')
+	`</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">err</span>
+<span class="p">}</span>
+
+<span class="c">// GetUserByName retrieves a user by name</span>
+<span class="k">func</span> <span class="p">(</span><span class="n">r</span> <span class="o">*</span><span class="n">UserRepository</span><span class="p">)</span> <span class="n">GetUserByName</span><span class="p">(</span><span class="n">ctx</span> <span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="kt">int64</span><span class="p">,</span> <span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">var</span> <span class="n">id</span> <span class="kt">int64</span>
+	<span class="k">var</span> <span class="n">email</span> <span class="kt">string</span>
+
+	<span class="c">// The query will be automatically traced by the otelsql instrumentation</span>
+	<span class="n">err</span> <span class="o">:=</span> <span class="n">r</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">QueryRowContext</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">"SELECT id, email FROM users WHERE name = ?"</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="n">id</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">email</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="o">==</span> <span class="n">sql</span><span class="o">.</span><span class="n">ErrNoRows</span> <span class="p">{</span>
+			<span class="c">// Insert a new user if not found</span>
+			<span class="n">result</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">r</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">ExecContext</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">"INSERT INTO users (name, email) VALUES (?, ?)"</span><span class="p">,</span> 
+				<span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="o">+</span><span class="s">"@example.com"</span><span class="p">)</span>
+			<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+				<span class="k">return</span> <span class="m">0</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="n">err</span>
+			<span class="p">}</span>
+			<span class="n">id</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">LastInsertId</span><span class="p">()</span>
+			<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+				<span class="k">return</span> <span class="m">0</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="n">err</span>
+			<span class="p">}</span>
+			<span class="k">return</span> <span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="o">+</span><span class="s">"@example.com"</span><span class="p">,</span> <span class="no">nil</span>
+		<span class="p">}</span>
+		<span class="k">return</span> <span class="m">0</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="n">err</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="n">id</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="no">nil</span>
+<span class="p">}</span>
+
+<span class="c">// GetAllUsers retrieves all users</span>
+<span class="k">func</span> <span class="p">(</span><span class="n">r</span> <span class="o">*</span><span class="n">UserRepository</span><span class="p">)</span> <span class="n">GetAllUsers</span><span class="p">(</span><span class="n">ctx</span> <span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span> <span class="p">([]</span><span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="k">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c">// The query will be automatically traced by the otelsql instrumentation</span>
+	<span class="n">rows</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">r</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">QueryContext</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">"SELECT id, name, email FROM users"</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="no">nil</span><span class="p">,</span> <span class="n">err</span>
+	<span class="p">}</span>
+	<span class="k">defer</span> <span class="n">rows</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+
+	<span class="k">var</span> <span class="n">users</span> <span class="p">[]</span><span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="k">interface</span><span class="p">{}</span>
+	<span class="k">for</span> <span class="n">rows</span><span class="o">.</span><span class="n">Next</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">var</span> <span class="n">id</span> <span class="kt">int64</span>
+		<span class="k">var</span> <span class="n">name</span><span class="p">,</span> <span class="n">email</span> <span class="kt">string</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">rows</span><span class="o">.</span><span class="n">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="n">id</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">email</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="k">return</span> <span class="no">nil</span><span class="p">,</span> <span class="n">err</span>
+		<span class="p">}</span>
+		<span class="n">users</span> <span class="o">=</span> <span class="nb">append</span><span class="p">(</span><span class="n">users</span><span class="p">,</span> <span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="k">interface</span><span class="p">{}{</span>
+			<span class="s">"id"</span><span class="o">:</span>    <span class="n">id</span><span class="p">,</span>
+			<span class="s">"name"</span><span class="o">:</span>  <span class="n">name</span><span class="p">,</span>
+			<span class="s">"email"</span><span class="o">:</span> <span class="n">email</span><span class="p">,</span>
+		<span class="p">})</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">rows</span><span class="o">.</span><span class="n">Err</span><span class="p">();</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="no">nil</span><span class="p">,</span> <span class="n">err</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="n">users</span><span class="p">,</span> <span class="no">nil</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This code:</p>
+<ol>
+  <li>Uses <code class="language-plaintext highlighter-rouge">otelsql</code> to automatically instrument SQL operations</li>
+  <li>Creates a simple user repository with CRUD operations</li>
+  <li>Adds custom attributes to identify the database in telemetry data</li>
+</ol>
+
+<h3 id="implementing-the-grpc-service">Implementing the gRPC Service</h3>
+
+<p>Now, let’s create a simple gRPC service with automatic instrumentation. First, create <code class="language-plaintext highlighter-rouge">internal/grpc/service.proto</code>:</p>
+
+<div class="language-protobuf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">syntax</span> <span class="o">=</span> <span class="s">"proto3"</span><span class="p">;</span>
+
+<span class="kn">package</span> <span class="nn">userservice</span><span class="p">;</span>
+<span class="k">option</span> <span class="na">go_package</span> <span class="o">=</span> <span class="s">"github.com/yourusername/otel-demo-auto/internal/grpc"</span><span class="p">;</span>
+
+<span class="kd">service</span> <span class="n">UserService</span> <span class="p">{</span>
+  <span class="k">rpc</span> <span class="n">GetUserDetails</span> <span class="p">(</span><span class="n">UserRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">UserResponse</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">UserRequest</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">UserResponse</span> <span class="p">{</span>
+  <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">email</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>You’ll need to install the Protocol Buffers compiler and the Go plugin to generate the gRPC code. Once installed, run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>protoc <span class="nt">--go_out</span><span class="o">=</span><span class="nb">.</span> <span class="nt">--go-grpc_out</span><span class="o">=</span><span class="nb">.</span> internal/grpc/service.proto
+</code></pre></div></div>
+
+<p>Now, let’s implement the gRPC service in <code class="language-plaintext highlighter-rouge">internal/grpc/server.go</code>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">grpc</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"context"</span>
+	<span class="s">"log"</span>
+	<span class="s">"net"</span>
+
+	<span class="s">"github.com/yourusername/otel-demo-auto/internal/database"</span>
+	<span class="s">"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"</span>
+	<span class="s">"google.golang.org/grpc"</span>
+<span class="p">)</span>
+
+<span class="c">// Server implements the gRPC server</span>
+<span class="k">type</span> <span class="n">Server</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">UnimplementedUserServiceServer</span>
+	<span class="n">userRepo</span> <span class="o">*</span><span class="n">database</span><span class="o">.</span><span class="n">UserRepository</span>
+	<span class="n">server</span>   <span class="o">*</span><span class="n">grpc</span><span class="o">.</span><span class="n">Server</span>
+<span class="p">}</span>
+
+<span class="c">// NewServer creates a new gRPC server</span>
+<span class="k">func</span> <span class="n">NewServer</span><span class="p">(</span><span class="n">userRepo</span> <span class="o">*</span><span class="n">database</span><span class="o">.</span><span class="n">UserRepository</span><span class="p">)</span> <span class="o">*</span><span class="n">Server</span> <span class="p">{</span>
+	<span class="c">// Create a new gRPC server with OpenTelemetry interceptors</span>
+	<span class="n">grpcServer</span> <span class="o">:=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">NewServer</span><span class="p">(</span>
+		<span class="n">grpc</span><span class="o">.</span><span class="n">UnaryInterceptor</span><span class="p">(</span><span class="n">otelgrpc</span><span class="o">.</span><span class="n">UnaryServerInterceptor</span><span class="p">()),</span>
+		<span class="n">grpc</span><span class="o">.</span><span class="n">StreamInterceptor</span><span class="p">(</span><span class="n">otelgrpc</span><span class="o">.</span><span class="n">StreamServerInterceptor</span><span class="p">()),</span>
+	<span class="p">)</span>
+
+	<span class="n">server</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="n">Server</span><span class="p">{</span>
+		<span class="n">userRepo</span><span class="o">:</span> <span class="n">userRepo</span><span class="p">,</span>
+		<span class="n">server</span><span class="o">:</span>   <span class="n">grpcServer</span><span class="p">,</span>
+	<span class="p">}</span>
+
+	<span class="c">// Register the service</span>
+	<span class="n">RegisterUserServiceServer</span><span class="p">(</span><span class="n">grpcServer</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">server</span>
+<span class="p">}</span>
+
+<span class="c">// Start starts the gRPC server</span>
+<span class="k">func</span> <span class="p">(</span><span class="n">s</span> <span class="o">*</span><span class="n">Server</span><span class="p">)</span> <span class="n">Start</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="n">lis</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">net</span><span class="o">.</span><span class="n">Listen</span><span class="p">(</span><span class="s">"tcp"</span><span class="p">,</span> <span class="s">":50051"</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="n">err</span>
+	<span class="p">}</span>
+
+	<span class="n">log</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"gRPC server listening on :50051"</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">Serve</span><span class="p">(</span><span class="n">lis</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c">// Stop stops the gRPC server</span>
+<span class="k">func</span> <span class="p">(</span><span class="n">s</span> <span class="o">*</span><span class="n">Server</span><span class="p">)</span> <span class="n">Stop</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">s</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">GracefulStop</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="c">// GetUserDetails implements the GetUserDetails RPC method</span>
+<span class="k">func</span> <span class="p">(</span><span class="n">s</span> <span class="o">*</span><span class="n">Server</span><span class="p">)</span> <span class="n">GetUserDetails</span><span class="p">(</span><span class="n">ctx</span> <span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">req</span> <span class="o">*</span><span class="n">UserRequest</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="n">UserResponse</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c">// Get user details from the database</span>
+	<span class="n">id</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">s</span><span class="o">.</span><span class="n">userRepo</span><span class="o">.</span><span class="n">GetUserByName</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="no">nil</span><span class="p">,</span> <span class="n">err</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="o">&amp;</span><span class="n">UserResponse</span><span class="p">{</span>
+		<span class="n">Id</span><span class="o">:</span>    <span class="n">id</span><span class="p">,</span>
+		<span class="n">Name</span><span class="o">:</span>  <span class="n">req</span><span class="o">.</span><span class="n">Name</span><span class="p">,</span>
+		<span class="n">Email</span><span class="o">:</span> <span class="n">email</span><span class="p">,</span>
+	<span class="p">},</span> <span class="no">nil</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This code:</p>
+<ol>
+  <li>Uses <code class="language-plaintext highlighter-rouge">otelgrpc</code> interceptors to automatically instrument gRPC operations</li>
+  <li>Creates a simple user service that interacts with our database</li>
+  <li>Implements the gRPC service interface</li>
+</ol>
+
+<h3 id="implementing-the-http-server">Implementing the HTTP Server</h3>
+
+<p>Finally, let’s create an HTTP server that uses both the database and gRPC service. Create <code class="language-plaintext highlighter-rouge">cmd/server/main.go</code>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"context"</span>
+	<span class="s">"encoding/json"</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"log"</span>
+	<span class="s">"net/http"</span>
+	<span class="s">"os"</span>
+	<span class="s">"os/signal"</span>
+	<span class="s">"time"</span>
+
+	<span class="s">"github.com/yourusername/otel-demo-auto/internal/database"</span>
+	<span class="n">grpcservice</span> <span class="s">"github.com/yourusername/otel-demo-auto/internal/grpc"</span>
+	<span class="s">"github.com/yourusername/otel-demo-auto/internal/telemetry"</span>
+	<span class="s">"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"</span>
+	<span class="s">"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"</span>
+	<span class="s">"google.golang.org/grpc"</span>
+	<span class="s">"google.golang.org/grpc/credentials/insecure"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c">// Initialize OpenTelemetry</span>
+	<span class="n">shutdown</span> <span class="o">:=</span> <span class="n">telemetry</span><span class="o">.</span><span class="n">InitTracer</span><span class="p">()</span>
+	<span class="k">defer</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">shutdown</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">());</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Error shutting down tracer: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
+
+	<span class="c">// Initialize the database</span>
+	<span class="n">userRepo</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">database</span><span class="o">.</span><span class="n">NewUserRepository</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Failed to initialize database: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">defer</span> <span class="n">userRepo</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+
+	<span class="c">// Start the gRPC server in a goroutine</span>
+	<span class="n">grpcServer</span> <span class="o">:=</span> <span class="n">grpcservice</span><span class="o">.</span><span class="n">NewServer</span><span class="p">(</span><span class="n">userRepo</span><span class="p">)</span>
+	<span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">grpcServer</span><span class="o">.</span><span class="n">Start</span><span class="p">();</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Failed to start gRPC server: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
+	<span class="k">defer</span> <span class="n">grpcServer</span><span class="o">.</span><span class="n">Stop</span><span class="p">()</span>
+
+	<span class="c">// Create a gRPC client with OpenTelemetry instrumentation</span>
+	<span class="n">grpcConn</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">Dial</span><span class="p">(</span>
+		<span class="s">"localhost:50051"</span><span class="p">,</span>
+		<span class="n">grpc</span><span class="o">.</span><span class="n">WithTransportCredentials</span><span class="p">(</span><span class="n">insecure</span><span class="o">.</span><span class="n">NewCredentials</span><span class="p">()),</span>
+		<span class="n">grpc</span><span class="o">.</span><span class="n">WithUnaryInterceptor</span><span class="p">(</span><span class="n">otelgrpc</span><span class="o">.</span><span class="n">UnaryClientInterceptor</span><span class="p">()),</span>
+		<span class="n">grpc</span><span class="o">.</span><span class="n">WithStreamInterceptor</span><span class="p">(</span><span class="n">otelgrpc</span><span class="o">.</span><span class="n">StreamClientInterceptor</span><span class="p">()),</span>
+	<span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Failed to connect to gRPC server: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">defer</span> <span class="n">grpcConn</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+	<span class="n">grpcClient</span> <span class="o">:=</span> <span class="n">grpcservice</span><span class="o">.</span><span class="n">NewUserServiceClient</span><span class="p">(</span><span class="n">grpcConn</span><span class="p">)</span>
+
+	<span class="c">// Set up HTTP handlers</span>
+	<span class="c">// Wrap each handler with otelhttp for automatic instrumentation</span>
+	<span class="n">http</span><span class="o">.</span><span class="n">Handle</span><span class="p">(</span><span class="s">"/"</span><span class="p">,</span> <span class="n">otelhttp</span><span class="o">.</span><span class="n">NewHandler</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">HandlerFunc</span><span class="p">(</span><span class="n">handleRoot</span><span class="p">),</span> <span class="s">"handleRoot"</span><span class="p">))</span>
+	<span class="n">http</span><span class="o">.</span><span class="n">Handle</span><span class="p">(</span><span class="s">"/users"</span><span class="p">,</span> <span class="n">otelhttp</span><span class="o">.</span><span class="n">NewHandler</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">HandlerFunc</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">handleUsers</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">userRepo</span><span class="p">)</span>
+	<span class="p">}),</span> <span class="s">"handleUsers"</span><span class="p">))</span>
+	<span class="n">http</span><span class="o">.</span><span class="n">Handle</span><span class="p">(</span><span class="s">"/user"</span><span class="p">,</span> <span class="n">otelhttp</span><span class="o">.</span><span class="n">NewHandler</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">HandlerFunc</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">handleUser</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">grpcClient</span><span class="p">)</span>
+	<span class="p">}),</span> <span class="s">"handleUser"</span><span class="p">))</span>
+
+	<span class="c">// Start the HTTP server in a goroutine</span>
+	<span class="n">server</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="n">http</span><span class="o">.</span><span class="n">Server</span><span class="p">{</span><span class="n">Addr</span><span class="o">:</span> <span class="s">":8080"</span><span class="p">}</span>
+	<span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"HTTP server starting on :8080..."</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">server</span><span class="o">.</span><span class="n">ListenAndServe</span><span class="p">();</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="o">&amp;&amp;</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">http</span><span class="o">.</span><span class="n">ErrServerClosed</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"HTTP server failed to start: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
+
+	<span class="c">// Wait for interrupt signal</span>
+	<span class="n">sigCh</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="n">os</span><span class="o">.</span><span class="n">Signal</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+	<span class="n">signal</span><span class="o">.</span><span class="n">Notify</span><span class="p">(</span><span class="n">sigCh</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">Interrupt</span><span class="p">)</span>
+	<span class="o">&lt;-</span><span class="n">sigCh</span>
+
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Shutting down..."</span><span class="p">)</span>
+	
+	<span class="c">// Gracefully shut down the HTTP server</span>
+	<span class="n">ctx</span><span class="p">,</span> <span class="n">cancel</span> <span class="o">:=</span> <span class="n">context</span><span class="o">.</span><span class="n">WithTimeout</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">(),</span> <span class="m">5</span><span class="o">*</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="n">cancel</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">server</span><span class="o">.</span><span class="n">Shutdown</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"HTTP server shutdown failed: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">handleRoot</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Fprintf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Welcome to the OpenTelemetry Auto-Instrumentation Demo!</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Fprintf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Available endpoints:</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Fprintf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"- /users: List all users</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Fprintf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"- /user?name=&lt;n&gt;: Get user details</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">handleUsers</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">,</span> <span class="n">userRepo</span> <span class="o">*</span><span class="n">database</span><span class="o">.</span><span class="n">UserRepository</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">users</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">userRepo</span><span class="o">.</span><span class="n">GetAllUsers</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">Context</span><span class="p">())</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">Error</span><span class="p">(),</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusInternalServerError</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="n">w</span><span class="o">.</span><span class="n">Header</span><span class="p">()</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Content-Type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+	<span class="n">json</span><span class="o">.</span><span class="n">NewEncoder</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">Encode</span><span class="p">(</span><span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="k">interface</span><span class="p">{}{</span>
+		<span class="s">"users"</span><span class="o">:</span> <span class="n">users</span><span class="p">,</span>
+	<span class="p">})</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">handleUser</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">,</span> <span class="n">client</span> <span class="n">grpcservice</span><span class="o">.</span><span class="n">UserServiceClient</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">name</span> <span class="o">:=</span> <span class="n">r</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">Query</span><span class="p">()</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">"name"</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s">""</span> <span class="p">{</span>
+		<span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Missing name parameter"</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusBadRequest</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="c">// Call the gRPC service</span>
+	<span class="n">resp</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">client</span><span class="o">.</span><span class="n">GetUserDetails</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">Context</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">grpcservice</span><span class="o">.</span><span class="n">UserRequest</span><span class="p">{</span><span class="n">Name</span><span class="o">:</span> <span class="n">name</span><span class="p">})</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">Error</span><span class="p">(),</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusInternalServerError</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="n">w</span><span class="o">.</span><span class="n">Header</span><span class="p">()</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Content-Type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+	<span class="n">json</span><span class="o">.</span><span class="n">NewEncoder</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">Encode</span><span class="p">(</span><span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="k">interface</span><span class="p">{}{</span>
+		<span class="s">"id"</span><span class="o">:</span>    <span class="n">resp</span><span class="o">.</span><span class="n">Id</span><span class="p">,</span>
+		<span class="s">"name"</span><span class="o">:</span>  <span class="n">resp</span><span class="o">.</span><span class="n">Name</span><span class="p">,</span>
+		<span class="s">"email"</span><span class="o">:</span> <span class="n">resp</span><span class="o">.</span><span class="n">Email</span><span class="p">,</span>
+	<span class="p">})</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This code:</p>
+<ol>
+  <li>Uses <code class="language-plaintext highlighter-rouge">otelhttp</code> to automatically instrument HTTP handlers</li>
+  <li>Uses <code class="language-plaintext highlighter-rouge">otelgrpc</code> to automatically instrument the gRPC client</li>
+  <li>Creates three endpoints:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">/</code>: A welcome page</li>
+      <li><code class="language-plaintext highlighter-rouge">/users</code>: Lists all users from the database</li>
+      <li><code class="language-plaintext highlighter-rouge">/user</code>: Gets user details via the gRPC service</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="running-the-application">Running the Application</h3>
+
+<p>Now, let’s run our application:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go run cmd/server/main.go
+</code></pre></div></div>
+
+<p>You should see output indicating that both the HTTP and gRPC servers have started. In a separate terminal, make some requests to the server:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl http://localhost:8080/
+curl http://localhost:8080/users
+curl http://localhost:8080/user?name<span class="o">=</span>Alice
+curl http://localhost:8080/user?name<span class="o">=</span>Dave
+</code></pre></div></div>
+
+<h3 id="viewing-traces-in-the-collector">Viewing Traces in the Collector</h3>
+
+<p>Now, let’s check the Collector logs to see the traces:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose <span class="nt">-f</span> otel-collector/docker-compose.yaml logs
+</code></pre></div></div>
+
+<p>You should see detailed trace information in the logs, including:</p>
+<ul>
+  <li>HTTP requests and responses</li>
+  <li>gRPC calls</li>
+  <li>Database queries</li>
+  <li>The relationships between these operations</li>
+</ul>
+
+<p>The automatic instrumentation has created a comprehensive trace of each request’s journey through our system, without requiring us to add explicit tracing code to our application logic.</p>
+
+<h3 id="understanding-automatic-instrumentation">Understanding Automatic Instrumentation</h3>
+
+<p>Let’s break down the key components of our automatic instrumentation:</p>
+
+<h4 id="http-instrumentation">HTTP Instrumentation</h4>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">http</span><span class="o">.</span><span class="n">Handle</span><span class="p">(</span><span class="s">"/users"</span><span class="p">,</span> <span class="n">otelhttp</span><span class="o">.</span><span class="n">NewHandler</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">HandlerFunc</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">handleUsers</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">userRepo</span><span class="p">)</span>
+<span class="p">}),</span> <span class="s">"handleUsers"</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">otelhttp</code> package provides a handler wrapper that:</p>
+<ol>
+  <li>Creates a span for each incoming request</li>
+  <li>Adds HTTP-specific attributes (method, URL, status code, etc.)</li>
+  <li>Propagates context to the handler function</li>
+  <li>Ends the span when the request is complete</li>
+</ol>
+
+<h4 id="grpc-instrumentation">gRPC Instrumentation</h4>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Server-side</span>
+<span class="n">grpcServer</span> <span class="o">:=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">NewServer</span><span class="p">(</span>
+    <span class="n">grpc</span><span class="o">.</span><span class="n">UnaryInterceptor</span><span class="p">(</span><span class="n">otelgrpc</span><span class="o">.</span><span class="n">UnaryServerInterceptor</span><span class="p">()),</span>
+    <span class="n">grpc</span><span class="o">.</span><span class="n">StreamInterceptor</span><span class="p">(</span><span class="n">otelgrpc</span><span class="o">.</span><span class="n">StreamServerInterceptor</span><span class="p">()),</span>
+<span class="p">)</span>
+
+<span class="c">// Client-side</span>
+<span class="n">grpcConn</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">Dial</span><span class="p">(</span>
+    <span class="s">"localhost:50051"</span><span class="p">,</span>
+    <span class="n">grpc</span><span class="o">.</span><span class="n">WithTransportCredentials</span><span class="p">(</span><span class="n">insecure</span><span class="o">.</span><span class="n">NewCredentials</span><span class="p">()),</span>
+    <span class="n">grpc</span><span class="o">.</span><span class="n">WithUnaryInterceptor</span><span class="p">(</span><span class="n">otelgrpc</span><span class="o">.</span><span class="n">UnaryClientInterceptor</span><span class="p">()),</span>
+    <span class="n">grpc</span><span class="o">.</span><span class="n">WithStreamInterceptor</span><span class="p">(</span><span class="n">otelgrpc</span><span class="o">.</span><span class="n">StreamClientInterceptor</span><span class="p">()),</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">otelgrpc</code> package provides interceptors for both client and server that:</p>
+<ol>
+  <li>Create spans for each RPC call</li>
+  <li>Add gRPC-specific attributes (method, status, etc.)</li>
+  <li>Propagate context between client and server</li>
+  <li>End spans when the RPC call is complete</li>
+</ol>
+
+<h4 id="database-instrumentation">Database Instrumentation</h4>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">db</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">otelsql</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s">"sqlite3"</span><span class="p">,</span> <span class="s">"./users.db"</span><span class="p">,</span>
+    <span class="n">otelsql</span><span class="o">.</span><span class="n">WithAttributes</span><span class="p">(</span>
+        <span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+            <span class="s">"db.system"</span><span class="o">:</span>  <span class="s">"sqlite"</span><span class="p">,</span>
+            <span class="s">"db.name"</span><span class="o">:</span>    <span class="s">"users"</span><span class="p">,</span>
+            <span class="s">"db.user"</span><span class="o">:</span>    <span class="s">"demo"</span><span class="p">,</span>
+            <span class="s">"db.instance"</span><span class="o">:</span> <span class="s">"local"</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">otelsql</code> package provides a wrapper around the standard <code class="language-plaintext highlighter-rouge">database/sql</code> package that:</p>
+<ol>
+  <li>Creates spans for database operations (queries, executions, etc.)</li>
+  <li>Adds database-specific attributes (query, operation type, etc.)</li>
+  <li>Propagates context to the database driver</li>
+  <li>Ends spans when the database operation is complete</li>
+</ol>
+
+<h3 id="combining-manual-and-automatic-instrumentation">Combining Manual and Automatic Instrumentation</h3>
+
+<p>While automatic instrumentation is powerful, you may still want to add manual instrumentation for specific business logic. Let’s modify our <code class="language-plaintext highlighter-rouge">handleUser</code> function to include some manual instrumentation:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">handleUser</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">,</span> <span class="n">client</span> <span class="n">grpcservice</span><span class="o">.</span><span class="n">UserServiceClient</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c">// Get the current context, which already has the span from otelhttp</span>
+    <span class="n">ctx</span> <span class="o">:=</span> <span class="n">r</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>
+    
+    <span class="c">// Get a tracer</span>
+    <span class="n">tracer</span> <span class="o">:=</span> <span class="n">otel</span><span class="o">.</span><span class="n">Tracer</span><span class="p">(</span><span class="s">"github.com/yourusername/otel-demo-auto/cmd/server"</span><span class="p">)</span>
+    
+    <span class="c">// Create a child span for parameter validation</span>
+    <span class="n">ctx</span><span class="p">,</span> <span class="n">validateSpan</span> <span class="o">:=</span> <span class="n">tracer</span><span class="o">.</span><span class="n">Start</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">"validateUserParams"</span><span class="p">)</span>
+    
+    <span class="n">name</span> <span class="o">:=</span> <span class="n">r</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">Query</span><span class="p">()</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">"name"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s">""</span> <span class="p">{</span>
+        <span class="n">validateSpan</span><span class="o">.</span><span class="n">SetStatus</span><span class="p">(</span><span class="n">codes</span><span class="o">.</span><span class="n">Error</span><span class="p">,</span> <span class="s">"Missing name parameter"</span><span class="p">)</span>
+        <span class="n">validateSpan</span><span class="o">.</span><span class="n">End</span><span class="p">()</span>
+        <span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Missing name parameter"</span><span class="p">,</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusBadRequest</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    
+    <span class="c">// Add an attribute to the span</span>
+    <span class="n">validateSpan</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"user.name"</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+    
+    <span class="c">// End the validation span</span>
+    <span class="n">validateSpan</span><span class="o">.</span><span class="n">End</span><span class="p">()</span>
+    
+    <span class="c">// Create a span for the gRPC call (this will be a parent of the automatic gRPC client span)</span>
+    <span class="n">ctx</span><span class="p">,</span> <span class="n">grpcSpan</span> <span class="o">:=</span> <span class="n">tracer</span><span class="o">.</span><span class="n">Start</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">"callUserService"</span><span class="p">)</span>
+    
+    <span class="c">// Call the gRPC service (this will create its own span as a child of grpcSpan)</span>
+    <span class="n">resp</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">client</span><span class="o">.</span><span class="n">GetUserDetails</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">grpcservice</span><span class="o">.</span><span class="n">UserRequest</span><span class="p">{</span><span class="n">Name</span><span class="o">:</span> <span class="n">name</span><span class="p">})</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+        <span class="n">grpcSpan</span><span class="o">.</span><span class="n">SetStatus</span><span class="p">(</span><span class="n">codes</span><span class="o">.</span><span class="n">Error</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">Error</span><span class="p">())</span>
+        <span class="n">grpcSpan</span><span class="o">.</span><span class="n">End</span><span class="p">()</span>
+        <span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">Error</span><span class="p">(),</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusInternalServerError</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    
+    <span class="c">// Add the result to the span</span>
+    <span class="n">grpcSpan</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">Int64</span><span class="p">(</span><span class="s">"user.id"</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">Id</span><span class="p">))</span>
+    
+    <span class="c">// End the gRPC span</span>
+    <span class="n">grpcSpan</span><span class="o">.</span><span class="n">End</span><span class="p">()</span>
+    
+    <span class="c">// Create a span for response formatting</span>
+    <span class="n">ctx</span><span class="p">,</span> <span class="n">formatSpan</span> <span class="o">:=</span> <span class="n">tracer</span><span class="o">.</span><span class="n">Start</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">"formatResponse"</span><span class="p">)</span>
+    
+    <span class="n">w</span><span class="o">.</span><span class="n">Header</span><span class="p">()</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Content-Type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">NewEncoder</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">Encode</span><span class="p">(</span><span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="k">interface</span><span class="p">{}{</span>
+        <span class="s">"id"</span><span class="o">:</span>    <span class="n">resp</span><span class="o">.</span><span class="n">Id</span><span class="p">,</span>
+        <span class="s">"name"</span><span class="o">:</span>  <span class="n">resp</span><span class="o">.</span><span class="n">Name</span><span class="p">,</span>
+        <span class="s">"email"</span><span class="o">:</span> <span class="n">resp</span><span class="o">.</span><span class="n">Email</span><span class="p">,</span>
+    <span class="p">})</span>
+    
+    <span class="c">// End the format span</span>
+    <span class="n">formatSpan</span><span class="o">.</span><span class="n">End</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This combined approach gives you the best of both worlds:</p>
+<ol>
+  <li>Automatic instrumentation for standard operations</li>
+  <li>Manual instrumentation for business-specific logic</li>
+  <li>A complete trace that shows the entire request flow</li>
+</ol>
+
+<h3 id="cross-language-implementation">Cross-Language Implementation</h3>
+
+<p>While our examples use Go, OpenTelemetry provides automatic instrumentation for many languages. Here’s a quick comparison of how automatic instrumentation works in other languages:</p>
+
+<h4 id="java">Java</h4>
+
+<p>In Java, automatic instrumentation can be added using the Java agent:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java <span class="nt">-javaagent</span>:opentelemetry-javaagent.jar <span class="se">\</span>
+     <span class="nt">-Dotel</span>.service.name<span class="o">=</span>my-service <span class="se">\</span>
+     <span class="nt">-Dotel</span>.traces.exporter<span class="o">=</span>otlp <span class="se">\</span>
+     <span class="nt">-Dotel</span>.exporter.otlp.endpoint<span class="o">=</span>http://localhost:4317 <span class="se">\</span>
+     <span class="nt">-jar</span> my-application.jar
+</code></pre></div></div>
+
+<p>This automatically instruments many popular Java frameworks and libraries, including:</p>
+<ul>
+  <li>Spring</li>
+  <li>JDBC</li>
+  <li>Hibernate</li>
+  <li>Apache HTTP Client</li>
+  <li>Netty</li>
+  <li>gRPC</li>
+</ul>
+
+<h4 id="python">Python</h4>
+
+<p>In Python, automatic instrumentation can be added using the <code class="language-plaintext highlighter-rouge">opentelemetry-instrument</code> command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opentelemetry-instrument <span class="se">\</span>
+    <span class="nt">--service_name</span> my-service <span class="se">\</span>
+    <span class="nt">--traces_exporter</span> otlp <span class="se">\</span>
+    <span class="nt">--exporter_otlp_endpoint</span> http://localhost:4317 <span class="se">\</span>
+    python my_application.py
+</code></pre></div></div>
+
+<p>This automatically instruments many popular Python frameworks and libraries, including:</p>
+<ul>
+  <li>Flask</li>
+  <li>Django</li>
+  <li>SQLAlchemy</li>
+  <li>Requests</li>
+  <li>aiohttp</li>
+  <li>gRPC</li>
+</ul>
+
+<h4 id="nodejs">Node.js</h4>
+
+<p>In Node.js, automatic instrumentation can be added using the <code class="language-plaintext highlighter-rouge">@opentelemetry/auto-instrumentations-node</code> package:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">NodeSDK</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@opentelemetry/sdk-node</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">getNodeAutoInstrumentations</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@opentelemetry/auto-instrumentations-node</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">OTLPTraceExporter</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@opentelemetry/exporter-trace-otlp-proto</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">sdk</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NodeSDK</span><span class="p">({</span>
+  <span class="na">traceExporter</span><span class="p">:</span> <span class="k">new</span> <span class="nx">OTLPTraceExporter</span><span class="p">({</span>
+    <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">http://localhost:4317</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">}),</span>
+  <span class="na">instrumentations</span><span class="p">:</span> <span class="p">[</span><span class="nx">getNodeAutoInstrumentations</span><span class="p">()]</span>
+<span class="p">});</span>
+
+<span class="nx">sdk</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>This automatically instruments many popular Node.js frameworks and libraries, including:</p>
+<ul>
+  <li>Express</li>
+  <li>Koa</li>
+  <li>Fastify</li>
+  <li>MongoDB</li>
+  <li>MySQL</li>
+  <li>Redis</li>
+  <li>gRPC</li>
+</ul>
+
+<h3 id="best-practices-for-automatic-instrumentation">Best Practices for Automatic Instrumentation</h3>
+
+<p>Based on our exploration, here are some best practices for using automatic instrumentation:</p>
+
+<ol>
+  <li>
+    <p><strong>Start with Automatic, Add Manual as Needed</strong>: Begin with automatic instrumentation for standard components, then add manual instrumentation for business-specific logic.</p>
+  </li>
+  <li>
+    <p><strong>Use Consistent Naming</strong>: Use consistent naming conventions for spans and attributes across both automatic and manual instrumentation.</p>
+  </li>
+  <li>
+    <p><strong>Add Custom Attributes</strong>: Enhance automatic spans with custom attributes that provide business context.</p>
+  </li>
+  <li>
+    <p><strong>Monitor Performance Impact</strong>: While automatic instrumentation is designed to be lightweight, monitor its performance impact in your application.</p>
+  </li>
+  <li>
+    <p><strong>Keep Dependencies Updated</strong>: Regularly update your OpenTelemetry dependencies to benefit from improvements and bug fixes.</p>
+  </li>
+  <li>
+    <p><strong>Understand What’s Being Traced</strong>: Familiarize yourself with what each automatic instrumentation package traces to avoid gaps in coverage.</p>
+  </li>
+  <li>
+    <p><strong>Configure Sampling Appropriately</strong>: Use sampling to control the volume of traces generated, especially in high-traffic applications.</p>
+  </li>
+</ol>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>In this installment, we’ve explored automatic instrumentation in OpenTelemetry. We’ve seen how to:</p>
+
+<ol>
+  <li>Use pre-built integrations to instrument HTTP, gRPC, and database operations</li>
+  <li>Combine automatic and manual instrumentation for comprehensive tracing</li>
+  <li>Understand how automatic instrumentation works across different languages</li>
+</ol>
+
+<p>Automatic instrumentation provides a quick and easy way to add tracing to your applications, especially when using common frameworks and libraries. By combining it with manual instrumentation, you can create a complete picture of your application’s behavior.</p>
+
+<p>In tomorrow’s installment, we’ll explore context propagation and logs correlation, which are essential for creating a complete observability picture in distributed systems.</p>
+
+<p>Stay tuned, and happy tracing!</p>
+<hr>
+<div class="share-holder">
+  <span class="share-label">Share on: </span>
+  <ul class="share-buttons">
+    
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%2520copy&amp;text=7%20Days%20of%20OpenTelemetry:%20Day%205%20-%20Automatic%20Instrumentation%20and%20Framework%20Integration%20-%20Vitor%20Vasconcellos" aria-label="Twitter" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Twitter" class="hover-effect-big">
+          <i class="fa fa-twitter-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%2520copy" aria-label="Facebook" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Facebook" class="hover-effect-big">
+          <i class="fa fa-facebook-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://t.me/share/url?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%2520copy&amp;text=7%20Days%20of%20OpenTelemetry:%20Day%205%20-%20Automatic%20Instrumentation%20and%20Framework%20Integration%20-%20Vitor%20Vasconcellos" aria-label="Telegram" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Telegram" class="hover-effect-big">
+          <i class="fa fa-telegram fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%2520copy" aria-label="LinkedIn" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="LinkedIn" class="hover-effect-big">
+          <i class="fa fa-linkedin-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="mailto:?subject=7%20Days%20of%20OpenTelemetry:%20Day%205%20-%20Automatic%20Instrumentation%20and%20Framework%20Integration%20-%20Vitor%20Vasconcellos&amp;body=7%20Days%20of%20OpenTelemetry:%20Day%205%20-%20Automatic%20Instrumentation%20and%20Framework%20Integration%20-%20Vitor%20Vasconcellos%20http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%2520copy" aria-label="Email" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Email" class="hover-effect-big">
+          <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="javascript:void(0);" aria-label="Copy link" role="button" onclick="copyToClipboard('http://0.0.0.0:4000/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy', 'Link copied!')" id="copytoclipboard" data-toggle="tooltip" data-placement="top" title="Copy link" class="hover-effect-big">
+          <i class="fa fa-link fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+</div>
+</div>
+
+    <div class="pagination_wrapper">
+  <nav aria-label="Page navigation">
+    <ul class="pagination" style="opacity:0">
+    <li><a href="javascript:void(0);" role="button">1</a></li></ul>
+  </nav>
+</div>
+
+</div><div class="footer-wrapper">
+  <div class="footer-container">
+    <footer translate="no">
+      <div class="footer-text footer-text-centered long-copyright">
+          <p>&copy; 2025 Vitor Vasconcellos. </p><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" data-tooltip-no-hide title="Except where otherwise noted, content on this web site is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.">
+              <img src="/assets/img/default/cc/cc.svg" alt="cc" width="12" height="12">&nbsp;<img src="/assets/img/default/cc/by.svg" alt="by" width="12" height="12">&nbsp;<img src="/assets/img/default/cc/sa.svg" alt="sa" width="12" height="12">&nbsp;<p>Some rights reserved.</p>
+            </a></div>
+      <p class="footer-powered"><span>Pwrd by </span><a href="https://github.com/MrGreensWorkshop/MrGreen-JekyllTheme" target="_blank" rel="noopener noreferrer">Mr. Green</a></p>
+    </footer>
+  </div>
+</div>
+<div class="scroll-to-top-container">
+        <a id="scroll-to-top" href="#main-wrapper" role="button" aria-label="Back to top" class="hover-effect"><i class="fa fa-angle-up"></i></a>
+      </div></div>
+
+    <div class="searchbox-container">
+  <form id="searchbox-form" autocomplete="off">
+    <input type="search" id="search-box" placeholder="Search"
+    onkeyup="if(this.value!==''){document.getElementById('search-results').style.display = 'block';}"
+    onfocusout="this.value='';"
+    onblur="setTimeout(function(){ document.getElementById('search-results').style.display = 'none'; }, 100);">
+    <ul id="search-results" ></ul>
+  </form>
+</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v0.4.1/dist/bootstrap-toc.min.js"></script>
+
+<script src="/assets/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script>
+      $('.imgViewer[data-no-image-viewer]').css("cursor", "unset");
+      $(function () {
+        $('.imgViewer:not([data-no-image-viewer])').magnificPopup({
+          type: 'image'
+          ,image: {
+            titleSrc: 'alt'
+            /* Error message */
+            ,tError: "The image could not be loaded.<br><br>%url%"
+            /* Set to null to disable zoom out cursor. */
+            /*,cursor: null */
+          }
+          ,closeOnContentClick: true
+          ,showCloseBtn: false
+          ,zoom: {
+            /* By default it's false, so don't forget to enable it */
+            enabled: true
+            /* duration of the effect, in milliseconds */
+            ,duration: 300
+            /* CSS transition easing function */
+            ,easing: 'ease-in-out'
+          }
+        });
+      });
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js"></script>
+    <script>
+      /* lazy loads elements with default selector as '.lozad' */
+      const observer = lozad();
+      observer.observe();
+    </script>
+
+<script>
+      PagerPageNumbers.setProperties({
+        paginatorListContainerName: ".pagination_wrapper .pagination"
+        ,pageList: ["/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis", "/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation", "/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy", "/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy", "/posts/2025-05-28-7-days-otel-day-3-setting-up-collector", "/posts/2025-05-27-7-days-otel-day-2-understanding-distributed-tracing", "/posts/2025-05-26-7-days-otel-day-1-introduction-to-observability-and-opentelemetrytel", "/posts/2024-07-26-guia-contribuicao-otel-docs-pt"]
+        ,firstButtonName: "First"
+        ,lastButtonName: "Last"
+        ,prevButtonName: "«"
+        ,nextButtonName: "»"
+      });
+    </script>
+
+
+
+<script src="/assets/js/simple-jekyll-search-1.9.2.min.js"></script><script>
+  function loadSearch(jsonData, searchParam) {
+    if (!jsonData) jsonData = '/query/search.json';
+    var searchInput = document.getElementById('search-box');
+
+    const simpleJekyllSearch = SimpleJekyllSearch({
+      searchInput: searchInput
+      ,resultsContainer: document.getElementById('search-results')
+      ,json: jsonData
+      ,searchResultTemplate: '<li> <a href="{url}"> <div> <div class="title">{title}</div> <div class="date">{date}</div> <div style="clear: both;"></div> </div> </a></li>'
+      ,noResultsText: '<li>No results were found.</li>'
+      ,limit: 10
+      ,fuzzy: false
+      ,formSubmit: document.getElementById('searchbox-form')
+    });
+
+    if (searchParam) {
+      searchInput.value = searchParam;
+      searchInput.focus();
+      searchInput.disabled=false;
+      setTimeout(function(){
+        simpleJekyllSearch.search(searchParam);
+      }, 400);
+    }
+  }
+
+  </script>
+
+<script>
+    function isEmpty(value) {
+      if (value === "" || value === null || typeof value === "undefined") return true;
+      return false;
+    }
+
+    function getQueryParam (param, mach = true) {
+      var queryString = window.location.search.substring(1);
+      if (isEmpty(queryString)) return null;
+      var queries = queryString.split("&");
+      for (var i in queries) {
+        var pair = decodeURIComponent(queries[i]).split("=");
+        if (mach == true){
+          if (pair[0] == param) {
+            if (isEmpty(pair[1]) === false) return pair[1];
+          }
+        }else{
+          return pair;
+        }
+        break;
+      }
+      return null;
+    }
+
+    const searchParam = getQueryParam('search');
+
+    (async () => {
+      let resp = await fetch('/query/search.json');
+      if (!resp.ok) return;
+      let jsonData = await resp.json();
+      loadSearch(jsonData, searchParam);
+    })();
+  </script>
+
+
+
+<script>
+  CookieConsent.consentSettingHtml = "<div class=\"consent-settings\"> <h5>Cookie settings</h5> <br> <p class=\"info-text\">This website uses cookies to optimize site functionality. It will be activated with your approval. Please click each item below for cookie policy. Check <a href=\"/privacy-policy.html\">Privacy policy</a>.</p> <table> <tr> <td onclick=\"$('.info[data-consent-info=necessary]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Strictly necessary cookies</p> </td> <td> <span class=\"active_text\">Always active</span></td> </tr> </table> <div class=\"info\" data-consent-info=\"necessary\"> <p>These cookies are essential for the website function and cannot be disable. They are usually set when site function like color scheme etc. is changed. These cookies do not store any personally identifiable information. Enables storage related to security such as authentication functionality, fraud prevention, and other user protection. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=analytics]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Performance cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" checked=\"checked\" data-consent=\"analytics\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"analytics\"> <p>Enables storage (such as cookies) related to analytics e.g. visit duration. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=preferences]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Functionality cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" data-consent=\"preferences\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"preferences\"> <p>Enables storage that supports the functionality of the website or app e.g. language settings. Enables storage related to personalization e.g. video recommendations. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=advertising]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Targeting and advertising cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" data-consent=\"advertising\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"advertising\"> <p>Enables storage (such as cookies) related to advertising. </p> </div> <br> <div class=\"button-holder\"> <a href=\"javascript:void(0);\" class=\"btn-base btn-left\" onclick=\"CookieConsent.consentSettingDone('deny');\" role=\"button\" rel=\"nofollow\">Deny</a> <a href=\"javascript:void(0);\" class=\"btn-base btn-priority\" onclick=\"CookieConsent.consentSettingDone('accept');\" role=\"button\" rel=\"nofollow\">Allow all</a> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentSettingDone('save');\" role=\"button\" rel=\"nofollow\">Allow selection</a> </div> </div>";
+  CookieConsent.consentSettingSlideType = 'slideBoxTopToDown';
+  CookieConsent.consentBarHtml = "<div class=\"consent-bar\"> <a class=\"close-button\" href=\"javascript:void(0);\" onclick=\"CookieConsent.hideConsentBar();\" aria-label=\"Close\" role=\"button\" rel=\"nofollow\"><i class=\"fa-fw fa fa-times\"></i></a> <p>This website uses cookies to optimize site functionality. It will be activated with your approval. Check <a href=\"/privacy-policy.html\">Privacy policy</a>.</p> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentBarDone('deny');\" role=\"button\" rel=\"nofollow\">Deny</a> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentBarDone('settings');\" role=\"button\" rel=\"nofollow\">Customize</a> <a href=\"javascript:void(0);\" class=\"btn-base btn-priority\" onclick=\"CookieConsent.consentBarDone('accept');\" role=\"button\" rel=\"nofollow\">Allow all</a> </div>";
+  CookieConsent.consent_items = JSON.parse('{"necessary":{"group":["security_storage"],"value":"granted","wait_for_update":500,"cookie_domain":"","no_check_box":true},"analytics":{"group":["analytics_storage"],"value":"denied"},"preferences":{"group":["functionality_storage","personalization_storage"],"value":"denied"},"advertising":{"group":["ad_storage"],"value":"denied"}}');
+  CookieConsent.hideConsentBarWithSaveButton = true;
+
+  const consent_settings = CookieConsent.getConsentSettings();
+  const default_configs = JSON.parse('{"anonymize_ip":true,"ads_data_redaction":true,"cookie_flags":"SameSite=None;Secure"}');
+</script>
+<script>
+  SlidingMsgBox.html = "<div class=\"slideBox\"> <a class=\"close-button\" href=\"javascript:void(0);\" aria-label=\"Close\" role=\"button\" rel=\"nofollow\"><i class=\"fa-fw fa fa-times\"></i></a> </div>";
+</script>
+</body>
+</html>
+

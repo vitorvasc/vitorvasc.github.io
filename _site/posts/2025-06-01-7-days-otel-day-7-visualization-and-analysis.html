@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>7 Days of OpenTelemetry: Day 7 - Visualization and Analysis</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+</noscript>
+
+
+
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="manifest" href="/assets/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#f0f0f0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Vitor Vasconcellos's App">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="msapplication-starturl" content="/">
+  <meta name="application-name" content="Vitor Vasconcellos's App">
+  <meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+
+    <meta name="keywords" content="opentelemetry, observability, 7-days-of-opentelemetry">
+
+  <meta name="description" content="Day 7: Visualization and Analysis Welcome to the final day of our “7 Days of OpenTelemetry” challenge! Over the past six days, we’ve built a...">
+  <meta name="robots" content="index, follow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7 Days of OpenTelemetry: Day 7 - Visualization and Analysis">
+
+<meta name="twitter:description" content="Day 7: Visualization and Analysis Welcome to the final day of our “7 Days of OpenTelemetry” challenge! Over the past six days, we’ve built a...">
+<meta name="twitter:image" content="http://0.0.0.0:4000/assets/img/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis.png">
+<meta property="og:site_name" content="Vitor Vasconcellos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7 Days of OpenTelemetry: Day 7 - Visualization ...">
+<meta property="og:description" content="Day 7: Visualization and Analysis Welcome to the final day of our “7 Days of OpenTelemetry” challenge! Over the past six days, we’ve built a...">
+<meta property="og:url" content="http://0.0.0.0:4000/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis">
+<meta property="og:image" content="http://0.0.0.0:4000/assets/img/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis.png">
+  <meta property="article:author" content="Vitor Vasconcellos">
+  <meta property="article:section" content="">
+  <meta property="article:tag" content="opentelemetry">
+  <meta property="article:tag" content="observability">
+  <meta property="article:tag" content="7-days-of-opentelemetry">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org"
+  ,"@graph": [
+    {
+      "@type": "Person"
+      ,"@id": "http://0.0.0.0:4000/#person"
+      ,"name": "Vitor Vasconcellos"
+      ,"url": "http://0.0.0.0:4000/tabs/about.html"
+      ,"image": "http://0.0.0.0:4000/assets/img/about/about.jpg"
+      ,"description": "Vitor Vasconcellos is a Software Engineer, open-source contributor and observability enthusiast."
+  },{
+    "@type": "WebSite"
+    ,"@id": "http://0.0.0.0:4000/#website"
+    ,"url": "http://0.0.0.0:4000/"
+    ,"name": "Vitor Vasconcellos"
+    ,"description": "Vitor Vasconcellos is a Software Engineer, open-source contributor and observability enthusiast."
+    ,"publisher": {"@id": "http://0.0.0.0:4000/#person"}
+    ,"inLanguage": "en-US"
+    ,"sameAs": ["https://github.com/vitorvasc","https://www.linkedin.com/in/vvasconcellos","https://bsky.app/profile/vasconcellos.dev"]
+    ,"copyrightHolder" : {"@id": "http://0.0.0.0:4000/#person"}
+    ,"copyrightYear" : "2025"
+  },{
+    "@type": "WebPage"
+    ,"@id": "http://0.0.0.0:4000/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis#webpage"
+    ,"url": "http://0.0.0.0:4000/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis"
+    ,"name": "7 Days of OpenTelemetry: Day 7 - Visualization and Analysis"
+    ,"isPartOf": {"@id": "http://0.0.0.0:4000/#website"}
+    ,"breadcrumb": {"@id": "http://0.0.0.0:4000/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis#breadcrumb"}
+    ,"primaryImageOfPage": "http://0.0.0.0:4000/assets/img/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis.png"
+    ,"description": "Day 7: Visualization and Analysis Welcome to the final day of our “7 Days of OpenTelemetry” challenge! Over the past six days, we’ve built a..."
+    ,"inLanguage": "en-US"
+    ,"potentialAction": {
+      "@type": "ReadAction"
+      ,"target": "http://0.0.0.0:4000/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis"
+    }
+  },{
+      "@type": "BreadcrumbList",
+      "@id": "http://0.0.0.0:4000/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem"
+          ,"position": 1
+          ,"name": "Home"
+          ,"item": "http://0.0.0.0:4000/"
+        },
+        {
+          "@type": "ListItem"
+          ,"position": 2
+          ,"name": "Blog"
+          ,"item": "http://0.0.0.0:4000/tabs/blog/"
+        },
+        {
+          "@type": "ListItem"
+          ,"position": 3
+          ,"name": "7 Days of OpenTelemetry: Day 7 - Visualization and Analysis"
+        }
+      ]
+    },{
+      "@type": "BlogPosting"
+      ,"@id": "http://0.0.0.0:4000/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis#content"
+      ,"isPartOf": {"@id": "http://0.0.0.0:4000/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis#webpage"}
+      ,"mainEntityOfPage": {"@id": "http://0.0.0.0:4000/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis#webpage"}
+      ,"publisher": {"@id": "http://0.0.0.0:4000/#person"}
+      ,"author": {"@id": "http://0.0.0.0:4000/#person"}
+      ,"inLanguage": "en-US"
+      ,"headline": "7 Days of OpenTelemetry: Day 7 - Visualization and Analysis"
+      ,"image": "http://0.0.0.0:4000/assets/img/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis.png"
+      ,"thumbnailUrl": "http://0.0.0.0:4000/assets/img/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis.png"
+      ,"articleSection": ["opentelemetry", "observability", "7-days-of-opentelemetry"]
+      ,"description": "Day 7: Visualization and Analysis Welcome to the final day of our “7 Days of OpenTelemetry” challenge! Over the past six days, we’ve built a..."
+      ,"copyrightHolder" : {"@id": "http://0.0.0.0:4000/#person"}
+      ,"copyrightYear" : "2025"
+      ,"wordCount": 2051
+      ,"articleBody": "Day 7: Visualization and Analysis Welcome to the final day of our “7 Days of OpenTelemetry” challenge! Over the past six days, we’ve built a solid foundation for observability with OpenTelemetry. We’ve covered the fundamentals, set up the OpenTelemetry Collector, implemented both manual and automatic instrumentation, and explored context propagation and logs correlation. Today, we’ll complete our journey by connecting our telemetry data to visualization tools and learning how to analyze it effectively. This is where all our hard work pays off, as we transform raw telemetry data into actionable insights. The Value of Visualization While the debug output from our Collector has been useful for learning and testing, a proper visualization tool provides: Interactive Exploration: Drill down into traces and spans Search and Filter: Find specific traces based on various criteria Performance Analysis: Identify bottlenecks and slow operations Error Detection: Quickly spot and diagnose errors Dependency Mapping: Understand service relationships Alerting: Set up alerts for performance issues or errors Let’s explore how to connect our OpenTelemetry data to visualization tools and how to derive insights from it. Overview of Visualization Options There are several options for visualizing OpenTelemetry data: Open Source Options Jaeger: A popular distributed tracing system with a powerful UI Zipkin: Another distributed tracing system with a focus on simplicity Grafana Tempo: A high-scale, minimal-dependency distributed tracing backend SigNoz: An open-source alternative to DataDog, NewRelic, etc. Commercial Options Datadog: A comprehensive monitoring and analytics platform New Relic: An observability platform with APM, infrastructure monitoring, etc. Honeycomb: A platform designed for high-cardinality observability Lightstep: A platform focused on understanding system behavior Dynatrace: An AI-powered observability platform For this tutorial, we’ll use Jaeger, which is open source, easy to set up, and provides a good introduction to trace visualization. Setting Up Jaeger Let’s set up Jaeger and configure our Collector to send traces to it. Step 1: Add Jaeger to Docker Compose Update our docker-compose.yaml file in the otel-collector directory to include Jaeger: version: '3' services: otel-collector: image: otel/opentelemetry-collector-contrib:latest command: [\"--config=/etc/otel-collector/config.yaml\"] volumes: - ./config:/etc/otel-collector ports: - \"4317:4317\" # OTLP gRPC - \"4318:4318\" # OTLP HTTP depends_on: - jaeger restart: unless-stopped jaeger: image: jaegertracing/all-in-one:latest ports: - \"16686:16686\" # Jaeger UI - \"14250:14250\" # Jaeger gRPC environment: - COLLECTOR_OTLP_ENABLED=true restart: unless-stopped This adds a Jaeger container to our setup, with the UI accessible on port 16686. Step 2: Update the Collector Configuration Now, let’s update our Collector configuration to send traces to Jaeger. Modify the config.yaml file in the otel-collector/config directory: receivers: otlp: protocols: grpc: endpoint: 0.0.0.0:4317 http: endpoint: 0.0.0.0:4318 processors: batch: timeout: 1s send_batch_size: 1024 exporters: debug: verbosity: detailed logging: loglevel: debug jaeger: endpoint: jaeger:14250 tls: insecure: true service: pipelines: traces: receivers: [otlp] processors: [batch] exporters: [debug, logging, jaeger] metrics: receivers: [otlp] processors: [batch] exporters: [debug, logging] logs: receivers: [otlp] processors: [batch] exporters: [debug, logging] This adds a Jaeger exporter to our traces pipeline, sending traces to the Jaeger container. Step 3: Restart the Collector Now, let’s restart our Docker Compose setup: docker-compose -f otel-collector/docker-compose.yaml down docker-compose -f otel-collector/docker-compose.yaml up -d Step 4: Generate Some Traces Let’s run one of our previous examples to generate some traces. For instance, you could run the context propagation example from Day 6: cd otel-context go run cmd/backend/main.go In another terminal: cd otel-context go run cmd/frontend/main.go And make some requests: curl \"http://localhost:8080/api?id=123&amp;value=test\" curl \"http://localhost:8080/api?id=456&amp;value=example\" curl \"http://localhost:8080/api?id=789&amp;value=demo\" Step 5: Access the Jaeger UI Now, open a web browser and navigate to http://localhost:16686. You should see the Jaeger UI with our traces. Exploring Traces in Jaeger Let’s explore the Jaeger UI and learn how to analyze traces effectively. The Search Interface The main Jaeger UI shows a search interface where you can: Select a Service: Choose which service’s traces to view Set a Time Range: Narrow down to a specific time period Filter by Tags: Search for traces with specific attributes Limit Results: Control how many traces are returned Find Traces: Execute the search Try selecting one of our services (e.g., “otel-context-frontend”) and clicking “Find Traces”. You should see a list of traces for that service. Trace View Click on one of the traces to open the trace view. This shows: Trace Timeline: A visual representation of the spans in the trace Span Details: Information about each span, including: Service name Operation name Duration Start time Tags (attributes) Logs (events) Process information The trace timeline is particularly useful for identifying bottlenecks, as it visually shows which operations take the most time. Span Details Click on a span to see its details. This includes: Tags: Key-value pairs that provide context about the span Logs: Time-stamped events within the span Process: Information about the process that generated the span These details help you understand what happened during the span and why it might have taken a long time or resulted in an error. Analyzing Traces for Performance Issues Now that we can visualize our traces, let’s learn how to analyze them for performance issues. Identifying Bottlenecks Bottlenecks are operations that take a disproportionate amount of time. In the trace timeline, they appear as wide spans. To identify bottlenecks: Look for spans that take a long time relative to the total trace duration Check if the bottleneck is in your application code or in a dependency Look at the span’s tags and logs for clues about why it’s slow For example, if a database query is taking a long time, you might see a span for the query with a long duration. The span’s tags might include the SQL query, which could help you optimize it. Analyzing Error Paths Errors in traces are typically marked with an error tag or status. To analyze error paths: Look for spans with error tags or status Check the span’s logs for error messages Trace the error back to its source Look at the context in which the error occurred For example, if a service returns an error, you might see a span with an error status. The span’s logs might include the error message, and you can trace back through parent spans to understand what led to the error. Comparing Normal and Abnormal Traces One powerful analysis technique is to compare normal and abnormal traces. For example: Find a trace for a successful request with normal performance Find a trace for a slow or failed request Compare the two traces to identify differences Look for missing spans, different execution paths, or timing differences This can help you understand what conditions lead to performance issues or errors. Advanced Visualization Techniques Beyond basic trace visualization, there are several advanced techniques that can provide deeper insights: Service Dependency Graphs Jaeger can generate service dependency graphs that show how services interact. To access this: Click on “System Architecture” in the Jaeger UI Select a time range View the graph of service dependencies This helps you understand the architecture of your system and identify potential bottlenecks or single points of failure. Trace Comparison Jaeger allows you to compare two traces side by side. To use this feature: Find two traces you want to compare Click on the “Compare” button for one trace Select the second trace to compare View the traces side by side This is useful for comparing normal and abnormal traces, or before and after a change. Trace Statistics Jaeger provides statistics about traces, such as the distribution of durations. To access this: Run a search for traces Look at the histogram of trace durations Identify patterns or outliers This helps you understand the overall performance profile of your system. Connecting to Other Backends While we’ve used Jaeger for this tutorial, OpenTelemetry’s vendor-neutral approach means you can easily switch to a different backend. Let’s look at how to configure the Collector for some other common backends: Zipkin exporters: zipkin: endpoint: \"http://zipkin:9411/api/v2/spans\" service: pipelines: traces: receivers: [otlp] processors: [batch] exporters: [zipkin] Prometheus (for metrics) exporters: prometheus: endpoint: \"0.0.0.0:8889\" service: pipelines: metrics: receivers: [otlp] processors: [batch] exporters: [prometheus] Elasticsearch exporters: elasticsearch: endpoints: [\"http://elasticsearch:9200\"] index: \"traces\" service: pipelines: traces: receivers: [otlp] processors: [batch] exporters: [elasticsearch] This flexibility is one of the key benefits of OpenTelemetry: you can change your backend without changing your instrumentation code. Best Practices for Trace Analysis Based on our exploration, here are some best practices for effective trace analysis: Start with the Big Picture: Look at the overall trace before diving into details Focus on Outliers: Investigate traces that are unusually slow or result in errors Compare and Contrast: Compare normal and abnormal traces to identify differences Look for Patterns: Identify recurring patterns in performance issues or errors Correlate with Logs: Use trace IDs to find related logs for more context Monitor Trends: Track performance over time to identify gradual degradation Set Baselines: Establish performance baselines to detect deviations Use Multiple Views: Combine trace visualization with metrics and logs for a complete picture Building a Complete Observability Pipeline Now that we’ve explored all the components of OpenTelemetry, let’s discuss how to build a complete observability pipeline for production use. Components of a Production Pipeline A production-ready observability pipeline typically includes: Instrumentation: OpenTelemetry SDKs and auto-instrumentation in your applications Collection: OpenTelemetry Collectors deployed as agents and gateways Processing: Filtering, sampling, and enrichment of telemetry data Storage: Backends for storing traces, metrics, and logs Visualization: Tools for exploring and analyzing telemetry data Alerting: Notifications for performance issues or errors Deployment Patterns There are several common deployment patterns for OpenTelemetry: Sidecar Pattern: A Collector runs alongside each application as a sidecar container Agent Pattern: A Collector runs on each host, collecting data from multiple applications Gateway Pattern: Collectors run as agents, forwarding data to a central gateway Hybrid Pattern: A combination of the above patterns based on specific needs The best pattern depends on your infrastructure, scale, and requirements. Scaling Considerations As you scale your observability pipeline, consider: Sampling: Use head-based or tail-based sampling to reduce data volume Resource Usage: Monitor the resource usage of your Collectors High Availability: Deploy redundant Collectors for reliability Load Balancing: Distribute telemetry data across multiple backends Cost Management: Balance data retention with cost considerations A Brief Introduction to Metrics Visualization While our challenge has focused primarily on tracing, OpenTelemetry also supports metrics. Let’s briefly look at how metrics visualization works. Metrics are typically visualized as time-series graphs, showing how values change over time. Common visualizations include: Line Charts: Show trends over time Gauges: Display current values Histograms: Show the distribution of values Heatmaps: Visualize high-cardinality data Tools like Grafana, Prometheus, and Datadog provide powerful metrics visualization capabilities. When combined with traces and logs, metrics provide a complete observability picture. Next Steps Beyond the Challenge Congratulations on completing the “7 Days of OpenTelemetry” challenge! You now have a solid foundation in OpenTelemetry and observability. Here are some suggestions for next steps: Instrument Your Applications: Apply what you’ve learned to your own applications Explore Advanced Features: Dive deeper into sampling, processors, and other advanced topics Contribute to OpenTelemetry: Join the community and contribute to the project Explore Other Signals: Learn more about metrics and logs in OpenTelemetry Build Custom Components: Develop custom processors, exporters, or instrumentation Integrate with CI/CD: Automate the deployment of your observability pipeline Implement SLOs: Use telemetry data to define and monitor Service Level Objectives Resources for Continued Learning To continue your OpenTelemetry journey, here are some valuable resources: Official Documentation: https://opentelemetry.io/docs/ GitHub Repository: https://github.com/open-telemetry Community Meetings: https://opentelemetry.io/community/ Slack Channel: https://cloud-native.slack.com/archives/C01NPAXACKT CNCF Landscape: https://landscape.cncf.io/ OpenTelemetry Blog: https://opentelemetry.io/blog/ Jaeger Documentation: https://www.jaegertracing.io/docs/ Conclusion Over the past seven days, we’ve taken a comprehensive journey through OpenTelemetry, from understanding the basic concepts to implementing a complete observability pipeline. We’ve learned how to: Understand Observability: Grasp the fundamentals of observability and distributed tracing Set Up Infrastructure: Configure the OpenTelemetry Collector and visualization tools Instrument Applications: Implement both manual and automatic instrumentation Connect Services: Propagate context across service boundaries Correlate Data: Link traces with logs for a complete picture Visualize and Analyze: Explore and derive insights from telemetry data OpenTelemetry provides a powerful, vendor-neutral approach to observability that works across languages, frameworks, and backends. By adopting OpenTelemetry, you gain flexibility, standardization, and a future-proof observability strategy. Remember, observability is not just about collecting data—it’s about gaining insights that help you understand, troubleshoot, and optimize your systems. With the knowledge and skills you’ve gained in this challenge, you’re well-equipped to implement effective observability in your own applications. Thank you for joining me on this journey, and happy observing!"
+    }
+  ]
+}</script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="/assets/css/main.css" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v0.4.1/dist/bootstrap-toc.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
+<link href="/assets/css/nav-media.css" rel="stylesheet">
+
+  </head>
+
+  <body >
+    <script src="/assets/js/color-scheme-attr-init.js" data-mode="false"></script>
+    <nav class="navbar navbar-default top-nav">
+  <div class="navbar-header">
+    <button type="button" aria-label="Side menu" class="navbar-toggle collapsed pull-left top-nav-menu-toggle" data-toggle="collapse" data-target="#id_top-nav-menu-toggle" aria-expanded="false">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand top-nav-brand" href="/" translate="no">Vitor Vasconcellos</a>
+    </div>
+  <div class="color_scheme_switch_top_holder" data-toggle="tooltip" data-placement="bottom" title="Color scheme">
+  <label class="color-scheme-switch hover-effect">
+    <input type="checkbox" class="checkbox_color_switch" />
+    <span></span>
+  </label>
+</div>
+
+  
+</nav>
+<nav id="side-nav-container">
+  <div class="side-nav">
+    <div class="side-nav-brand">
+      <img src="/assets/img/default/profile_pic.png" alt="">
+      <div class="brand-holder">
+        <a href="/" translate="no">Vitor Vasconcellos</a>
+        </div>
+      <p>&nbsp;Software Engineer at @mercadolibre. Open-source contributor. I like observability things.</p>
+      <br>
+    </div>
+    <br>
+    <a href="javascript:void(0);" class="side-nav-close" role="button" rel="nofollow">
+        <i class="fa fa-angle-double-left fa-2x" aria-hidden="true"></i>
+      </a>
+    <hr>
+    <br>
+    <div class="side-nav-buttons">
+      <ul class="nav nav-pills nav-stacked">
+        <li ><a href="/" class=" hover-effect"><i class="fa-fw fa fa-home" aria-hidden="true"></i>Home</a></li><li ><a href="/tabs/blog/" class="active-page hover-effect"><i class="fa-fw fa fa-pencil-square-o" aria-hidden="true"></i>Blog</a></li><li ><a href="/tabs/about.html" class=" hover-effect"><i class="fa-fw fa fa-user-o" aria-hidden="true"></i>About</a></li></ul>
+    </div>
+    <br>
+    <br><div class="contact-container">
+  <hr>
+  <h3>Contact</h3>
+  <ul><li><a href="https://github.com/vitorvasc" aria-label="github" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><i class="fa fa-github" aria-hidden="true"></i></a></li><li>
+      <a href="javascript:void(0);" aria-label="email" class="hover-effect-big" onclick="setAddress('hi', 'vasconcellos.dev');"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li><li><a href="https://www.linkedin.com/in/vvasconcellos" aria-label="linkedin" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li><li><a href="https://bsky.app/profile/vasconcellos.dev" aria-label="bluesky" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><img src="/assets/img/default/bsky.svg" alt="bluesky"/></a></li></ul>
+</div>
+
+    <hr id="toc-view-top">
+    <div class="side-nav-footer" translate="no">
+        <p>&copy; 2025 Vitor Vasconcellos.</p>
+      </div>
+  </div>
+  <div class="side-nav-bottom-buttons-container">
+    <hr>
+    <ul>
+      <li><div class="color_scheme_switch_side_holder" data-toggle="tooltip" data-placement="top" title="Color scheme">
+  <label class="color-scheme-switch hover-effect">
+    <input type="checkbox" class="checkbox_color_switch" />
+    <span></span>
+  </label>
+</div>
+</li><li><div class="cookie-icon hover-effect" onclick="CookieConsent.showSettings();" data-toggle="tooltip" data-placement="top" title="Cookie settings">
+  <div class="cookie-wrapper">
+    <i class="fa fa-circle bitten-cookie" aria-hidden="true"></i>
+    <i class="fa fa-circle small-ellipse-icon" aria-hidden="true"></i>
+    <i class="fa fa-spinner inner-icon" aria-hidden="true"></i>
+    <i class="fa fa-circle-thin outer-icon" aria-hidden="true"></i>
+  </div>
+</div>
+</li></ul>
+  </div></nav>
+<div id="toc-container" class="movable">
+  <div class="panel panel-default">
+    <div class="panel-heading" data-toggle="tooltip" data-placement="top" title="Drag to move">
+      Contents
+      <span class="pull-right">
+        <a href="javascript:void(0);" aria-label="Close" role="button" rel="nofollow" class="close-button" onclick="document.getElementById('toc-container').style.display = 'none';">
+          <i class="fa fa-times" data-toggle="tooltip" data-placement="bottom" title="Close"></i>
+        </a>
+      </span>
+    </div>
+    <div class="panel-body">
+      <nav id="table-of-contents"></nav>
+    </div>
+  </div>
+</div>
+<div id="main-wrapper">
+      <div class="main-container"><div class="multipurpose-container post-container">
+  <div class="post-title"><h1>7 Days of OpenTelemetry: Day 7 - Visualization and Analysis</h1></div><div class="meta">
+  <small>
+    &nbsp;<i class="fa fa-calendar"></i>&nbsp;&nbsp;Jun 1, 2025
+  </small>
+  <small>
+    &nbsp;&nbsp;&nbsp;<span><i class="fa fa-clock-o"></i>&nbsp;12 min read</span>
+  </small>
+  </div>
+<hr/>
+  <div class="markdown-style">
+    <h2 id="day-7-visualization-and-analysis">Day 7: Visualization and Analysis</h2>
+
+<p>Welcome to the final day of our “7 Days of OpenTelemetry” challenge! Over the past six days, we’ve built a solid foundation for observability with OpenTelemetry. We’ve covered the fundamentals, set up the OpenTelemetry Collector, implemented both manual and automatic instrumentation, and explored context propagation and logs correlation.</p>
+
+<p>Today, we’ll complete our journey by connecting our telemetry data to visualization tools and learning how to analyze it effectively. This is where all our hard work pays off, as we transform raw telemetry data into actionable insights.</p>
+
+<h3 id="the-value-of-visualization">The Value of Visualization</h3>
+
+<p>While the debug output from our Collector has been useful for learning and testing, a proper visualization tool provides:</p>
+
+<ol>
+  <li><strong>Interactive Exploration</strong>: Drill down into traces and spans</li>
+  <li><strong>Search and Filter</strong>: Find specific traces based on various criteria</li>
+  <li><strong>Performance Analysis</strong>: Identify bottlenecks and slow operations</li>
+  <li><strong>Error Detection</strong>: Quickly spot and diagnose errors</li>
+  <li><strong>Dependency Mapping</strong>: Understand service relationships</li>
+  <li><strong>Alerting</strong>: Set up alerts for performance issues or errors</li>
+</ol>
+
+<p>Let’s explore how to connect our OpenTelemetry data to visualization tools and how to derive insights from it.</p>
+
+<h3 id="overview-of-visualization-options">Overview of Visualization Options</h3>
+
+<p>There are several options for visualizing OpenTelemetry data:</p>
+
+<h4 id="open-source-options">Open Source Options</h4>
+
+<ol>
+  <li><strong>Jaeger</strong>: A popular distributed tracing system with a powerful UI</li>
+  <li><strong>Zipkin</strong>: Another distributed tracing system with a focus on simplicity</li>
+  <li><strong>Grafana Tempo</strong>: A high-scale, minimal-dependency distributed tracing backend</li>
+  <li><strong>SigNoz</strong>: An open-source alternative to DataDog, NewRelic, etc.</li>
+</ol>
+
+<h4 id="commercial-options">Commercial Options</h4>
+
+<ol>
+  <li><strong>Datadog</strong>: A comprehensive monitoring and analytics platform</li>
+  <li><strong>New Relic</strong>: An observability platform with APM, infrastructure monitoring, etc.</li>
+  <li><strong>Honeycomb</strong>: A platform designed for high-cardinality observability</li>
+  <li><strong>Lightstep</strong>: A platform focused on understanding system behavior</li>
+  <li><strong>Dynatrace</strong>: An AI-powered observability platform</li>
+</ol>
+
+<p>For this tutorial, we’ll use Jaeger, which is open source, easy to set up, and provides a good introduction to trace visualization.</p>
+
+<h3 id="setting-up-jaeger">Setting Up Jaeger</h3>
+
+<p>Let’s set up Jaeger and configure our Collector to send traces to it.</p>
+
+<h4 id="step-1-add-jaeger-to-docker-compose">Step 1: Add Jaeger to Docker Compose</h4>
+
+<p>Update our <code class="language-plaintext highlighter-rouge">docker-compose.yaml</code> file in the <code class="language-plaintext highlighter-rouge">otel-collector</code> directory to include Jaeger:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3'</span>
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">otel-collector</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">otel/opentelemetry-collector-contrib:latest</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">--config=/etc/otel-collector/config.yaml"</span><span class="pi">]</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">./config:/etc/otel-collector</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">4317:4317"</span>   <span class="c1"># OTLP gRPC</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">4318:4318"</span>   <span class="c1"># OTLP HTTP</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">jaeger</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">unless-stopped</span>
+
+  <span class="na">jaeger</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">jaegertracing/all-in-one:latest</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">16686:16686"</span>  <span class="c1"># Jaeger UI</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">14250:14250"</span>  <span class="c1"># Jaeger gRPC</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">COLLECTOR_OTLP_ENABLED=true</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">unless-stopped</span>
+</code></pre></div></div>
+
+<p>This adds a Jaeger container to our setup, with the UI accessible on port 16686.</p>
+
+<h4 id="step-2-update-the-collector-configuration">Step 2: Update the Collector Configuration</h4>
+
+<p>Now, let’s update our Collector configuration to send traces to Jaeger. Modify the <code class="language-plaintext highlighter-rouge">config.yaml</code> file in the <code class="language-plaintext highlighter-rouge">otel-collector/config</code> directory:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">receivers</span><span class="pi">:</span>
+  <span class="na">otlp</span><span class="pi">:</span>
+    <span class="na">protocols</span><span class="pi">:</span>
+      <span class="na">grpc</span><span class="pi">:</span>
+        <span class="na">endpoint</span><span class="pi">:</span> <span class="s">0.0.0.0:4317</span>
+      <span class="na">http</span><span class="pi">:</span>
+        <span class="na">endpoint</span><span class="pi">:</span> <span class="s">0.0.0.0:4318</span>
+
+<span class="na">processors</span><span class="pi">:</span>
+  <span class="na">batch</span><span class="pi">:</span>
+    <span class="na">timeout</span><span class="pi">:</span> <span class="s">1s</span>
+    <span class="na">send_batch_size</span><span class="pi">:</span> <span class="m">1024</span>
+
+<span class="na">exporters</span><span class="pi">:</span>
+  <span class="na">debug</span><span class="pi">:</span>
+    <span class="na">verbosity</span><span class="pi">:</span> <span class="s">detailed</span>
+  
+  <span class="na">logging</span><span class="pi">:</span>
+    <span class="na">loglevel</span><span class="pi">:</span> <span class="s">debug</span>
+  
+  <span class="na">jaeger</span><span class="pi">:</span>
+    <span class="na">endpoint</span><span class="pi">:</span> <span class="s">jaeger:14250</span>
+    <span class="na">tls</span><span class="pi">:</span>
+      <span class="na">insecure</span><span class="pi">:</span> <span class="no">true</span>
+
+<span class="na">service</span><span class="pi">:</span>
+  <span class="na">pipelines</span><span class="pi">:</span>
+    <span class="na">traces</span><span class="pi">:</span>
+      <span class="na">receivers</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">otlp</span><span class="pi">]</span>
+      <span class="na">processors</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">batch</span><span class="pi">]</span>
+      <span class="na">exporters</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">debug</span><span class="pi">,</span> <span class="nv">logging</span><span class="pi">,</span> <span class="nv">jaeger</span><span class="pi">]</span>
+    <span class="na">metrics</span><span class="pi">:</span>
+      <span class="na">receivers</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">otlp</span><span class="pi">]</span>
+      <span class="na">processors</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">batch</span><span class="pi">]</span>
+      <span class="na">exporters</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">debug</span><span class="pi">,</span> <span class="nv">logging</span><span class="pi">]</span>
+    <span class="na">logs</span><span class="pi">:</span>
+      <span class="na">receivers</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">otlp</span><span class="pi">]</span>
+      <span class="na">processors</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">batch</span><span class="pi">]</span>
+      <span class="na">exporters</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">debug</span><span class="pi">,</span> <span class="nv">logging</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>This adds a Jaeger exporter to our traces pipeline, sending traces to the Jaeger container.</p>
+
+<h4 id="step-3-restart-the-collector">Step 3: Restart the Collector</h4>
+
+<p>Now, let’s restart our Docker Compose setup:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose <span class="nt">-f</span> otel-collector/docker-compose.yaml down
+docker-compose <span class="nt">-f</span> otel-collector/docker-compose.yaml up <span class="nt">-d</span>
+</code></pre></div></div>
+
+<h4 id="step-4-generate-some-traces">Step 4: Generate Some Traces</h4>
+
+<p>Let’s run one of our previous examples to generate some traces. For instance, you could run the context propagation example from Day 6:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>otel-context
+go run cmd/backend/main.go
+</code></pre></div></div>
+
+<p>In another terminal:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>otel-context
+go run cmd/frontend/main.go
+</code></pre></div></div>
+
+<p>And make some requests:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="s2">"http://localhost:8080/api?id=123&amp;value=test"</span>
+curl <span class="s2">"http://localhost:8080/api?id=456&amp;value=example"</span>
+curl <span class="s2">"http://localhost:8080/api?id=789&amp;value=demo"</span>
+</code></pre></div></div>
+
+<h4 id="step-5-access-the-jaeger-ui">Step 5: Access the Jaeger UI</h4>
+
+<p>Now, open a web browser and navigate to <code class="language-plaintext highlighter-rouge">http://localhost:16686</code>. You should see the Jaeger UI with our traces.</p>
+
+<h3 id="exploring-traces-in-jaeger">Exploring Traces in Jaeger</h3>
+
+<p>Let’s explore the Jaeger UI and learn how to analyze traces effectively.</p>
+
+<h4 id="the-search-interface">The Search Interface</h4>
+
+<p>The main Jaeger UI shows a search interface where you can:</p>
+
+<ol>
+  <li><strong>Select a Service</strong>: Choose which service’s traces to view</li>
+  <li><strong>Set a Time Range</strong>: Narrow down to a specific time period</li>
+  <li><strong>Filter by Tags</strong>: Search for traces with specific attributes</li>
+  <li><strong>Limit Results</strong>: Control how many traces are returned</li>
+  <li><strong>Find Traces</strong>: Execute the search</li>
+</ol>
+
+<p>Try selecting one of our services (e.g., “otel-context-frontend”) and clicking “Find Traces”. You should see a list of traces for that service.</p>
+
+<h4 id="trace-view">Trace View</h4>
+
+<p>Click on one of the traces to open the trace view. This shows:</p>
+
+<ol>
+  <li><strong>Trace Timeline</strong>: A visual representation of the spans in the trace</li>
+  <li><strong>Span Details</strong>: Information about each span, including:
+    <ul>
+      <li>Service name</li>
+      <li>Operation name</li>
+      <li>Duration</li>
+      <li>Start time</li>
+      <li>Tags (attributes)</li>
+      <li>Logs (events)</li>
+      <li>Process information</li>
+    </ul>
+  </li>
+</ol>
+
+<p>The trace timeline is particularly useful for identifying bottlenecks, as it visually shows which operations take the most time.</p>
+
+<h4 id="span-details">Span Details</h4>
+
+<p>Click on a span to see its details. This includes:</p>
+
+<ol>
+  <li><strong>Tags</strong>: Key-value pairs that provide context about the span</li>
+  <li><strong>Logs</strong>: Time-stamped events within the span</li>
+  <li><strong>Process</strong>: Information about the process that generated the span</li>
+</ol>
+
+<p>These details help you understand what happened during the span and why it might have taken a long time or resulted in an error.</p>
+
+<h3 id="analyzing-traces-for-performance-issues">Analyzing Traces for Performance Issues</h3>
+
+<p>Now that we can visualize our traces, let’s learn how to analyze them for performance issues.</p>
+
+<h4 id="identifying-bottlenecks">Identifying Bottlenecks</h4>
+
+<p>Bottlenecks are operations that take a disproportionate amount of time. In the trace timeline, they appear as wide spans. To identify bottlenecks:</p>
+
+<ol>
+  <li>Look for spans that take a long time relative to the total trace duration</li>
+  <li>Check if the bottleneck is in your application code or in a dependency</li>
+  <li>Look at the span’s tags and logs for clues about why it’s slow</li>
+</ol>
+
+<p>For example, if a database query is taking a long time, you might see a span for the query with a long duration. The span’s tags might include the SQL query, which could help you optimize it.</p>
+
+<h4 id="analyzing-error-paths">Analyzing Error Paths</h4>
+
+<p>Errors in traces are typically marked with an error tag or status. To analyze error paths:</p>
+
+<ol>
+  <li>Look for spans with error tags or status</li>
+  <li>Check the span’s logs for error messages</li>
+  <li>Trace the error back to its source</li>
+  <li>Look at the context in which the error occurred</li>
+</ol>
+
+<p>For example, if a service returns an error, you might see a span with an error status. The span’s logs might include the error message, and you can trace back through parent spans to understand what led to the error.</p>
+
+<h4 id="comparing-normal-and-abnormal-traces">Comparing Normal and Abnormal Traces</h4>
+
+<p>One powerful analysis technique is to compare normal and abnormal traces. For example:</p>
+
+<ol>
+  <li>Find a trace for a successful request with normal performance</li>
+  <li>Find a trace for a slow or failed request</li>
+  <li>Compare the two traces to identify differences</li>
+  <li>Look for missing spans, different execution paths, or timing differences</li>
+</ol>
+
+<p>This can help you understand what conditions lead to performance issues or errors.</p>
+
+<h3 id="advanced-visualization-techniques">Advanced Visualization Techniques</h3>
+
+<p>Beyond basic trace visualization, there are several advanced techniques that can provide deeper insights:</p>
+
+<h4 id="service-dependency-graphs">Service Dependency Graphs</h4>
+
+<p>Jaeger can generate service dependency graphs that show how services interact. To access this:</p>
+
+<ol>
+  <li>Click on “System Architecture” in the Jaeger UI</li>
+  <li>Select a time range</li>
+  <li>View the graph of service dependencies</li>
+</ol>
+
+<p>This helps you understand the architecture of your system and identify potential bottlenecks or single points of failure.</p>
+
+<h4 id="trace-comparison">Trace Comparison</h4>
+
+<p>Jaeger allows you to compare two traces side by side. To use this feature:</p>
+
+<ol>
+  <li>Find two traces you want to compare</li>
+  <li>Click on the “Compare” button for one trace</li>
+  <li>Select the second trace to compare</li>
+  <li>View the traces side by side</li>
+</ol>
+
+<p>This is useful for comparing normal and abnormal traces, or before and after a change.</p>
+
+<h4 id="trace-statistics">Trace Statistics</h4>
+
+<p>Jaeger provides statistics about traces, such as the distribution of durations. To access this:</p>
+
+<ol>
+  <li>Run a search for traces</li>
+  <li>Look at the histogram of trace durations</li>
+  <li>Identify patterns or outliers</li>
+</ol>
+
+<p>This helps you understand the overall performance profile of your system.</p>
+
+<h3 id="connecting-to-other-backends">Connecting to Other Backends</h3>
+
+<p>While we’ve used Jaeger for this tutorial, OpenTelemetry’s vendor-neutral approach means you can easily switch to a different backend. Let’s look at how to configure the Collector for some other common backends:</p>
+
+<h4 id="zipkin">Zipkin</h4>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">exporters</span><span class="pi">:</span>
+  <span class="na">zipkin</span><span class="pi">:</span>
+    <span class="na">endpoint</span><span class="pi">:</span> <span class="s2">"</span><span class="s">http://zipkin:9411/api/v2/spans"</span>
+
+<span class="na">service</span><span class="pi">:</span>
+  <span class="na">pipelines</span><span class="pi">:</span>
+    <span class="na">traces</span><span class="pi">:</span>
+      <span class="na">receivers</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">otlp</span><span class="pi">]</span>
+      <span class="na">processors</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">batch</span><span class="pi">]</span>
+      <span class="na">exporters</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">zipkin</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<h4 id="prometheus-for-metrics">Prometheus (for metrics)</h4>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">exporters</span><span class="pi">:</span>
+  <span class="na">prometheus</span><span class="pi">:</span>
+    <span class="na">endpoint</span><span class="pi">:</span> <span class="s2">"</span><span class="s">0.0.0.0:8889"</span>
+
+<span class="na">service</span><span class="pi">:</span>
+  <span class="na">pipelines</span><span class="pi">:</span>
+    <span class="na">metrics</span><span class="pi">:</span>
+      <span class="na">receivers</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">otlp</span><span class="pi">]</span>
+      <span class="na">processors</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">batch</span><span class="pi">]</span>
+      <span class="na">exporters</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">prometheus</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<h4 id="elasticsearch">Elasticsearch</h4>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">exporters</span><span class="pi">:</span>
+  <span class="na">elasticsearch</span><span class="pi">:</span>
+    <span class="na">endpoints</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">http://elasticsearch:9200"</span><span class="pi">]</span>
+    <span class="na">index</span><span class="pi">:</span> <span class="s2">"</span><span class="s">traces"</span>
+
+<span class="na">service</span><span class="pi">:</span>
+  <span class="na">pipelines</span><span class="pi">:</span>
+    <span class="na">traces</span><span class="pi">:</span>
+      <span class="na">receivers</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">otlp</span><span class="pi">]</span>
+      <span class="na">processors</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">batch</span><span class="pi">]</span>
+      <span class="na">exporters</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">elasticsearch</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>This flexibility is one of the key benefits of OpenTelemetry: you can change your backend without changing your instrumentation code.</p>
+
+<h3 id="best-practices-for-trace-analysis">Best Practices for Trace Analysis</h3>
+
+<p>Based on our exploration, here are some best practices for effective trace analysis:</p>
+
+<ol>
+  <li><strong>Start with the Big Picture</strong>: Look at the overall trace before diving into details</li>
+  <li><strong>Focus on Outliers</strong>: Investigate traces that are unusually slow or result in errors</li>
+  <li><strong>Compare and Contrast</strong>: Compare normal and abnormal traces to identify differences</li>
+  <li><strong>Look for Patterns</strong>: Identify recurring patterns in performance issues or errors</li>
+  <li><strong>Correlate with Logs</strong>: Use trace IDs to find related logs for more context</li>
+  <li><strong>Monitor Trends</strong>: Track performance over time to identify gradual degradation</li>
+  <li><strong>Set Baselines</strong>: Establish performance baselines to detect deviations</li>
+  <li><strong>Use Multiple Views</strong>: Combine trace visualization with metrics and logs for a complete picture</li>
+</ol>
+
+<h3 id="building-a-complete-observability-pipeline">Building a Complete Observability Pipeline</h3>
+
+<p>Now that we’ve explored all the components of OpenTelemetry, let’s discuss how to build a complete observability pipeline for production use.</p>
+
+<h4 id="components-of-a-production-pipeline">Components of a Production Pipeline</h4>
+
+<p>A production-ready observability pipeline typically includes:</p>
+
+<ol>
+  <li><strong>Instrumentation</strong>: OpenTelemetry SDKs and auto-instrumentation in your applications</li>
+  <li><strong>Collection</strong>: OpenTelemetry Collectors deployed as agents and gateways</li>
+  <li><strong>Processing</strong>: Filtering, sampling, and enrichment of telemetry data</li>
+  <li><strong>Storage</strong>: Backends for storing traces, metrics, and logs</li>
+  <li><strong>Visualization</strong>: Tools for exploring and analyzing telemetry data</li>
+  <li><strong>Alerting</strong>: Notifications for performance issues or errors</li>
+</ol>
+
+<h4 id="deployment-patterns">Deployment Patterns</h4>
+
+<p>There are several common deployment patterns for OpenTelemetry:</p>
+
+<ol>
+  <li><strong>Sidecar Pattern</strong>: A Collector runs alongside each application as a sidecar container</li>
+  <li><strong>Agent Pattern</strong>: A Collector runs on each host, collecting data from multiple applications</li>
+  <li><strong>Gateway Pattern</strong>: Collectors run as agents, forwarding data to a central gateway</li>
+  <li><strong>Hybrid Pattern</strong>: A combination of the above patterns based on specific needs</li>
+</ol>
+
+<p>The best pattern depends on your infrastructure, scale, and requirements.</p>
+
+<h4 id="scaling-considerations">Scaling Considerations</h4>
+
+<p>As you scale your observability pipeline, consider:</p>
+
+<ol>
+  <li><strong>Sampling</strong>: Use head-based or tail-based sampling to reduce data volume</li>
+  <li><strong>Resource Usage</strong>: Monitor the resource usage of your Collectors</li>
+  <li><strong>High Availability</strong>: Deploy redundant Collectors for reliability</li>
+  <li><strong>Load Balancing</strong>: Distribute telemetry data across multiple backends</li>
+  <li><strong>Cost Management</strong>: Balance data retention with cost considerations</li>
+</ol>
+
+<h3 id="a-brief-introduction-to-metrics-visualization">A Brief Introduction to Metrics Visualization</h3>
+
+<p>While our challenge has focused primarily on tracing, OpenTelemetry also supports metrics. Let’s briefly look at how metrics visualization works.</p>
+
+<p>Metrics are typically visualized as time-series graphs, showing how values change over time. Common visualizations include:</p>
+
+<ol>
+  <li><strong>Line Charts</strong>: Show trends over time</li>
+  <li><strong>Gauges</strong>: Display current values</li>
+  <li><strong>Histograms</strong>: Show the distribution of values</li>
+  <li><strong>Heatmaps</strong>: Visualize high-cardinality data</li>
+</ol>
+
+<p>Tools like Grafana, Prometheus, and Datadog provide powerful metrics visualization capabilities. When combined with traces and logs, metrics provide a complete observability picture.</p>
+
+<h3 id="next-steps-beyond-the-challenge">Next Steps Beyond the Challenge</h3>
+
+<p>Congratulations on completing the “7 Days of OpenTelemetry” challenge! You now have a solid foundation in OpenTelemetry and observability. Here are some suggestions for next steps:</p>
+
+<ol>
+  <li><strong>Instrument Your Applications</strong>: Apply what you’ve learned to your own applications</li>
+  <li><strong>Explore Advanced Features</strong>: Dive deeper into sampling, processors, and other advanced topics</li>
+  <li><strong>Contribute to OpenTelemetry</strong>: Join the community and contribute to the project</li>
+  <li><strong>Explore Other Signals</strong>: Learn more about metrics and logs in OpenTelemetry</li>
+  <li><strong>Build Custom Components</strong>: Develop custom processors, exporters, or instrumentation</li>
+  <li><strong>Integrate with CI/CD</strong>: Automate the deployment of your observability pipeline</li>
+  <li><strong>Implement SLOs</strong>: Use telemetry data to define and monitor Service Level Objectives</li>
+</ol>
+
+<h3 id="resources-for-continued-learning">Resources for Continued Learning</h3>
+
+<p>To continue your OpenTelemetry journey, here are some valuable resources:</p>
+
+<ol>
+  <li><strong>Official Documentation</strong>: <a href="https://opentelemetry.io/docs/">https://opentelemetry.io/docs/</a></li>
+  <li><strong>GitHub Repository</strong>: <a href="https://github.com/open-telemetry">https://github.com/open-telemetry</a></li>
+  <li><strong>Community Meetings</strong>: <a href="https://opentelemetry.io/community/">https://opentelemetry.io/community/</a></li>
+  <li><strong>Slack Channel</strong>: <a href="https://cloud-native.slack.com/archives/C01NPAXACKT">https://cloud-native.slack.com/archives/C01NPAXACKT</a></li>
+  <li><strong>CNCF Landscape</strong>: <a href="https://landscape.cncf.io/">https://landscape.cncf.io/</a></li>
+  <li><strong>OpenTelemetry Blog</strong>: <a href="https://opentelemetry.io/blog/">https://opentelemetry.io/blog/</a></li>
+  <li><strong>Jaeger Documentation</strong>: <a href="https://www.jaegertracing.io/docs/">https://www.jaegertracing.io/docs/</a></li>
+</ol>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>Over the past seven days, we’ve taken a comprehensive journey through OpenTelemetry, from understanding the basic concepts to implementing a complete observability pipeline. We’ve learned how to:</p>
+
+<ol>
+  <li><strong>Understand Observability</strong>: Grasp the fundamentals of observability and distributed tracing</li>
+  <li><strong>Set Up Infrastructure</strong>: Configure the OpenTelemetry Collector and visualization tools</li>
+  <li><strong>Instrument Applications</strong>: Implement both manual and automatic instrumentation</li>
+  <li><strong>Connect Services</strong>: Propagate context across service boundaries</li>
+  <li><strong>Correlate Data</strong>: Link traces with logs for a complete picture</li>
+  <li><strong>Visualize and Analyze</strong>: Explore and derive insights from telemetry data</li>
+</ol>
+
+<p>OpenTelemetry provides a powerful, vendor-neutral approach to observability that works across languages, frameworks, and backends. By adopting OpenTelemetry, you gain flexibility, standardization, and a future-proof observability strategy.</p>
+
+<p>Remember, observability is not just about collecting data—it’s about gaining insights that help you understand, troubleshoot, and optimize your systems. With the knowledge and skills you’ve gained in this challenge, you’re well-equipped to implement effective observability in your own applications.</p>
+
+<p>Thank you for joining me on this journey, and happy observing!</p>
+<hr>
+<div class="share-holder">
+  <span class="share-label">Share on: </span>
+  <ul class="share-buttons">
+    
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-06-01-7-days-otel-day-7-visualization-and-analysis&amp;text=7%20Days%20of%20OpenTelemetry:%20Day%207%20-%20Visualization%20and%20Analysis%20-%20Vitor%20Vasconcellos" aria-label="Twitter" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Twitter" class="hover-effect-big">
+          <i class="fa fa-twitter-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-06-01-7-days-otel-day-7-visualization-and-analysis" aria-label="Facebook" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Facebook" class="hover-effect-big">
+          <i class="fa fa-facebook-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://t.me/share/url?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-06-01-7-days-otel-day-7-visualization-and-analysis&amp;text=7%20Days%20of%20OpenTelemetry:%20Day%207%20-%20Visualization%20and%20Analysis%20-%20Vitor%20Vasconcellos" aria-label="Telegram" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Telegram" class="hover-effect-big">
+          <i class="fa fa-telegram fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-06-01-7-days-otel-day-7-visualization-and-analysis" aria-label="LinkedIn" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="LinkedIn" class="hover-effect-big">
+          <i class="fa fa-linkedin-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="mailto:?subject=7%20Days%20of%20OpenTelemetry:%20Day%207%20-%20Visualization%20and%20Analysis%20-%20Vitor%20Vasconcellos&amp;body=7%20Days%20of%20OpenTelemetry:%20Day%207%20-%20Visualization%20and%20Analysis%20-%20Vitor%20Vasconcellos%20http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-06-01-7-days-otel-day-7-visualization-and-analysis" aria-label="Email" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Email" class="hover-effect-big">
+          <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="javascript:void(0);" aria-label="Copy link" role="button" onclick="copyToClipboard('http://0.0.0.0:4000/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis', 'Link copied!')" id="copytoclipboard" data-toggle="tooltip" data-placement="top" title="Copy link" class="hover-effect-big">
+          <i class="fa fa-link fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+</div>
+</div>
+
+    <div class="pagination_wrapper">
+  <nav aria-label="Page navigation">
+    <ul class="pagination" style="opacity:0">
+    <li><a href="javascript:void(0);" role="button">1</a></li></ul>
+  </nav>
+</div>
+
+</div><div class="footer-wrapper">
+  <div class="footer-container">
+    <footer translate="no">
+      <div class="footer-text footer-text-centered long-copyright">
+          <p>&copy; 2025 Vitor Vasconcellos. </p><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" data-tooltip-no-hide title="Except where otherwise noted, content on this web site is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.">
+              <img src="/assets/img/default/cc/cc.svg" alt="cc" width="12" height="12">&nbsp;<img src="/assets/img/default/cc/by.svg" alt="by" width="12" height="12">&nbsp;<img src="/assets/img/default/cc/sa.svg" alt="sa" width="12" height="12">&nbsp;<p>Some rights reserved.</p>
+            </a></div>
+      <p class="footer-powered"><span>Pwrd by </span><a href="https://github.com/MrGreensWorkshop/MrGreen-JekyllTheme" target="_blank" rel="noopener noreferrer">Mr. Green</a></p>
+    </footer>
+  </div>
+</div>
+<div class="scroll-to-top-container">
+        <a id="scroll-to-top" href="#main-wrapper" role="button" aria-label="Back to top" class="hover-effect"><i class="fa fa-angle-up"></i></a>
+      </div></div>
+
+    <div class="searchbox-container">
+  <form id="searchbox-form" autocomplete="off">
+    <input type="search" id="search-box" placeholder="Search"
+    onkeyup="if(this.value!==''){document.getElementById('search-results').style.display = 'block';}"
+    onfocusout="this.value='';"
+    onblur="setTimeout(function(){ document.getElementById('search-results').style.display = 'none'; }, 100);">
+    <ul id="search-results" ></ul>
+  </form>
+</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v0.4.1/dist/bootstrap-toc.min.js"></script>
+
+<script src="/assets/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script>
+      $('.imgViewer[data-no-image-viewer]').css("cursor", "unset");
+      $(function () {
+        $('.imgViewer:not([data-no-image-viewer])').magnificPopup({
+          type: 'image'
+          ,image: {
+            titleSrc: 'alt'
+            /* Error message */
+            ,tError: "The image could not be loaded.<br><br>%url%"
+            /* Set to null to disable zoom out cursor. */
+            /*,cursor: null */
+          }
+          ,closeOnContentClick: true
+          ,showCloseBtn: false
+          ,zoom: {
+            /* By default it's false, so don't forget to enable it */
+            enabled: true
+            /* duration of the effect, in milliseconds */
+            ,duration: 300
+            /* CSS transition easing function */
+            ,easing: 'ease-in-out'
+          }
+        });
+      });
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js"></script>
+    <script>
+      /* lazy loads elements with default selector as '.lozad' */
+      const observer = lozad();
+      observer.observe();
+    </script>
+
+<script>
+      PagerPageNumbers.setProperties({
+        paginatorListContainerName: ".pagination_wrapper .pagination"
+        ,pageList: ["/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis", "/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation", "/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy", "/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy", "/posts/2025-05-28-7-days-otel-day-3-setting-up-collector", "/posts/2025-05-27-7-days-otel-day-2-understanding-distributed-tracing", "/posts/2025-05-26-7-days-otel-day-1-introduction-to-observability-and-opentelemetrytel", "/posts/2024-07-26-guia-contribuicao-otel-docs-pt"]
+        ,firstButtonName: "First"
+        ,lastButtonName: "Last"
+        ,prevButtonName: "«"
+        ,nextButtonName: "»"
+      });
+    </script>
+
+
+
+<script src="/assets/js/simple-jekyll-search-1.9.2.min.js"></script><script>
+  function loadSearch(jsonData, searchParam) {
+    if (!jsonData) jsonData = '/query/search.json';
+    var searchInput = document.getElementById('search-box');
+
+    const simpleJekyllSearch = SimpleJekyllSearch({
+      searchInput: searchInput
+      ,resultsContainer: document.getElementById('search-results')
+      ,json: jsonData
+      ,searchResultTemplate: '<li> <a href="{url}"> <div> <div class="title">{title}</div> <div class="date">{date}</div> <div style="clear: both;"></div> </div> </a></li>'
+      ,noResultsText: '<li>No results were found.</li>'
+      ,limit: 10
+      ,fuzzy: false
+      ,formSubmit: document.getElementById('searchbox-form')
+    });
+
+    if (searchParam) {
+      searchInput.value = searchParam;
+      searchInput.focus();
+      searchInput.disabled=false;
+      setTimeout(function(){
+        simpleJekyllSearch.search(searchParam);
+      }, 400);
+    }
+  }
+
+  </script>
+
+<script>
+    function isEmpty(value) {
+      if (value === "" || value === null || typeof value === "undefined") return true;
+      return false;
+    }
+
+    function getQueryParam (param, mach = true) {
+      var queryString = window.location.search.substring(1);
+      if (isEmpty(queryString)) return null;
+      var queries = queryString.split("&");
+      for (var i in queries) {
+        var pair = decodeURIComponent(queries[i]).split("=");
+        if (mach == true){
+          if (pair[0] == param) {
+            if (isEmpty(pair[1]) === false) return pair[1];
+          }
+        }else{
+          return pair;
+        }
+        break;
+      }
+      return null;
+    }
+
+    const searchParam = getQueryParam('search');
+
+    (async () => {
+      let resp = await fetch('/query/search.json');
+      if (!resp.ok) return;
+      let jsonData = await resp.json();
+      loadSearch(jsonData, searchParam);
+    })();
+  </script>
+
+
+
+<script>
+  CookieConsent.consentSettingHtml = "<div class=\"consent-settings\"> <h5>Cookie settings</h5> <br> <p class=\"info-text\">This website uses cookies to optimize site functionality. It will be activated with your approval. Please click each item below for cookie policy. Check <a href=\"/privacy-policy.html\">Privacy policy</a>.</p> <table> <tr> <td onclick=\"$('.info[data-consent-info=necessary]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Strictly necessary cookies</p> </td> <td> <span class=\"active_text\">Always active</span></td> </tr> </table> <div class=\"info\" data-consent-info=\"necessary\"> <p>These cookies are essential for the website function and cannot be disable. They are usually set when site function like color scheme etc. is changed. These cookies do not store any personally identifiable information. Enables storage related to security such as authentication functionality, fraud prevention, and other user protection. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=analytics]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Performance cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" checked=\"checked\" data-consent=\"analytics\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"analytics\"> <p>Enables storage (such as cookies) related to analytics e.g. visit duration. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=preferences]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Functionality cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" data-consent=\"preferences\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"preferences\"> <p>Enables storage that supports the functionality of the website or app e.g. language settings. Enables storage related to personalization e.g. video recommendations. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=advertising]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Targeting and advertising cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" data-consent=\"advertising\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"advertising\"> <p>Enables storage (such as cookies) related to advertising. </p> </div> <br> <div class=\"button-holder\"> <a href=\"javascript:void(0);\" class=\"btn-base btn-left\" onclick=\"CookieConsent.consentSettingDone('deny');\" role=\"button\" rel=\"nofollow\">Deny</a> <a href=\"javascript:void(0);\" class=\"btn-base btn-priority\" onclick=\"CookieConsent.consentSettingDone('accept');\" role=\"button\" rel=\"nofollow\">Allow all</a> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentSettingDone('save');\" role=\"button\" rel=\"nofollow\">Allow selection</a> </div> </div>";
+  CookieConsent.consentSettingSlideType = 'slideBoxTopToDown';
+  CookieConsent.consentBarHtml = "<div class=\"consent-bar\"> <a class=\"close-button\" href=\"javascript:void(0);\" onclick=\"CookieConsent.hideConsentBar();\" aria-label=\"Close\" role=\"button\" rel=\"nofollow\"><i class=\"fa-fw fa fa-times\"></i></a> <p>This website uses cookies to optimize site functionality. It will be activated with your approval. Check <a href=\"/privacy-policy.html\">Privacy policy</a>.</p> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentBarDone('deny');\" role=\"button\" rel=\"nofollow\">Deny</a> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentBarDone('settings');\" role=\"button\" rel=\"nofollow\">Customize</a> <a href=\"javascript:void(0);\" class=\"btn-base btn-priority\" onclick=\"CookieConsent.consentBarDone('accept');\" role=\"button\" rel=\"nofollow\">Allow all</a> </div>";
+  CookieConsent.consent_items = JSON.parse('{"necessary":{"group":["security_storage"],"value":"granted","wait_for_update":500,"cookie_domain":"","no_check_box":true},"analytics":{"group":["analytics_storage"],"value":"denied"},"preferences":{"group":["functionality_storage","personalization_storage"],"value":"denied"},"advertising":{"group":["ad_storage"],"value":"denied"}}');
+  CookieConsent.hideConsentBarWithSaveButton = true;
+
+  const consent_settings = CookieConsent.getConsentSettings();
+  const default_configs = JSON.parse('{"anonymize_ip":true,"ads_data_redaction":true,"cookie_flags":"SameSite=None;Secure"}');
+</script>
+<script>
+  SlidingMsgBox.html = "<div class=\"slideBox\"> <a class=\"close-button\" href=\"javascript:void(0);\" aria-label=\"Close\" role=\"button\" rel=\"nofollow\"><i class=\"fa-fw fa fa-times\"></i></a> </div>";
+</script>
+</body>
+</html>
+

@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>7 Days of OpenTelemetry: Day 6 - Context Propagation and ...</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+</noscript>
+
+
+
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="manifest" href="/assets/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#f0f0f0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Vitor Vasconcellos's App">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="msapplication-starturl" content="/">
+  <meta name="application-name" content="Vitor Vasconcellos's App">
+  <meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+
+    <meta name="keywords" content="opentelemetry, observability, 7-days-of-opentelemetry">
+
+  <meta name="description" content="Day 6: Context Propagation and Logs Correlation Welcome to Day 6 of our “7 Days of OpenTelemetry” challenge! In the previous days, we’ve explored t...">
+  <meta name="robots" content="index, follow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7 Days of OpenTelemetry: Day 6 - Context Propagation and Logs Corre...">
+
+<meta name="twitter:description" content="Day 6: Context Propagation and Logs Correlation Welcome to Day 6 of our “7 Days of OpenTelemetry” challenge! In the previous days, we’ve explored the...">
+<meta name="twitter:image" content="http://0.0.0.0:4000/assets/img/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation.png">
+<meta property="og:site_name" content="Vitor Vasconcellos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7 Days of OpenTelemetry: Day 6 - Context Propag...">
+<meta property="og:description" content="Day 6: Context Propagation and Logs Correlation Welcome to Day 6 of our “7 Days of OpenTelemetry” challenge! In the previous days, we’ve explored t...">
+<meta property="og:url" content="http://0.0.0.0:4000/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation">
+<meta property="og:image" content="http://0.0.0.0:4000/assets/img/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation.png">
+  <meta property="article:author" content="Vitor Vasconcellos">
+  <meta property="article:section" content="">
+  <meta property="article:tag" content="opentelemetry">
+  <meta property="article:tag" content="observability">
+  <meta property="article:tag" content="7-days-of-opentelemetry">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org"
+  ,"@graph": [
+    {
+      "@type": "Person"
+      ,"@id": "http://0.0.0.0:4000/#person"
+      ,"name": "Vitor Vasconcellos"
+      ,"url": "http://0.0.0.0:4000/tabs/about.html"
+      ,"image": "http://0.0.0.0:4000/assets/img/about/about.jpg"
+      ,"description": "Vitor Vasconcellos is a Software Engineer, open-source contributor and observability enthusiast."
+  },{
+    "@type": "WebSite"
+    ,"@id": "http://0.0.0.0:4000/#website"
+    ,"url": "http://0.0.0.0:4000/"
+    ,"name": "Vitor Vasconcellos"
+    ,"description": "Vitor Vasconcellos is a Software Engineer, open-source contributor and observability enthusiast."
+    ,"publisher": {"@id": "http://0.0.0.0:4000/#person"}
+    ,"inLanguage": "en-US"
+    ,"sameAs": ["https://github.com/vitorvasc","https://www.linkedin.com/in/vvasconcellos","https://bsky.app/profile/vasconcellos.dev"]
+    ,"copyrightHolder" : {"@id": "http://0.0.0.0:4000/#person"}
+    ,"copyrightYear" : "2025"
+  },{
+    "@type": "WebPage"
+    ,"@id": "http://0.0.0.0:4000/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation#webpage"
+    ,"url": "http://0.0.0.0:4000/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation"
+    ,"name": "7 Days of OpenTelemetry: Day 6 - Context Propagation and Logs Correlation"
+    ,"isPartOf": {"@id": "http://0.0.0.0:4000/#website"}
+    ,"breadcrumb": {"@id": "http://0.0.0.0:4000/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation#breadcrumb"}
+    ,"primaryImageOfPage": "http://0.0.0.0:4000/assets/img/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation.png"
+    ,"description": "Day 6: Context Propagation and Logs Correlation Welcome to Day 6 of our “7 Days of OpenTelemetry” challenge! In the previous days, we’ve explored t..."
+    ,"inLanguage": "en-US"
+    ,"potentialAction": {
+      "@type": "ReadAction"
+      ,"target": "http://0.0.0.0:4000/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation"
+    }
+  },{
+      "@type": "BreadcrumbList",
+      "@id": "http://0.0.0.0:4000/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem"
+          ,"position": 1
+          ,"name": "Home"
+          ,"item": "http://0.0.0.0:4000/"
+        },
+        {
+          "@type": "ListItem"
+          ,"position": 2
+          ,"name": "Blog"
+          ,"item": "http://0.0.0.0:4000/tabs/blog/"
+        },
+        {
+          "@type": "ListItem"
+          ,"position": 3
+          ,"name": "7 Days of OpenTelemetry: Day 6 - Context Propagation and Logs Correlation"
+        }
+      ]
+    },{
+      "@type": "BlogPosting"
+      ,"@id": "http://0.0.0.0:4000/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation#content"
+      ,"isPartOf": {"@id": "http://0.0.0.0:4000/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation#webpage"}
+      ,"mainEntityOfPage": {"@id": "http://0.0.0.0:4000/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation#webpage"}
+      ,"publisher": {"@id": "http://0.0.0.0:4000/#person"}
+      ,"author": {"@id": "http://0.0.0.0:4000/#person"}
+      ,"inLanguage": "en-US"
+      ,"headline": "7 Days of OpenTelemetry: Day 6 - Context Propagation and Logs Correlation"
+      ,"image": "http://0.0.0.0:4000/assets/img/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation.png"
+      ,"thumbnailUrl": "http://0.0.0.0:4000/assets/img/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation.png"
+      ,"articleSection": ["opentelemetry", "observability", "7-days-of-opentelemetry"]
+      ,"description": "Day 6: Context Propagation and Logs Correlation Welcome to Day 6 of our “7 Days of OpenTelemetry” challenge! In the previous days, we’ve explored t..."
+      ,"copyrightHolder" : {"@id": "http://0.0.0.0:4000/#person"}
+      ,"copyrightYear" : "2025"
+      ,"wordCount": 2822
+      ,"articleBody": "Day 6: Context Propagation and Logs Correlation Welcome to Day 6 of our “7 Days of OpenTelemetry” challenge! In the previous days, we’ve explored the fundamentals of observability, set up the OpenTelemetry Collector, and implemented both manual and automatic instrumentation. Today, we’ll dive into two critical aspects of distributed tracing: context propagation and logs correlation. The Challenge of Distributed Tracing In a microservices architecture, a single user request might span multiple services. To create a complete trace of this request, we need to: Propagate context between services, so each service knows it’s handling part of the same request Correlate logs with traces, so we can see the detailed logs associated with each span Without these capabilities, we’d have disconnected spans and logs, making it difficult to understand the full picture of a request’s journey through our system. Understanding Context Propagation Context propagation is the mechanism that connects spans across service boundaries. It works by passing trace information (trace ID, span ID, etc.) from one service to another, typically through HTTP headers, message queues, or other inter-service communication channels. How Context Propagation Works Service A creates a span and adds trace context to outgoing requests Service B extracts the trace context from incoming requests and creates child spans The spans from both services are connected in the resulting trace This process creates a complete trace that spans multiple services, giving you end-to-end visibility into the request’s journey. W3C Trace Context Standard To ensure interoperability between different tracing systems, the W3C has defined a standard for trace context propagation called W3C Trace Context. This standard defines: traceparent: Contains the trace ID, span ID, and trace flags tracestate: Allows vendors to add custom information OpenTelemetry implements this standard by default, ensuring compatibility with other systems that follow the same standard. Implementing Context Propagation Let’s create a simple example with two services that communicate via HTTP to demonstrate context propagation: Frontend Service: Receives user requests and calls the Backend Service Backend Service: Processes requests from the Frontend Service Setting Up the Project First, let’s create the necessary directories: mkdir -p otel-context/cmd/frontend mkdir -p otel-context/cmd/backend cd otel-context Initialize a Go module: go mod init github.com/yourusername/otel-context Add the necessary dependencies: go get go.opentelemetry.io/otel \\ go.opentelemetry.io/otel/trace \\ go.opentelemetry.io/otel/sdk \\ go.opentelemetry.io/otel/exporters/otlp/otlptrace \\ go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc \\ go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp Creating a Shared Telemetry Package Let’s create a shared package for telemetry initialization. Create internal/telemetry/telemetry.go: package telemetry import ( \"context\" \"log\" \"time\" \"go.opentelemetry.io/otel\" \"go.opentelemetry.io/otel/exporters/otlp/otlptrace\" \"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc\" \"go.opentelemetry.io/otel/propagation\" \"go.opentelemetry.io/otel/sdk/resource\" sdktrace \"go.opentelemetry.io/otel/sdk/trace\" semconv \"go.opentelemetry.io/otel/semconv/v1.4.0\" \"google.golang.org/grpc\" \"google.golang.org/grpc/credentials/insecure\" ) // InitTracer initializes the OpenTelemetry tracer func InitTracer(serviceName string) func(context.Context) error { ctx := context.Background() // Configure the exporter to use gRPC and connect to the Collector exporter, err := otlptrace.New( ctx, otlptracegrpc.NewClient( otlptracegrpc.WithInsecure(), otlptracegrpc.WithEndpoint(\"localhost:4317\"), otlptracegrpc.WithDialOption(grpc.WithBlock()), ), ) if err != nil { log.Fatalf(\"Failed to create exporter: %v\", err) } // Configure the resource with service information res, err := resource.New(ctx, resource.WithAttributes( semconv.ServiceNameKey.String(serviceName), semconv.ServiceVersionKey.String(\"0.1.0\"), ), ) if err != nil { log.Fatalf(\"Failed to create resource: %v\", err) } // Configure the trace provider with the exporter and resource tp := sdktrace.NewTracerProvider( sdktrace.WithSampler(sdktrace.AlwaysSample()), sdktrace.WithBatcher(exporter), sdktrace.WithResource(res), ) // Set the global trace provider otel.SetTracerProvider(tp) // Set the global propagator to propagate context between services otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator( propagation.TraceContext{}, // W3C Trace Context propagation.Baggage{}, // W3C Baggage )) // Return a function to shut down the exporter when the application exits return func(ctx context.Context) error { ctx, cancel := context.WithTimeout(ctx, 5*time.Second) defer cancel() return tp.Shutdown(ctx) } } This code is similar to our previous telemetry initialization, but it takes a service name parameter and explicitly sets up the W3C Trace Context propagator. Implementing the Backend Service Now, let’s implement the Backend Service. Create cmd/backend/main.go: package main import ( \"context\" \"encoding/json\" \"fmt\" \"log\" \"net/http\" \"os\" \"os/signal\" \"time\" \"github.com/yourusername/otel-context/internal/telemetry\" \"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp\" \"go.opentelemetry.io/otel\" \"go.opentelemetry.io/otel/attribute\" \"go.opentelemetry.io/otel/trace\" ) const tracerName = \"github.com/yourusername/otel-context/backend\" func main() { // Initialize the tracer shutdown := telemetry.InitTracer(\"otel-context-backend\") defer func() { if err := shutdown(context.Background()); err != nil { log.Fatalf(\"Error shutting down tracer: %v\", err) } }() // Set up HTTP handlers with automatic instrumentation http.Handle(\"/process\", otelhttp.NewHandler(http.HandlerFunc(handleProcess), \"handleProcess\")) // Start the server in a goroutine server := &amp;http.Server{Addr: \":8081\"} go func() { fmt.Println(\"Backend server starting on :8081...\") if err := server.ListenAndServe(); err != nil &amp;&amp; err != http.ErrServerClosed { log.Fatalf(\"Server failed to start: %v\", err) } }() // Wait for interrupt signal sigCh := make(chan os.Signal, 1) signal.Notify(sigCh, os.Interrupt) &lt;-sigCh fmt.Println(\"Shutting down...\") // Gracefully shut down the server ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second) defer cancel() if err := server.Shutdown(ctx); err != nil { log.Fatalf(\"Server shutdown failed: %v\", err) } } func handleProcess(w http.ResponseWriter, r *http.Request) { // Get the tracer tracer := otel.Tracer(tracerName) // The otelhttp handler has already created a span for us // We can access it through the request context ctx := r.Context() span := trace.SpanFromContext(ctx) // Log the trace and span IDs traceID := span.SpanContext().TraceID().String() spanID := span.SpanContext().SpanID().String() log.Printf(\"[TraceID: %s, SpanID: %s] Processing request\", traceID, spanID) // Create a child span for processing ctx, processSpan := tracer.Start(ctx, \"processData\") defer processSpan.End() // Extract the data from the request var data map[string]interface{} if err := json.NewDecoder(r.Body).Decode(&amp;data); err != nil { processSpan.RecordError(err) http.Error(w, err.Error(), http.StatusBadRequest) log.Printf(\"[TraceID: %s, SpanID: %s] Error decoding request: %v\", traceID, spanID, err) return } // Add attributes to the span processSpan.SetAttributes( attribute.String(\"data.id\", fmt.Sprintf(\"%v\", data[\"id\"])), attribute.String(\"data.value\", fmt.Sprintf(\"%v\", data[\"value\"])), ) // Log with trace context log.Printf(\"[TraceID: %s, SpanID: %s] Processing data: %v\", traceID, processSpan.SpanContext().SpanID().String(), data) // Simulate processing time.Sleep(100 * time.Millisecond) // Create a result result := map[string]interface{}{ \"id\": data[\"id\"], \"value\": data[\"value\"], \"result\": fmt.Sprintf(\"Processed %v\", data[\"value\"]), \"traceID\": traceID, } // Log the result with trace context log.Printf(\"[TraceID: %s, SpanID: %s] Processing complete: %v\", traceID, processSpan.SpanContext().SpanID().String(), result) // Return the result w.Header().Set(\"Content-Type\", \"application/json\") json.NewEncoder(w).Encode(result) } This Backend Service: Initializes OpenTelemetry with the service name “otel-context-backend” Sets up an HTTP handler with automatic instrumentation Extracts the trace context from incoming requests Creates child spans for processing Logs with trace and span IDs for correlation Implementing the Frontend Service Now, let’s implement the Frontend Service. Create cmd/frontend/main.go: package main import ( \"bytes\" \"context\" \"encoding/json\" \"fmt\" \"io/ioutil\" \"log\" \"net/http\" \"os\" \"os/signal\" \"time\" \"github.com/yourusername/otel-context/internal/telemetry\" \"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp\" \"go.opentelemetry.io/otel\" \"go.opentelemetry.io/otel/attribute\" \"go.opentelemetry.io/otel/trace\" ) const tracerName = \"github.com/yourusername/otel-context/frontend\" func main() { // Initialize the tracer shutdown := telemetry.InitTracer(\"otel-context-frontend\") defer func() { if err := shutdown(context.Background()); err != nil { log.Fatalf(\"Error shutting down tracer: %v\", err) } }() // Create an HTTP client with automatic instrumentation client := &amp;http.Client{ Transport: otelhttp.NewTransport(http.DefaultTransport), } // Set up HTTP handlers with automatic instrumentation http.Handle(\"/\", otelhttp.NewHandler(http.HandlerFunc(handleRoot), \"handleRoot\")) http.Handle(\"/api\", otelhttp.NewHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { handleAPI(w, r, client) }), \"handleAPI\")) // Start the server in a goroutine server := &amp;http.Server{Addr: \":8080\"} go func() { fmt.Println(\"Frontend server starting on :8080...\") if err := server.ListenAndServe(); err != nil &amp;&amp; err != http.ErrServerClosed { log.Fatalf(\"Server failed to start: %v\", err) } }() // Wait for interrupt signal sigCh := make(chan os.Signal, 1) signal.Notify(sigCh, os.Interrupt) &lt;-sigCh fmt.Println(\"Shutting down...\") // Gracefully shut down the server ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second) defer cancel() if err := server.Shutdown(ctx); err != nil { log.Fatalf(\"Server shutdown failed: %v\", err) } } func handleRoot(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, \"Welcome to the OpenTelemetry Context Propagation Demo!\\n\") fmt.Fprintf(w, \"Try calling /api?id=123&amp;value=test\\n\") } func handleAPI(w http.ResponseWriter, r *http.Request, client *http.Client) { // Get the tracer tracer := otel.Tracer(tracerName) // The otelhttp handler has already created a span for us // We can access it through the request context ctx := r.Context() span := trace.SpanFromContext(ctx) // Log the trace and span IDs traceID := span.SpanContext().TraceID().String() spanID := span.SpanContext().SpanID().String() log.Printf(\"[TraceID: %s, SpanID: %s] Handling API request\", traceID, spanID) // Get query parameters id := r.URL.Query().Get(\"id\") if id == \"\" { id = \"unknown\" } value := r.URL.Query().Get(\"value\") if value == \"\" { value = \"default\" } // Add attributes to the span span.SetAttributes( attribute.String(\"request.id\", id), attribute.String(\"request.value\", value), ) // Create a child span for calling the backend ctx, backendSpan := tracer.Start(ctx, \"callBackend\") defer backendSpan.End() // Log with trace context log.Printf(\"[TraceID: %s, SpanID: %s] Calling backend with id=%s, value=%s\", traceID, backendSpan.SpanContext().SpanID().String(), id, value) // Prepare the request to the backend data := map[string]interface{}{ \"id\": id, \"value\": value, } jsonData, err := json.Marshal(data) if err != nil { backendSpan.RecordError(err) http.Error(w, err.Error(), http.StatusInternalServerError) log.Printf(\"[TraceID: %s, SpanID: %s] Error marshaling data: %v\", traceID, backendSpan.SpanContext().SpanID().String(), err) return } // Create the request req, err := http.NewRequestWithContext(ctx, \"POST\", \"http://localhost:8081/process\", bytes.NewBuffer(jsonData)) if err != nil { backendSpan.RecordError(err) http.Error(w, err.Error(), http.StatusInternalServerError) log.Printf(\"[TraceID: %s, SpanID: %s] Error creating request: %v\", traceID, backendSpan.SpanContext().SpanID().String(), err) return } req.Header.Set(\"Content-Type\", \"application/json\") // Send the request to the backend // The otelhttp client will automatically propagate the trace context resp, err := client.Do(req) if err != nil { backendSpan.RecordError(err) http.Error(w, err.Error(), http.StatusInternalServerError) log.Printf(\"[TraceID: %s, SpanID: %s] Error calling backend: %v\", traceID, backendSpan.SpanContext().SpanID().String(), err) return } defer resp.Body.Close() // Read the response body, err := ioutil.ReadAll(resp.Body) if err != nil { backendSpan.RecordError(err) http.Error(w, err.Error(), http.StatusInternalServerError) log.Printf(\"[TraceID: %s, SpanID: %s] Error reading response: %v\", traceID, backendSpan.SpanContext().SpanID().String(), err) return } // Log the response with trace context log.Printf(\"[TraceID: %s, SpanID: %s] Received response: %s\", traceID, backendSpan.SpanContext().SpanID().String(), string(body)) // Return the response to the client w.Header().Set(\"Content-Type\", \"application/json\") w.Write(body) } This Frontend Service: Initializes OpenTelemetry with the service name “otel-context-frontend” Creates an HTTP client with automatic instrumentation Sets up HTTP handlers with automatic instrumentation Creates spans for processing and calling the backend Uses the instrumented HTTP client to propagate trace context to the backend Logs with trace and span IDs for correlation Running the Services Let’s run both services. In one terminal, start the Backend Service: go run cmd/backend/main.go In another terminal, start the Frontend Service: go run cmd/frontend/main.go Now, make a request to the Frontend Service: curl \"http://localhost:8080/api?id=123&amp;value=test\" You should see logs in both terminals with the same trace ID, indicating that the context has been propagated between the services. Viewing Traces in the Collector Check the Collector logs to see the distributed trace: docker-compose -f otel-collector/docker-compose.yaml logs You should see a single trace that spans both services, with spans for: The HTTP request to the Frontend Service The processing in the Frontend Service The HTTP request from the Frontend to the Backend Service The processing in the Backend Service This demonstrates successful context propagation between services. Understanding Logs Correlation While distributed tracing provides a high-level view of a request’s journey, logs provide detailed information about what happened during each step. Correlating logs with traces allows you to see the logs associated with each span, giving you both the big picture and the details. Why Logs Correlation Matters Imagine you’re investigating a performance issue in a distributed system: Traces show you which service is slow Logs tell you why it’s slow (e.g., a database query is taking too long) Without correlation, you’d have to manually match logs to traces, which is time-consuming and error-prone. How Logs Correlation Works Logs correlation works by including trace and span IDs in log entries. This allows you to: Find all logs associated with a specific trace See the logs in the context of the trace timeline Understand what happened during each span In our example, we’ve already implemented basic logs correlation by including trace and span IDs in our log messages: log.Printf(\"[TraceID: %s, SpanID: %s] Processing request\", traceID, spanID) Implementing Structured Logging with Trace IDs While our basic approach works, a more robust solution is to use a structured logging library that supports OpenTelemetry integration. Let’s update our Backend Service to use the zap logging library with OpenTelemetry integration. First, add the necessary dependencies: go get go.uber.org/zap Now, create a new file internal/logging/logging.go: package logging import ( \"context\" \"go.opentelemetry.io/otel/trace\" \"go.uber.org/zap\" \"go.uber.org/zap/zapcore\" ) // NewLogger creates a new zap logger func NewLogger() (*zap.Logger, error) { config := zap.NewProductionConfig() config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder return config.Build() } // WithTraceContext adds trace context to a zap logger func WithTraceContext(ctx context.Context, logger *zap.Logger) *zap.Logger { span := trace.SpanFromContext(ctx) if !span.SpanContext().IsValid() { return logger } traceID := span.SpanContext().TraceID().String() spanID := span.SpanContext().SpanID().String() return logger.With( zap.String(\"traceID\", traceID), zap.String(\"spanID\", spanID), ) } Now, update the Backend Service to use this structured logging: package main import ( \"context\" \"encoding/json\" \"fmt\" \"net/http\" \"os\" \"os/signal\" \"time\" \"github.com/yourusername/otel-context/internal/logging\" \"github.com/yourusername/otel-context/internal/telemetry\" \"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp\" \"go.opentelemetry.io/otel\" \"go.opentelemetry.io/otel/attribute\" \"go.opentelemetry.io/otel/trace\" \"go.uber.org/zap\" ) const tracerName = \"github.com/yourusername/otel-context/backend\" var logger *zap.Logger func main() { // Initialize the logger var err error logger, err = logging.NewLogger() if err != nil { fmt.Printf(\"Failed to create logger: %v\\n\", err) os.Exit(1) } defer logger.Sync() // Initialize the tracer shutdown := telemetry.InitTracer(\"otel-context-backend\") defer func() { if err := shutdown(context.Background()); err != nil { logger.Error(\"Error shutting down tracer\", zap.Error(err)) } }() // Set up HTTP handlers with automatic instrumentation http.Handle(\"/process\", otelhttp.NewHandler(http.HandlerFunc(handleProcess), \"handleProcess\")) // Start the server in a goroutine server := &amp;http.Server{Addr: \":8081\"} go func() { logger.Info(\"Backend server starting\", zap.String(\"address\", \":8081\")) if err := server.ListenAndServe(); err != nil &amp;&amp; err != http.ErrServerClosed { logger.Fatal(\"Server failed to start\", zap.Error(err)) } }() // Wait for interrupt signal sigCh := make(chan os.Signal, 1) signal.Notify(sigCh, os.Interrupt) &lt;-sigCh logger.Info(\"Shutting down...\") // Gracefully shut down the server ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second) defer cancel() if err := server.Shutdown(ctx); err != nil { logger.Fatal(\"Server shutdown failed\", zap.Error(err)) } } func handleProcess(w http.ResponseWriter, r *http.Request) { // Get the tracer tracer := otel.Tracer(tracerName) // The otelhttp handler has already created a span for us // We can access it through the request context ctx := r.Context() // Get a logger with trace context log := logging.WithTraceContext(ctx, logger) log.Info(\"Processing request\") // Create a child span for processing ctx, processSpan := tracer.Start(ctx, \"processData\") defer processSpan.End() // Update the logger with the new span context log = logging.WithTraceContext(ctx, logger) // Extract the data from the request var data map[string]interface{} if err := json.NewDecoder(r.Body).Decode(&amp;data); err != nil { processSpan.RecordError(err) http.Error(w, err.Error(), http.StatusBadRequest) log.Error(\"Error decoding request\", zap.Error(err)) return } // Add attributes to the span processSpan.SetAttributes( attribute.String(\"data.id\", fmt.Sprintf(\"%v\", data[\"id\"])), attribute.String(\"data.value\", fmt.Sprintf(\"%v\", data[\"value\"])), ) // Log with trace context log.Info(\"Processing data\", zap.Any(\"data\", data)) // Simulate processing time.Sleep(100 * time.Millisecond) // Create a result result := map[string]interface{}{ \"id\": data[\"id\"], \"value\": data[\"value\"], \"result\": fmt.Sprintf(\"Processed %v\", data[\"value\"]), \"traceID\": trace.SpanFromContext(ctx).SpanContext().TraceID().String(), } // Log the result with trace context log.Info(\"Processing complete\", zap.Any(\"result\", result)) // Return the result w.Header().Set(\"Content-Type\", \"application/json\") json.NewEncoder(w).Encode(result) } This updated Backend Service: Uses the zap logging library for structured logging Adds trace and span IDs to log entries automatically Updates the logger context when creating new spans The logs will now include trace and span IDs in a structured format, making it easier to correlate them with traces. Best Practices for Context Propagation and Logs Correlation Based on our example, here are some best practices: Context Propagation Use Standard Propagators: Stick to standard propagators like W3C Trace Context for interoperability. Propagate Context Across All Boundaries: Ensure context is propagated across all service boundaries, including HTTP, gRPC, message queues, etc. Use Automatic Instrumentation When Possible: Libraries like otelhttp handle context propagation automatically. Maintain Context in Asynchronous Operations: Pass context to goroutines, workers, and other asynchronous operations. Test Context Propagation: Verify that trace IDs are consistent across services. Logs Correlation Include Trace and Span IDs in Logs: Always include these IDs to enable correlation. Use Structured Logging: Structured logs are easier to parse and correlate. Update Logger Context with Span Changes: When creating new spans, update the logger context. Consider Log Levels: Use appropriate log levels to avoid overwhelming your logging system. Include Relevant Context: Add other relevant information to logs, such as user IDs, request IDs, etc. Cross-Language Implementation While our example uses Go, context propagation and logs correlation work similarly in other languages. Here’s a quick comparison: Java // Context propagation with Spring Boot @Bean public WebClient.Builder webClientBuilder() { return WebClient.builder() .filter(new TracingExchangeFilterFunction()); } // Logs correlation with SLF4J private static final Logger logger = LoggerFactory.getLogger(MyClass.class); void processRequest(Context context) { Span span = Span.current(); MDC.put(\"traceId\", span.getSpanContext().getTraceId()); MDC.put(\"spanId\", span.getSpanContext().getSpanId()); logger.info(\"Processing request\"); } Python # Context propagation with Flask app = Flask(__name__) FlaskInstrumentor().instrument_app(app) # HTTP client with context propagation session = requests.Session() RequestsInstrumentor().instrument_session(session) # Logs correlation def process_request(): span = trace.get_current_span() trace_id = span.get_span_context().trace_id span_id = span.get_span_context().span_id logger.info(f\"Processing request\", extra={\"trace_id\": trace_id, \"span_id\": span_id}) JavaScript (Node.js) // Context propagation with Express const app = express(); const opentelemetry = require('@opentelemetry/api'); const { ExpressInstrumentation } = require('@opentelemetry/instrumentation-express'); const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http'); const expressInstrumentation = new ExpressInstrumentation(); const httpInstrumentation = new HttpInstrumentation(); expressInstrumentation.enable(); httpInstrumentation.enable(); // Logs correlation function processRequest(req, res) { const span = opentelemetry.trace.getSpan(opentelemetry.context.active()); const traceId = span.spanContext().traceId; const spanId = span.spanContext().spanId; console.log(`[TraceID: ${traceId}, SpanID: ${spanId}] Processing request`); } The specific APIs vary, but the concepts are the same: propagate context between services and include trace and span IDs in logs. Conclusion In this installment, we’ve explored context propagation and logs correlation, which are essential for creating a complete observability picture in distributed systems. We’ve learned how to: Propagate context between services using W3C Trace Context Create distributed traces that span multiple services Correlate logs with traces using trace and span IDs Implement structured logging with trace context These capabilities allow you to track requests across service boundaries and see the detailed logs associated with each span, giving you both the big picture and the details. In tomorrow’s final installment, we’ll explore visualization and analysis, connecting our telemetry data to proper visualization tools and learning how to derive insights from it. Stay tuned, and happy tracing!"
+    }
+  ]
+}</script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="/assets/css/main.css" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v0.4.1/dist/bootstrap-toc.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
+<link href="/assets/css/nav-media.css" rel="stylesheet">
+
+  </head>
+
+  <body >
+    <script src="/assets/js/color-scheme-attr-init.js" data-mode="false"></script>
+    <nav class="navbar navbar-default top-nav">
+  <div class="navbar-header">
+    <button type="button" aria-label="Side menu" class="navbar-toggle collapsed pull-left top-nav-menu-toggle" data-toggle="collapse" data-target="#id_top-nav-menu-toggle" aria-expanded="false">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand top-nav-brand" href="/" translate="no">Vitor Vasconcellos</a>
+    </div>
+  <div class="color_scheme_switch_top_holder" data-toggle="tooltip" data-placement="bottom" title="Color scheme">
+  <label class="color-scheme-switch hover-effect">
+    <input type="checkbox" class="checkbox_color_switch" />
+    <span></span>
+  </label>
+</div>
+
+  
+</nav>
+<nav id="side-nav-container">
+  <div class="side-nav">
+    <div class="side-nav-brand">
+      <img src="/assets/img/default/profile_pic.png" alt="">
+      <div class="brand-holder">
+        <a href="/" translate="no">Vitor Vasconcellos</a>
+        </div>
+      <p>&nbsp;Software Engineer at @mercadolibre. Open-source contributor. I like observability things.</p>
+      <br>
+    </div>
+    <br>
+    <a href="javascript:void(0);" class="side-nav-close" role="button" rel="nofollow">
+        <i class="fa fa-angle-double-left fa-2x" aria-hidden="true"></i>
+      </a>
+    <hr>
+    <br>
+    <div class="side-nav-buttons">
+      <ul class="nav nav-pills nav-stacked">
+        <li ><a href="/" class=" hover-effect"><i class="fa-fw fa fa-home" aria-hidden="true"></i>Home</a></li><li ><a href="/tabs/blog/" class="active-page hover-effect"><i class="fa-fw fa fa-pencil-square-o" aria-hidden="true"></i>Blog</a></li><li ><a href="/tabs/about.html" class=" hover-effect"><i class="fa-fw fa fa-user-o" aria-hidden="true"></i>About</a></li></ul>
+    </div>
+    <br>
+    <br><div class="contact-container">
+  <hr>
+  <h3>Contact</h3>
+  <ul><li><a href="https://github.com/vitorvasc" aria-label="github" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><i class="fa fa-github" aria-hidden="true"></i></a></li><li>
+      <a href="javascript:void(0);" aria-label="email" class="hover-effect-big" onclick="setAddress('hi', 'vasconcellos.dev');"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li><li><a href="https://www.linkedin.com/in/vvasconcellos" aria-label="linkedin" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li><li><a href="https://bsky.app/profile/vasconcellos.dev" aria-label="bluesky" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><img src="/assets/img/default/bsky.svg" alt="bluesky"/></a></li></ul>
+</div>
+
+    <hr id="toc-view-top">
+    <div class="side-nav-footer" translate="no">
+        <p>&copy; 2025 Vitor Vasconcellos.</p>
+      </div>
+  </div>
+  <div class="side-nav-bottom-buttons-container">
+    <hr>
+    <ul>
+      <li><div class="color_scheme_switch_side_holder" data-toggle="tooltip" data-placement="top" title="Color scheme">
+  <label class="color-scheme-switch hover-effect">
+    <input type="checkbox" class="checkbox_color_switch" />
+    <span></span>
+  </label>
+</div>
+</li><li><div class="cookie-icon hover-effect" onclick="CookieConsent.showSettings();" data-toggle="tooltip" data-placement="top" title="Cookie settings">
+  <div class="cookie-wrapper">
+    <i class="fa fa-circle bitten-cookie" aria-hidden="true"></i>
+    <i class="fa fa-circle small-ellipse-icon" aria-hidden="true"></i>
+    <i class="fa fa-spinner inner-icon" aria-hidden="true"></i>
+    <i class="fa fa-circle-thin outer-icon" aria-hidden="true"></i>
+  </div>
+</div>
+</li></ul>
+  </div></nav>
+<div id="toc-container" class="movable">
+  <div class="panel panel-default">
+    <div class="panel-heading" data-toggle="tooltip" data-placement="top" title="Drag to move">
+      Contents
+      <span class="pull-right">
+        <a href="javascript:void(0);" aria-label="Close" role="button" rel="nofollow" class="close-button" onclick="document.getElementById('toc-container').style.display = 'none';">
+          <i class="fa fa-times" data-toggle="tooltip" data-placement="bottom" title="Close"></i>
+        </a>
+      </span>
+    </div>
+    <div class="panel-body">
+      <nav id="table-of-contents"></nav>
+    </div>
+  </div>
+</div>
+<div id="main-wrapper">
+      <div class="main-container"><div class="multipurpose-container post-container">
+  <div class="post-title"><h1>7 Days of OpenTelemetry: Day 6 - Context Propagation and Logs Correlation</h1></div><div class="meta">
+  <small>
+    &nbsp;<i class="fa fa-calendar"></i>&nbsp;&nbsp;May 31, 2025
+  </small>
+  <small>
+    &nbsp;&nbsp;&nbsp;<span><i class="fa fa-clock-o"></i>&nbsp;27 min read</span>
+  </small>
+  </div>
+<hr/>
+  <div class="markdown-style">
+    <h2 id="day-6-context-propagation-and-logs-correlation">Day 6: Context Propagation and Logs Correlation</h2>
+
+<p>Welcome to Day 6 of our “7 Days of OpenTelemetry” challenge! In the previous days, we’ve explored the fundamentals of observability, set up the OpenTelemetry Collector, and implemented both manual and automatic instrumentation. Today, we’ll dive into two critical aspects of distributed tracing: context propagation and logs correlation.</p>
+
+<h3 id="the-challenge-of-distributed-tracing">The Challenge of Distributed Tracing</h3>
+
+<p>In a microservices architecture, a single user request might span multiple services. To create a complete trace of this request, we need to:</p>
+
+<ol>
+  <li><strong>Propagate context</strong> between services, so each service knows it’s handling part of the same request</li>
+  <li><strong>Correlate logs</strong> with traces, so we can see the detailed logs associated with each span</li>
+</ol>
+
+<p>Without these capabilities, we’d have disconnected spans and logs, making it difficult to understand the full picture of a request’s journey through our system.</p>
+
+<h3 id="understanding-context-propagation">Understanding Context Propagation</h3>
+
+<p>Context propagation is the mechanism that connects spans across service boundaries. It works by passing trace information (trace ID, span ID, etc.) from one service to another, typically through HTTP headers, message queues, or other inter-service communication channels.</p>
+
+<h3 id="how-context-propagation-works">How Context Propagation Works</h3>
+
+<ol>
+  <li><strong>Service A</strong> creates a span and adds trace context to outgoing requests</li>
+  <li><strong>Service B</strong> extracts the trace context from incoming requests and creates child spans</li>
+  <li>The spans from both services are connected in the resulting trace</li>
+</ol>
+
+<p>This process creates a complete trace that spans multiple services, giving you end-to-end visibility into the request’s journey.</p>
+
+<h3 id="w3c-trace-context-standard">W3C Trace Context Standard</h3>
+
+<p>To ensure interoperability between different tracing systems, the W3C has defined a standard for trace context propagation called <a href="https://www.w3.org/TR/trace-context/">W3C Trace Context</a>. This standard defines:</p>
+
+<ol>
+  <li><strong>traceparent</strong>: Contains the trace ID, span ID, and trace flags</li>
+  <li><strong>tracestate</strong>: Allows vendors to add custom information</li>
+</ol>
+
+<p>OpenTelemetry implements this standard by default, ensuring compatibility with other systems that follow the same standard.</p>
+
+<h3 id="implementing-context-propagation">Implementing Context Propagation</h3>
+
+<p>Let’s create a simple example with two services that communicate via HTTP to demonstrate context propagation:</p>
+
+<ol>
+  <li><strong>Frontend Service</strong>: Receives user requests and calls the Backend Service</li>
+  <li><strong>Backend Service</strong>: Processes requests from the Frontend Service</li>
+</ol>
+
+<h4 id="setting-up-the-project">Setting Up the Project</h4>
+
+<p>First, let’s create the necessary directories:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> otel-context/cmd/frontend
+<span class="nb">mkdir</span> <span class="nt">-p</span> otel-context/cmd/backend
+<span class="nb">cd </span>otel-context
+</code></pre></div></div>
+
+<p>Initialize a Go module:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go mod init github.com/yourusername/otel-context
+</code></pre></div></div>
+
+<p>Add the necessary dependencies:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go get go.opentelemetry.io/otel <span class="se">\</span>
+       go.opentelemetry.io/otel/trace <span class="se">\</span>
+       go.opentelemetry.io/otel/sdk <span class="se">\</span>
+       go.opentelemetry.io/otel/exporters/otlp/otlptrace <span class="se">\</span>
+       go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc <span class="se">\</span>
+       go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp
+</code></pre></div></div>
+
+<h4 id="creating-a-shared-telemetry-package">Creating a Shared Telemetry Package</h4>
+
+<p>Let’s create a shared package for telemetry initialization. Create <code class="language-plaintext highlighter-rouge">internal/telemetry/telemetry.go</code>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">telemetry</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"context"</span>
+	<span class="s">"log"</span>
+	<span class="s">"time"</span>
+
+	<span class="s">"go.opentelemetry.io/otel"</span>
+	<span class="s">"go.opentelemetry.io/otel/exporters/otlp/otlptrace"</span>
+	<span class="s">"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"</span>
+	<span class="s">"go.opentelemetry.io/otel/propagation"</span>
+	<span class="s">"go.opentelemetry.io/otel/sdk/resource"</span>
+	<span class="n">sdktrace</span> <span class="s">"go.opentelemetry.io/otel/sdk/trace"</span>
+	<span class="n">semconv</span> <span class="s">"go.opentelemetry.io/otel/semconv/v1.4.0"</span>
+	<span class="s">"google.golang.org/grpc"</span>
+	<span class="s">"google.golang.org/grpc/credentials/insecure"</span>
+<span class="p">)</span>
+
+<span class="c">// InitTracer initializes the OpenTelemetry tracer</span>
+<span class="k">func</span> <span class="n">InitTracer</span><span class="p">(</span><span class="n">serviceName</span> <span class="kt">string</span><span class="p">)</span> <span class="k">func</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="n">ctx</span> <span class="o">:=</span> <span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">()</span>
+	
+	<span class="c">// Configure the exporter to use gRPC and connect to the Collector</span>
+	<span class="n">exporter</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">otlptrace</span><span class="o">.</span><span class="n">New</span><span class="p">(</span>
+		<span class="n">ctx</span><span class="p">,</span>
+		<span class="n">otlptracegrpc</span><span class="o">.</span><span class="n">NewClient</span><span class="p">(</span>
+			<span class="n">otlptracegrpc</span><span class="o">.</span><span class="n">WithInsecure</span><span class="p">(),</span>
+			<span class="n">otlptracegrpc</span><span class="o">.</span><span class="n">WithEndpoint</span><span class="p">(</span><span class="s">"localhost:4317"</span><span class="p">),</span>
+			<span class="n">otlptracegrpc</span><span class="o">.</span><span class="n">WithDialOption</span><span class="p">(</span><span class="n">grpc</span><span class="o">.</span><span class="n">WithBlock</span><span class="p">()),</span>
+		<span class="p">),</span>
+	<span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Failed to create exporter: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="c">// Configure the resource with service information</span>
+	<span class="n">res</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">resource</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span>
+		<span class="n">resource</span><span class="o">.</span><span class="n">WithAttributes</span><span class="p">(</span>
+			<span class="n">semconv</span><span class="o">.</span><span class="n">ServiceNameKey</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">serviceName</span><span class="p">),</span>
+			<span class="n">semconv</span><span class="o">.</span><span class="n">ServiceVersionKey</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"0.1.0"</span><span class="p">),</span>
+		<span class="p">),</span>
+	<span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Failed to create resource: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="c">// Configure the trace provider with the exporter and resource</span>
+	<span class="n">tp</span> <span class="o">:=</span> <span class="n">sdktrace</span><span class="o">.</span><span class="n">NewTracerProvider</span><span class="p">(</span>
+		<span class="n">sdktrace</span><span class="o">.</span><span class="n">WithSampler</span><span class="p">(</span><span class="n">sdktrace</span><span class="o">.</span><span class="n">AlwaysSample</span><span class="p">()),</span>
+		<span class="n">sdktrace</span><span class="o">.</span><span class="n">WithBatcher</span><span class="p">(</span><span class="n">exporter</span><span class="p">),</span>
+		<span class="n">sdktrace</span><span class="o">.</span><span class="n">WithResource</span><span class="p">(</span><span class="n">res</span><span class="p">),</span>
+	<span class="p">)</span>
+
+	<span class="c">// Set the global trace provider</span>
+	<span class="n">otel</span><span class="o">.</span><span class="n">SetTracerProvider</span><span class="p">(</span><span class="n">tp</span><span class="p">)</span>
+	
+	<span class="c">// Set the global propagator to propagate context between services</span>
+	<span class="n">otel</span><span class="o">.</span><span class="n">SetTextMapPropagator</span><span class="p">(</span><span class="n">propagation</span><span class="o">.</span><span class="n">NewCompositeTextMapPropagator</span><span class="p">(</span>
+		<span class="n">propagation</span><span class="o">.</span><span class="n">TraceContext</span><span class="p">{},</span>  <span class="c">// W3C Trace Context</span>
+		<span class="n">propagation</span><span class="o">.</span><span class="n">Baggage</span><span class="p">{},</span>       <span class="c">// W3C Baggage</span>
+	<span class="p">))</span>
+
+	<span class="c">// Return a function to shut down the exporter when the application exits</span>
+	<span class="k">return</span> <span class="k">func</span><span class="p">(</span><span class="n">ctx</span> <span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+		<span class="n">ctx</span><span class="p">,</span> <span class="n">cancel</span> <span class="o">:=</span> <span class="n">context</span><span class="o">.</span><span class="n">WithTimeout</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="m">5</span><span class="o">*</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span>
+		<span class="k">defer</span> <span class="n">cancel</span><span class="p">()</span>
+		<span class="k">return</span> <span class="n">tp</span><span class="o">.</span><span class="n">Shutdown</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This code is similar to our previous telemetry initialization, but it takes a service name parameter and explicitly sets up the W3C Trace Context propagator.</p>
+
+<h4 id="implementing-the-backend-service">Implementing the Backend Service</h4>
+
+<p>Now, let’s implement the Backend Service. Create <code class="language-plaintext highlighter-rouge">cmd/backend/main.go</code>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"context"</span>
+	<span class="s">"encoding/json"</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"log"</span>
+	<span class="s">"net/http"</span>
+	<span class="s">"os"</span>
+	<span class="s">"os/signal"</span>
+	<span class="s">"time"</span>
+
+	<span class="s">"github.com/yourusername/otel-context/internal/telemetry"</span>
+	<span class="s">"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"</span>
+	<span class="s">"go.opentelemetry.io/otel"</span>
+	<span class="s">"go.opentelemetry.io/otel/attribute"</span>
+	<span class="s">"go.opentelemetry.io/otel/trace"</span>
+<span class="p">)</span>
+
+<span class="k">const</span> <span class="n">tracerName</span> <span class="o">=</span> <span class="s">"github.com/yourusername/otel-context/backend"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c">// Initialize the tracer</span>
+	<span class="n">shutdown</span> <span class="o">:=</span> <span class="n">telemetry</span><span class="o">.</span><span class="n">InitTracer</span><span class="p">(</span><span class="s">"otel-context-backend"</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">shutdown</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">());</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Error shutting down tracer: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
+
+	<span class="c">// Set up HTTP handlers with automatic instrumentation</span>
+	<span class="n">http</span><span class="o">.</span><span class="n">Handle</span><span class="p">(</span><span class="s">"/process"</span><span class="p">,</span> <span class="n">otelhttp</span><span class="o">.</span><span class="n">NewHandler</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">HandlerFunc</span><span class="p">(</span><span class="n">handleProcess</span><span class="p">),</span> <span class="s">"handleProcess"</span><span class="p">))</span>
+
+	<span class="c">// Start the server in a goroutine</span>
+	<span class="n">server</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="n">http</span><span class="o">.</span><span class="n">Server</span><span class="p">{</span><span class="n">Addr</span><span class="o">:</span> <span class="s">":8081"</span><span class="p">}</span>
+	<span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Backend server starting on :8081..."</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">server</span><span class="o">.</span><span class="n">ListenAndServe</span><span class="p">();</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="o">&amp;&amp;</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">http</span><span class="o">.</span><span class="n">ErrServerClosed</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Server failed to start: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
+
+	<span class="c">// Wait for interrupt signal</span>
+	<span class="n">sigCh</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="n">os</span><span class="o">.</span><span class="n">Signal</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+	<span class="n">signal</span><span class="o">.</span><span class="n">Notify</span><span class="p">(</span><span class="n">sigCh</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">Interrupt</span><span class="p">)</span>
+	<span class="o">&lt;-</span><span class="n">sigCh</span>
+
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Shutting down..."</span><span class="p">)</span>
+	
+	<span class="c">// Gracefully shut down the server</span>
+	<span class="n">ctx</span><span class="p">,</span> <span class="n">cancel</span> <span class="o">:=</span> <span class="n">context</span><span class="o">.</span><span class="n">WithTimeout</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">(),</span> <span class="m">5</span><span class="o">*</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="n">cancel</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">server</span><span class="o">.</span><span class="n">Shutdown</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Server shutdown failed: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">handleProcess</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c">// Get the tracer</span>
+	<span class="n">tracer</span> <span class="o">:=</span> <span class="n">otel</span><span class="o">.</span><span class="n">Tracer</span><span class="p">(</span><span class="n">tracerName</span><span class="p">)</span>
+	
+	<span class="c">// The otelhttp handler has already created a span for us</span>
+	<span class="c">// We can access it through the request context</span>
+	<span class="n">ctx</span> <span class="o">:=</span> <span class="n">r</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>
+	<span class="n">span</span> <span class="o">:=</span> <span class="n">trace</span><span class="o">.</span><span class="n">SpanFromContext</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+	
+	<span class="c">// Log the trace and span IDs</span>
+	<span class="n">traceID</span> <span class="o">:=</span> <span class="n">span</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">TraceID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">()</span>
+	<span class="n">spanID</span> <span class="o">:=</span> <span class="n">span</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">SpanID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">()</span>
+	<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"[TraceID: %s, SpanID: %s] Processing request"</span><span class="p">,</span> <span class="n">traceID</span><span class="p">,</span> <span class="n">spanID</span><span class="p">)</span>
+	
+	<span class="c">// Create a child span for processing</span>
+	<span class="n">ctx</span><span class="p">,</span> <span class="n">processSpan</span> <span class="o">:=</span> <span class="n">tracer</span><span class="o">.</span><span class="n">Start</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">"processData"</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="n">processSpan</span><span class="o">.</span><span class="n">End</span><span class="p">()</span>
+	
+	<span class="c">// Extract the data from the request</span>
+	<span class="k">var</span> <span class="n">data</span> <span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="k">interface</span><span class="p">{}</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">json</span><span class="o">.</span><span class="n">NewDecoder</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">Body</span><span class="p">)</span><span class="o">.</span><span class="n">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">data</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">processSpan</span><span class="o">.</span><span class="n">RecordError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">Error</span><span class="p">(),</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusBadRequest</span><span class="p">)</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"[TraceID: %s, SpanID: %s] Error decoding request: %v"</span><span class="p">,</span> 
+			<span class="n">traceID</span><span class="p">,</span> <span class="n">spanID</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	
+	<span class="c">// Add attributes to the span</span>
+	<span class="n">processSpan</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span>
+		<span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"data.id"</span><span class="p">,</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"%v"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s">"id"</span><span class="p">])),</span>
+		<span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"data.value"</span><span class="p">,</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"%v"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s">"value"</span><span class="p">])),</span>
+	<span class="p">)</span>
+	
+	<span class="c">// Log with trace context</span>
+	<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"[TraceID: %s, SpanID: %s] Processing data: %v"</span><span class="p">,</span> 
+		<span class="n">traceID</span><span class="p">,</span> <span class="n">processSpan</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">SpanID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">(),</span> <span class="n">data</span><span class="p">)</span>
+	
+	<span class="c">// Simulate processing</span>
+	<span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">100</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span>
+	
+	<span class="c">// Create a result</span>
+	<span class="n">result</span> <span class="o">:=</span> <span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="k">interface</span><span class="p">{}{</span>
+		<span class="s">"id"</span><span class="o">:</span>      <span class="n">data</span><span class="p">[</span><span class="s">"id"</span><span class="p">],</span>
+		<span class="s">"value"</span><span class="o">:</span>   <span class="n">data</span><span class="p">[</span><span class="s">"value"</span><span class="p">],</span>
+		<span class="s">"result"</span><span class="o">:</span>  <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"Processed %v"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s">"value"</span><span class="p">]),</span>
+		<span class="s">"traceID"</span><span class="o">:</span> <span class="n">traceID</span><span class="p">,</span>
+	<span class="p">}</span>
+	
+	<span class="c">// Log the result with trace context</span>
+	<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"[TraceID: %s, SpanID: %s] Processing complete: %v"</span><span class="p">,</span> 
+		<span class="n">traceID</span><span class="p">,</span> <span class="n">processSpan</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">SpanID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">(),</span> <span class="n">result</span><span class="p">)</span>
+	
+	<span class="c">// Return the result</span>
+	<span class="n">w</span><span class="o">.</span><span class="n">Header</span><span class="p">()</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Content-Type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+	<span class="n">json</span><span class="o">.</span><span class="n">NewEncoder</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">Encode</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This Backend Service:</p>
+<ol>
+  <li>Initializes OpenTelemetry with the service name “otel-context-backend”</li>
+  <li>Sets up an HTTP handler with automatic instrumentation</li>
+  <li>Extracts the trace context from incoming requests</li>
+  <li>Creates child spans for processing</li>
+  <li>Logs with trace and span IDs for correlation</li>
+</ol>
+
+<h4 id="implementing-the-frontend-service">Implementing the Frontend Service</h4>
+
+<p>Now, let’s implement the Frontend Service. Create <code class="language-plaintext highlighter-rouge">cmd/frontend/main.go</code>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"bytes"</span>
+	<span class="s">"context"</span>
+	<span class="s">"encoding/json"</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"io/ioutil"</span>
+	<span class="s">"log"</span>
+	<span class="s">"net/http"</span>
+	<span class="s">"os"</span>
+	<span class="s">"os/signal"</span>
+	<span class="s">"time"</span>
+
+	<span class="s">"github.com/yourusername/otel-context/internal/telemetry"</span>
+	<span class="s">"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"</span>
+	<span class="s">"go.opentelemetry.io/otel"</span>
+	<span class="s">"go.opentelemetry.io/otel/attribute"</span>
+	<span class="s">"go.opentelemetry.io/otel/trace"</span>
+<span class="p">)</span>
+
+<span class="k">const</span> <span class="n">tracerName</span> <span class="o">=</span> <span class="s">"github.com/yourusername/otel-context/frontend"</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c">// Initialize the tracer</span>
+	<span class="n">shutdown</span> <span class="o">:=</span> <span class="n">telemetry</span><span class="o">.</span><span class="n">InitTracer</span><span class="p">(</span><span class="s">"otel-context-frontend"</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">shutdown</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">());</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Error shutting down tracer: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
+
+	<span class="c">// Create an HTTP client with automatic instrumentation</span>
+	<span class="n">client</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="n">http</span><span class="o">.</span><span class="n">Client</span><span class="p">{</span>
+		<span class="n">Transport</span><span class="o">:</span> <span class="n">otelhttp</span><span class="o">.</span><span class="n">NewTransport</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">DefaultTransport</span><span class="p">),</span>
+	<span class="p">}</span>
+
+	<span class="c">// Set up HTTP handlers with automatic instrumentation</span>
+	<span class="n">http</span><span class="o">.</span><span class="n">Handle</span><span class="p">(</span><span class="s">"/"</span><span class="p">,</span> <span class="n">otelhttp</span><span class="o">.</span><span class="n">NewHandler</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">HandlerFunc</span><span class="p">(</span><span class="n">handleRoot</span><span class="p">),</span> <span class="s">"handleRoot"</span><span class="p">))</span>
+	<span class="n">http</span><span class="o">.</span><span class="n">Handle</span><span class="p">(</span><span class="s">"/api"</span><span class="p">,</span> <span class="n">otelhttp</span><span class="o">.</span><span class="n">NewHandler</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">HandlerFunc</span><span class="p">(</span><span class="k">func</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">handleAPI</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">client</span><span class="p">)</span>
+	<span class="p">}),</span> <span class="s">"handleAPI"</span><span class="p">))</span>
+
+	<span class="c">// Start the server in a goroutine</span>
+	<span class="n">server</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="n">http</span><span class="o">.</span><span class="n">Server</span><span class="p">{</span><span class="n">Addr</span><span class="o">:</span> <span class="s">":8080"</span><span class="p">}</span>
+	<span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Frontend server starting on :8080..."</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">server</span><span class="o">.</span><span class="n">ListenAndServe</span><span class="p">();</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="o">&amp;&amp;</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">http</span><span class="o">.</span><span class="n">ErrServerClosed</span> <span class="p">{</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Server failed to start: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
+
+	<span class="c">// Wait for interrupt signal</span>
+	<span class="n">sigCh</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="n">os</span><span class="o">.</span><span class="n">Signal</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+	<span class="n">signal</span><span class="o">.</span><span class="n">Notify</span><span class="p">(</span><span class="n">sigCh</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">Interrupt</span><span class="p">)</span>
+	<span class="o">&lt;-</span><span class="n">sigCh</span>
+
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Shutting down..."</span><span class="p">)</span>
+	
+	<span class="c">// Gracefully shut down the server</span>
+	<span class="n">ctx</span><span class="p">,</span> <span class="n">cancel</span> <span class="o">:=</span> <span class="n">context</span><span class="o">.</span><span class="n">WithTimeout</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">(),</span> <span class="m">5</span><span class="o">*</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="n">cancel</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">server</span><span class="o">.</span><span class="n">Shutdown</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s">"Server shutdown failed: %v"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">handleRoot</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Fprintf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Welcome to the OpenTelemetry Context Propagation Demo!</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+	<span class="n">fmt</span><span class="o">.</span><span class="n">Fprintf</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">"Try calling /api?id=123&amp;value=test</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">handleAPI</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">,</span> <span class="n">client</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Client</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c">// Get the tracer</span>
+	<span class="n">tracer</span> <span class="o">:=</span> <span class="n">otel</span><span class="o">.</span><span class="n">Tracer</span><span class="p">(</span><span class="n">tracerName</span><span class="p">)</span>
+	
+	<span class="c">// The otelhttp handler has already created a span for us</span>
+	<span class="c">// We can access it through the request context</span>
+	<span class="n">ctx</span> <span class="o">:=</span> <span class="n">r</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>
+	<span class="n">span</span> <span class="o">:=</span> <span class="n">trace</span><span class="o">.</span><span class="n">SpanFromContext</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+	
+	<span class="c">// Log the trace and span IDs</span>
+	<span class="n">traceID</span> <span class="o">:=</span> <span class="n">span</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">TraceID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">()</span>
+	<span class="n">spanID</span> <span class="o">:=</span> <span class="n">span</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">SpanID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">()</span>
+	<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"[TraceID: %s, SpanID: %s] Handling API request"</span><span class="p">,</span> <span class="n">traceID</span><span class="p">,</span> <span class="n">spanID</span><span class="p">)</span>
+	
+	<span class="c">// Get query parameters</span>
+	<span class="n">id</span> <span class="o">:=</span> <span class="n">r</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">Query</span><span class="p">()</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">"id"</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">id</span> <span class="o">==</span> <span class="s">""</span> <span class="p">{</span>
+		<span class="n">id</span> <span class="o">=</span> <span class="s">"unknown"</span>
+	<span class="p">}</span>
+	
+	<span class="n">value</span> <span class="o">:=</span> <span class="n">r</span><span class="o">.</span><span class="n">URL</span><span class="o">.</span><span class="n">Query</span><span class="p">()</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">"value"</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s">""</span> <span class="p">{</span>
+		<span class="n">value</span> <span class="o">=</span> <span class="s">"default"</span>
+	<span class="p">}</span>
+	
+	<span class="c">// Add attributes to the span</span>
+	<span class="n">span</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span>
+		<span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"request.id"</span><span class="p">,</span> <span class="n">id</span><span class="p">),</span>
+		<span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"request.value"</span><span class="p">,</span> <span class="n">value</span><span class="p">),</span>
+	<span class="p">)</span>
+	
+	<span class="c">// Create a child span for calling the backend</span>
+	<span class="n">ctx</span><span class="p">,</span> <span class="n">backendSpan</span> <span class="o">:=</span> <span class="n">tracer</span><span class="o">.</span><span class="n">Start</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">"callBackend"</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="n">backendSpan</span><span class="o">.</span><span class="n">End</span><span class="p">()</span>
+	
+	<span class="c">// Log with trace context</span>
+	<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"[TraceID: %s, SpanID: %s] Calling backend with id=%s, value=%s"</span><span class="p">,</span> 
+		<span class="n">traceID</span><span class="p">,</span> <span class="n">backendSpan</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">SpanID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">(),</span> <span class="n">id</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+	
+	<span class="c">// Prepare the request to the backend</span>
+	<span class="n">data</span> <span class="o">:=</span> <span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="k">interface</span><span class="p">{}{</span>
+		<span class="s">"id"</span><span class="o">:</span>    <span class="n">id</span><span class="p">,</span>
+		<span class="s">"value"</span><span class="o">:</span> <span class="n">value</span><span class="p">,</span>
+	<span class="p">}</span>
+	<span class="n">jsonData</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">json</span><span class="o">.</span><span class="n">Marshal</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">backendSpan</span><span class="o">.</span><span class="n">RecordError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">Error</span><span class="p">(),</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusInternalServerError</span><span class="p">)</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"[TraceID: %s, SpanID: %s] Error marshaling data: %v"</span><span class="p">,</span> 
+			<span class="n">traceID</span><span class="p">,</span> <span class="n">backendSpan</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">SpanID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">(),</span> <span class="n">err</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	
+	<span class="c">// Create the request</span>
+	<span class="n">req</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">NewRequestWithContext</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">"POST"</span><span class="p">,</span> <span class="s">"http://localhost:8081/process"</span><span class="p">,</span> <span class="n">bytes</span><span class="o">.</span><span class="n">NewBuffer</span><span class="p">(</span><span class="n">jsonData</span><span class="p">))</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">backendSpan</span><span class="o">.</span><span class="n">RecordError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">Error</span><span class="p">(),</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusInternalServerError</span><span class="p">)</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"[TraceID: %s, SpanID: %s] Error creating request: %v"</span><span class="p">,</span> 
+			<span class="n">traceID</span><span class="p">,</span> <span class="n">backendSpan</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">SpanID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">(),</span> <span class="n">err</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	<span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Content-Type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+	
+	<span class="c">// Send the request to the backend</span>
+	<span class="c">// The otelhttp client will automatically propagate the trace context</span>
+	<span class="n">resp</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">client</span><span class="o">.</span><span class="n">Do</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">backendSpan</span><span class="o">.</span><span class="n">RecordError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">Error</span><span class="p">(),</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusInternalServerError</span><span class="p">)</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"[TraceID: %s, SpanID: %s] Error calling backend: %v"</span><span class="p">,</span> 
+			<span class="n">traceID</span><span class="p">,</span> <span class="n">backendSpan</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">SpanID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">(),</span> <span class="n">err</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	<span class="k">defer</span> <span class="n">resp</span><span class="o">.</span><span class="n">Body</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+	
+	<span class="c">// Read the response</span>
+	<span class="n">body</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">ioutil</span><span class="o">.</span><span class="n">ReadAll</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">Body</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">backendSpan</span><span class="o">.</span><span class="n">RecordError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">Error</span><span class="p">(),</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusInternalServerError</span><span class="p">)</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"[TraceID: %s, SpanID: %s] Error reading response: %v"</span><span class="p">,</span> 
+			<span class="n">traceID</span><span class="p">,</span> <span class="n">backendSpan</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">SpanID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">(),</span> <span class="n">err</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	
+	<span class="c">// Log the response with trace context</span>
+	<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"[TraceID: %s, SpanID: %s] Received response: %s"</span><span class="p">,</span> 
+		<span class="n">traceID</span><span class="p">,</span> <span class="n">backendSpan</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">SpanID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">(),</span> <span class="kt">string</span><span class="p">(</span><span class="n">body</span><span class="p">))</span>
+	
+	<span class="c">// Return the response to the client</span>
+	<span class="n">w</span><span class="o">.</span><span class="n">Header</span><span class="p">()</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Content-Type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+	<span class="n">w</span><span class="o">.</span><span class="n">Write</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This Frontend Service:</p>
+<ol>
+  <li>Initializes OpenTelemetry with the service name “otel-context-frontend”</li>
+  <li>Creates an HTTP client with automatic instrumentation</li>
+  <li>Sets up HTTP handlers with automatic instrumentation</li>
+  <li>Creates spans for processing and calling the backend</li>
+  <li>Uses the instrumented HTTP client to propagate trace context to the backend</li>
+  <li>Logs with trace and span IDs for correlation</li>
+</ol>
+
+<h3 id="running-the-services">Running the Services</h3>
+
+<p>Let’s run both services. In one terminal, start the Backend Service:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go run cmd/backend/main.go
+</code></pre></div></div>
+
+<p>In another terminal, start the Frontend Service:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go run cmd/frontend/main.go
+</code></pre></div></div>
+
+<p>Now, make a request to the Frontend Service:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="s2">"http://localhost:8080/api?id=123&amp;value=test"</span>
+</code></pre></div></div>
+
+<p>You should see logs in both terminals with the same trace ID, indicating that the context has been propagated between the services.</p>
+
+<h3 id="viewing-traces-in-the-collector">Viewing Traces in the Collector</h3>
+
+<p>Check the Collector logs to see the distributed trace:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose <span class="nt">-f</span> otel-collector/docker-compose.yaml logs
+</code></pre></div></div>
+
+<p>You should see a single trace that spans both services, with spans for:</p>
+<ol>
+  <li>The HTTP request to the Frontend Service</li>
+  <li>The processing in the Frontend Service</li>
+  <li>The HTTP request from the Frontend to the Backend Service</li>
+  <li>The processing in the Backend Service</li>
+</ol>
+
+<p>This demonstrates successful context propagation between services.</p>
+
+<h2 id="understanding-logs-correlation">Understanding Logs Correlation</h2>
+
+<p>While distributed tracing provides a high-level view of a request’s journey, logs provide detailed information about what happened during each step. Correlating logs with traces allows you to see the logs associated with each span, giving you both the big picture and the details.</p>
+
+<h3 id="why-logs-correlation-matters">Why Logs Correlation Matters</h3>
+
+<p>Imagine you’re investigating a performance issue in a distributed system:</p>
+
+<ol>
+  <li><strong>Traces</strong> show you which service is slow</li>
+  <li><strong>Logs</strong> tell you why it’s slow (e.g., a database query is taking too long)</li>
+</ol>
+
+<p>Without correlation, you’d have to manually match logs to traces, which is time-consuming and error-prone.</p>
+
+<h3 id="how-logs-correlation-works">How Logs Correlation Works</h3>
+
+<p>Logs correlation works by including trace and span IDs in log entries. This allows you to:</p>
+
+<ol>
+  <li>Find all logs associated with a specific trace</li>
+  <li>See the logs in the context of the trace timeline</li>
+  <li>Understand what happened during each span</li>
+</ol>
+
+<p>In our example, we’ve already implemented basic logs correlation by including trace and span IDs in our log messages:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"[TraceID: %s, SpanID: %s] Processing request"</span><span class="p">,</span> <span class="n">traceID</span><span class="p">,</span> <span class="n">spanID</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="implementing-structured-logging-with-trace-ids">Implementing Structured Logging with Trace IDs</h3>
+
+<p>While our basic approach works, a more robust solution is to use a structured logging library that supports OpenTelemetry integration. Let’s update our Backend Service to use the <code class="language-plaintext highlighter-rouge">zap</code> logging library with OpenTelemetry integration.</p>
+
+<p>First, add the necessary dependencies:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go get go.uber.org/zap
+</code></pre></div></div>
+
+<p>Now, create a new file <code class="language-plaintext highlighter-rouge">internal/logging/logging.go</code>:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">logging</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"context"</span>
+
+	<span class="s">"go.opentelemetry.io/otel/trace"</span>
+	<span class="s">"go.uber.org/zap"</span>
+	<span class="s">"go.uber.org/zap/zapcore"</span>
+<span class="p">)</span>
+
+<span class="c">// NewLogger creates a new zap logger</span>
+<span class="k">func</span> <span class="n">NewLogger</span><span class="p">()</span> <span class="p">(</span><span class="o">*</span><span class="n">zap</span><span class="o">.</span><span class="n">Logger</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">config</span> <span class="o">:=</span> <span class="n">zap</span><span class="o">.</span><span class="n">NewProductionConfig</span><span class="p">()</span>
+	<span class="n">config</span><span class="o">.</span><span class="n">EncoderConfig</span><span class="o">.</span><span class="n">EncodeTime</span> <span class="o">=</span> <span class="n">zapcore</span><span class="o">.</span><span class="n">ISO8601TimeEncoder</span>
+	<span class="k">return</span> <span class="n">config</span><span class="o">.</span><span class="n">Build</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="c">// WithTraceContext adds trace context to a zap logger</span>
+<span class="k">func</span> <span class="n">WithTraceContext</span><span class="p">(</span><span class="n">ctx</span> <span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">logger</span> <span class="o">*</span><span class="n">zap</span><span class="o">.</span><span class="n">Logger</span><span class="p">)</span> <span class="o">*</span><span class="n">zap</span><span class="o">.</span><span class="n">Logger</span> <span class="p">{</span>
+	<span class="n">span</span> <span class="o">:=</span> <span class="n">trace</span><span class="o">.</span><span class="n">SpanFromContext</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+	<span class="k">if</span> <span class="o">!</span><span class="n">span</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">IsValid</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="n">logger</span>
+	<span class="p">}</span>
+	
+	<span class="n">traceID</span> <span class="o">:=</span> <span class="n">span</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">TraceID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">()</span>
+	<span class="n">spanID</span> <span class="o">:=</span> <span class="n">span</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">SpanID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">()</span>
+	
+	<span class="k">return</span> <span class="n">logger</span><span class="o">.</span><span class="n">With</span><span class="p">(</span>
+		<span class="n">zap</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"traceID"</span><span class="p">,</span> <span class="n">traceID</span><span class="p">),</span>
+		<span class="n">zap</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"spanID"</span><span class="p">,</span> <span class="n">spanID</span><span class="p">),</span>
+	<span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now, update the Backend Service to use this structured logging:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+	<span class="s">"context"</span>
+	<span class="s">"encoding/json"</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"net/http"</span>
+	<span class="s">"os"</span>
+	<span class="s">"os/signal"</span>
+	<span class="s">"time"</span>
+
+	<span class="s">"github.com/yourusername/otel-context/internal/logging"</span>
+	<span class="s">"github.com/yourusername/otel-context/internal/telemetry"</span>
+	<span class="s">"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"</span>
+	<span class="s">"go.opentelemetry.io/otel"</span>
+	<span class="s">"go.opentelemetry.io/otel/attribute"</span>
+	<span class="s">"go.opentelemetry.io/otel/trace"</span>
+	<span class="s">"go.uber.org/zap"</span>
+<span class="p">)</span>
+
+<span class="k">const</span> <span class="n">tracerName</span> <span class="o">=</span> <span class="s">"github.com/yourusername/otel-context/backend"</span>
+
+<span class="k">var</span> <span class="n">logger</span> <span class="o">*</span><span class="n">zap</span><span class="o">.</span><span class="n">Logger</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c">// Initialize the logger</span>
+	<span class="k">var</span> <span class="n">err</span> <span class="kt">error</span>
+	<span class="n">logger</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">NewLogger</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Failed to create logger: %v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+		<span class="n">os</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">defer</span> <span class="n">logger</span><span class="o">.</span><span class="n">Sync</span><span class="p">()</span>
+
+	<span class="c">// Initialize the tracer</span>
+	<span class="n">shutdown</span> <span class="o">:=</span> <span class="n">telemetry</span><span class="o">.</span><span class="n">InitTracer</span><span class="p">(</span><span class="s">"otel-context-backend"</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">shutdown</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">());</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="s">"Error shutting down tracer"</span><span class="p">,</span> <span class="n">zap</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
+
+	<span class="c">// Set up HTTP handlers with automatic instrumentation</span>
+	<span class="n">http</span><span class="o">.</span><span class="n">Handle</span><span class="p">(</span><span class="s">"/process"</span><span class="p">,</span> <span class="n">otelhttp</span><span class="o">.</span><span class="n">NewHandler</span><span class="p">(</span><span class="n">http</span><span class="o">.</span><span class="n">HandlerFunc</span><span class="p">(</span><span class="n">handleProcess</span><span class="p">),</span> <span class="s">"handleProcess"</span><span class="p">))</span>
+
+	<span class="c">// Start the server in a goroutine</span>
+	<span class="n">server</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="n">http</span><span class="o">.</span><span class="n">Server</span><span class="p">{</span><span class="n">Addr</span><span class="o">:</span> <span class="s">":8081"</span><span class="p">}</span>
+	<span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="n">logger</span><span class="o">.</span><span class="n">Info</span><span class="p">(</span><span class="s">"Backend server starting"</span><span class="p">,</span> <span class="n">zap</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"address"</span><span class="p">,</span> <span class="s">":8081"</span><span class="p">))</span>
+		<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">server</span><span class="o">.</span><span class="n">ListenAndServe</span><span class="p">();</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="o">&amp;&amp;</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">http</span><span class="o">.</span><span class="n">ErrServerClosed</span> <span class="p">{</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="s">"Server failed to start"</span><span class="p">,</span> <span class="n">zap</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
+
+	<span class="c">// Wait for interrupt signal</span>
+	<span class="n">sigCh</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="n">os</span><span class="o">.</span><span class="n">Signal</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+	<span class="n">signal</span><span class="o">.</span><span class="n">Notify</span><span class="p">(</span><span class="n">sigCh</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">Interrupt</span><span class="p">)</span>
+	<span class="o">&lt;-</span><span class="n">sigCh</span>
+
+	<span class="n">logger</span><span class="o">.</span><span class="n">Info</span><span class="p">(</span><span class="s">"Shutting down..."</span><span class="p">)</span>
+	
+	<span class="c">// Gracefully shut down the server</span>
+	<span class="n">ctx</span><span class="p">,</span> <span class="n">cancel</span> <span class="o">:=</span> <span class="n">context</span><span class="o">.</span><span class="n">WithTimeout</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">Background</span><span class="p">(),</span> <span class="m">5</span><span class="o">*</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="n">cancel</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">server</span><span class="o">.</span><span class="n">Shutdown</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">logger</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="s">"Server shutdown failed"</span><span class="p">,</span> <span class="n">zap</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">handleProcess</span><span class="p">(</span><span class="n">w</span> <span class="n">http</span><span class="o">.</span><span class="n">ResponseWriter</span><span class="p">,</span> <span class="n">r</span> <span class="o">*</span><span class="n">http</span><span class="o">.</span><span class="n">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c">// Get the tracer</span>
+	<span class="n">tracer</span> <span class="o">:=</span> <span class="n">otel</span><span class="o">.</span><span class="n">Tracer</span><span class="p">(</span><span class="n">tracerName</span><span class="p">)</span>
+	
+	<span class="c">// The otelhttp handler has already created a span for us</span>
+	<span class="c">// We can access it through the request context</span>
+	<span class="n">ctx</span> <span class="o">:=</span> <span class="n">r</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>
+	
+	<span class="c">// Get a logger with trace context</span>
+	<span class="n">log</span> <span class="o">:=</span> <span class="n">logging</span><span class="o">.</span><span class="n">WithTraceContext</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span>
+	
+	<span class="n">log</span><span class="o">.</span><span class="n">Info</span><span class="p">(</span><span class="s">"Processing request"</span><span class="p">)</span>
+	
+	<span class="c">// Create a child span for processing</span>
+	<span class="n">ctx</span><span class="p">,</span> <span class="n">processSpan</span> <span class="o">:=</span> <span class="n">tracer</span><span class="o">.</span><span class="n">Start</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">"processData"</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="n">processSpan</span><span class="o">.</span><span class="n">End</span><span class="p">()</span>
+	
+	<span class="c">// Update the logger with the new span context</span>
+	<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">WithTraceContext</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span>
+	
+	<span class="c">// Extract the data from the request</span>
+	<span class="k">var</span> <span class="n">data</span> <span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="k">interface</span><span class="p">{}</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">json</span><span class="o">.</span><span class="n">NewDecoder</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">Body</span><span class="p">)</span><span class="o">.</span><span class="n">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">data</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="n">processSpan</span><span class="o">.</span><span class="n">RecordError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+		<span class="n">http</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">Error</span><span class="p">(),</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusBadRequest</span><span class="p">)</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="s">"Error decoding request"</span><span class="p">,</span> <span class="n">zap</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	
+	<span class="c">// Add attributes to the span</span>
+	<span class="n">processSpan</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span>
+		<span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"data.id"</span><span class="p">,</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"%v"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s">"id"</span><span class="p">])),</span>
+		<span class="n">attribute</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">"data.value"</span><span class="p">,</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"%v"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s">"value"</span><span class="p">])),</span>
+	<span class="p">)</span>
+	
+	<span class="c">// Log with trace context</span>
+	<span class="n">log</span><span class="o">.</span><span class="n">Info</span><span class="p">(</span><span class="s">"Processing data"</span><span class="p">,</span> <span class="n">zap</span><span class="o">.</span><span class="n">Any</span><span class="p">(</span><span class="s">"data"</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+	
+	<span class="c">// Simulate processing</span>
+	<span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="m">100</span> <span class="o">*</span> <span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span>
+	
+	<span class="c">// Create a result</span>
+	<span class="n">result</span> <span class="o">:=</span> <span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="k">interface</span><span class="p">{}{</span>
+		<span class="s">"id"</span><span class="o">:</span>      <span class="n">data</span><span class="p">[</span><span class="s">"id"</span><span class="p">],</span>
+		<span class="s">"value"</span><span class="o">:</span>   <span class="n">data</span><span class="p">[</span><span class="s">"value"</span><span class="p">],</span>
+		<span class="s">"result"</span><span class="o">:</span>  <span class="n">fmt</span><span class="o">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">"Processed %v"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s">"value"</span><span class="p">]),</span>
+		<span class="s">"traceID"</span><span class="o">:</span> <span class="n">trace</span><span class="o">.</span><span class="n">SpanFromContext</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span><span class="o">.</span><span class="n">SpanContext</span><span class="p">()</span><span class="o">.</span><span class="n">TraceID</span><span class="p">()</span><span class="o">.</span><span class="n">String</span><span class="p">(),</span>
+	<span class="p">}</span>
+	
+	<span class="c">// Log the result with trace context</span>
+	<span class="n">log</span><span class="o">.</span><span class="n">Info</span><span class="p">(</span><span class="s">"Processing complete"</span><span class="p">,</span> <span class="n">zap</span><span class="o">.</span><span class="n">Any</span><span class="p">(</span><span class="s">"result"</span><span class="p">,</span> <span class="n">result</span><span class="p">))</span>
+	
+	<span class="c">// Return the result</span>
+	<span class="n">w</span><span class="o">.</span><span class="n">Header</span><span class="p">()</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Content-Type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+	<span class="n">json</span><span class="o">.</span><span class="n">NewEncoder</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">Encode</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This updated Backend Service:</p>
+<ol>
+  <li>Uses the <code class="language-plaintext highlighter-rouge">zap</code> logging library for structured logging</li>
+  <li>Adds trace and span IDs to log entries automatically</li>
+  <li>Updates the logger context when creating new spans</li>
+</ol>
+
+<p>The logs will now include trace and span IDs in a structured format, making it easier to correlate them with traces.</p>
+
+<h3 id="best-practices-for-context-propagation-and-logs-correlation">Best Practices for Context Propagation and Logs Correlation</h3>
+
+<p>Based on our example, here are some best practices:</p>
+
+<h4 id="context-propagation">Context Propagation</h4>
+
+<ol>
+  <li>
+    <p><strong>Use Standard Propagators</strong>: Stick to standard propagators like W3C Trace Context for interoperability.</p>
+  </li>
+  <li>
+    <p><strong>Propagate Context Across All Boundaries</strong>: Ensure context is propagated across all service boundaries, including HTTP, gRPC, message queues, etc.</p>
+  </li>
+  <li>
+    <p><strong>Use Automatic Instrumentation When Possible</strong>: Libraries like <code class="language-plaintext highlighter-rouge">otelhttp</code> handle context propagation automatically.</p>
+  </li>
+  <li>
+    <p><strong>Maintain Context in Asynchronous Operations</strong>: Pass context to goroutines, workers, and other asynchronous operations.</p>
+  </li>
+  <li>
+    <p><strong>Test Context Propagation</strong>: Verify that trace IDs are consistent across services.</p>
+  </li>
+</ol>
+
+<h4 id="logs-correlation">Logs Correlation</h4>
+
+<ol>
+  <li>
+    <p><strong>Include Trace and Span IDs in Logs</strong>: Always include these IDs to enable correlation.</p>
+  </li>
+  <li>
+    <p><strong>Use Structured Logging</strong>: Structured logs are easier to parse and correlate.</p>
+  </li>
+  <li>
+    <p><strong>Update Logger Context with Span Changes</strong>: When creating new spans, update the logger context.</p>
+  </li>
+  <li>
+    <p><strong>Consider Log Levels</strong>: Use appropriate log levels to avoid overwhelming your logging system.</p>
+  </li>
+  <li>
+    <p><strong>Include Relevant Context</strong>: Add other relevant information to logs, such as user IDs, request IDs, etc.</p>
+  </li>
+</ol>
+
+<h3 id="cross-language-implementation">Cross-Language Implementation</h3>
+
+<p>While our example uses Go, context propagation and logs correlation work similarly in other languages. Here’s a quick comparison:</p>
+
+<h4 id="java">Java</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Context propagation with Spring Boot</span>
+<span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="nc">WebClient</span><span class="o">.</span><span class="na">Builder</span> <span class="nf">webClientBuilder</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nc">WebClient</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="k">new</span> <span class="nc">TracingExchangeFilterFunction</span><span class="o">());</span>
+<span class="o">}</span>
+
+<span class="c1">// Logs correlation with SLF4J</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="nc">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="nc">MyClass</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+<span class="kt">void</span> <span class="nf">processRequest</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">Span</span> <span class="n">span</span> <span class="o">=</span> <span class="nc">Span</span><span class="o">.</span><span class="na">current</span><span class="o">();</span>
+    <span class="no">MDC</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"traceId"</span><span class="o">,</span> <span class="n">span</span><span class="o">.</span><span class="na">getSpanContext</span><span class="o">().</span><span class="na">getTraceId</span><span class="o">());</span>
+    <span class="no">MDC</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"spanId"</span><span class="o">,</span> <span class="n">span</span><span class="o">.</span><span class="na">getSpanContext</span><span class="o">().</span><span class="na">getSpanId</span><span class="o">());</span>
+    <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Processing request"</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="python">Python</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Context propagation with Flask
+</span><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">FlaskInstrumentor</span><span class="p">().</span><span class="n">instrument_app</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+<span class="c1"># HTTP client with context propagation
+</span><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span>
+<span class="n">RequestsInstrumentor</span><span class="p">().</span><span class="n">instrument_session</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+
+<span class="c1"># Logs correlation
+</span><span class="k">def</span> <span class="nf">process_request</span><span class="p">():</span>
+    <span class="n">span</span> <span class="o">=</span> <span class="n">trace</span><span class="p">.</span><span class="n">get_current_span</span><span class="p">()</span>
+    <span class="n">trace_id</span> <span class="o">=</span> <span class="n">span</span><span class="p">.</span><span class="n">get_span_context</span><span class="p">().</span><span class="n">trace_id</span>
+    <span class="n">span_id</span> <span class="o">=</span> <span class="n">span</span><span class="p">.</span><span class="n">get_span_context</span><span class="p">().</span><span class="n">span_id</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"Processing request"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s">"trace_id"</span><span class="p">:</span> <span class="n">trace_id</span><span class="p">,</span> <span class="s">"span_id"</span><span class="p">:</span> <span class="n">span_id</span><span class="p">})</span>
+</code></pre></div></div>
+
+<h4 id="javascript-nodejs">JavaScript (Node.js)</h4>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Context propagation with Express</span>
+<span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">opentelemetry</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@opentelemetry/api</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">ExpressInstrumentation</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@opentelemetry/instrumentation-express</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">HttpInstrumentation</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@opentelemetry/instrumentation-http</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">expressInstrumentation</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ExpressInstrumentation</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">httpInstrumentation</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">HttpInstrumentation</span><span class="p">();</span>
+<span class="nx">expressInstrumentation</span><span class="p">.</span><span class="nx">enable</span><span class="p">();</span>
+<span class="nx">httpInstrumentation</span><span class="p">.</span><span class="nx">enable</span><span class="p">();</span>
+
+<span class="c1">// Logs correlation</span>
+<span class="kd">function</span> <span class="nx">processRequest</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">span</span> <span class="o">=</span> <span class="nx">opentelemetry</span><span class="p">.</span><span class="nx">trace</span><span class="p">.</span><span class="nx">getSpan</span><span class="p">(</span><span class="nx">opentelemetry</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">active</span><span class="p">());</span>
+    <span class="kd">const</span> <span class="nx">traceId</span> <span class="o">=</span> <span class="nx">span</span><span class="p">.</span><span class="nx">spanContext</span><span class="p">().</span><span class="nx">traceId</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">spanId</span> <span class="o">=</span> <span class="nx">span</span><span class="p">.</span><span class="nx">spanContext</span><span class="p">().</span><span class="nx">spanId</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`[TraceID: </span><span class="p">${</span><span class="nx">traceId</span><span class="p">}</span><span class="s2">, SpanID: </span><span class="p">${</span><span class="nx">spanId</span><span class="p">}</span><span class="s2">] Processing request`</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The specific APIs vary, but the concepts are the same: propagate context between services and include trace and span IDs in logs.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>In this installment, we’ve explored context propagation and logs correlation, which are essential for creating a complete observability picture in distributed systems. We’ve learned how to:</p>
+
+<ol>
+  <li>Propagate context between services using W3C Trace Context</li>
+  <li>Create distributed traces that span multiple services</li>
+  <li>Correlate logs with traces using trace and span IDs</li>
+  <li>Implement structured logging with trace context</li>
+</ol>
+
+<p>These capabilities allow you to track requests across service boundaries and see the detailed logs associated with each span, giving you both the big picture and the details.</p>
+
+<p>In tomorrow’s final installment, we’ll explore visualization and analysis, connecting our telemetry data to proper visualization tools and learning how to derive insights from it.</p>
+
+<p>Stay tuned, and happy tracing!</p>
+<hr>
+<div class="share-holder">
+  <span class="share-label">Share on: </span>
+  <ul class="share-buttons">
+    
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation&amp;text=7%20Days%20of%20OpenTelemetry:%20Day%206%20-%20Context%20Propagation%20and%20Logs%20Correlation%20-%20Vitor%20Vasconcellos" aria-label="Twitter" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Twitter" class="hover-effect-big">
+          <i class="fa fa-twitter-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation" aria-label="Facebook" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Facebook" class="hover-effect-big">
+          <i class="fa fa-facebook-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://t.me/share/url?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation&amp;text=7%20Days%20of%20OpenTelemetry:%20Day%206%20-%20Context%20Propagation%20and%20Logs%20Correlation%20-%20Vitor%20Vasconcellos" aria-label="Telegram" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Telegram" class="hover-effect-big">
+          <i class="fa fa-telegram fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation" aria-label="LinkedIn" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="LinkedIn" class="hover-effect-big">
+          <i class="fa fa-linkedin-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="mailto:?subject=7%20Days%20of%20OpenTelemetry:%20Day%206%20-%20Context%20Propagation%20and%20Logs%20Correlation%20-%20Vitor%20Vasconcellos&amp;body=7%20Days%20of%20OpenTelemetry:%20Day%206%20-%20Context%20Propagation%20and%20Logs%20Correlation%20-%20Vitor%20Vasconcellos%20http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation" aria-label="Email" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Email" class="hover-effect-big">
+          <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="javascript:void(0);" aria-label="Copy link" role="button" onclick="copyToClipboard('http://0.0.0.0:4000/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation', 'Link copied!')" id="copytoclipboard" data-toggle="tooltip" data-placement="top" title="Copy link" class="hover-effect-big">
+          <i class="fa fa-link fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+</div>
+</div>
+
+    <div class="pagination_wrapper">
+  <nav aria-label="Page navigation">
+    <ul class="pagination" style="opacity:0">
+    <li><a href="javascript:void(0);" role="button">1</a></li></ul>
+  </nav>
+</div>
+
+</div><div class="footer-wrapper">
+  <div class="footer-container">
+    <footer translate="no">
+      <div class="footer-text footer-text-centered long-copyright">
+          <p>&copy; 2025 Vitor Vasconcellos. </p><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" data-tooltip-no-hide title="Except where otherwise noted, content on this web site is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.">
+              <img src="/assets/img/default/cc/cc.svg" alt="cc" width="12" height="12">&nbsp;<img src="/assets/img/default/cc/by.svg" alt="by" width="12" height="12">&nbsp;<img src="/assets/img/default/cc/sa.svg" alt="sa" width="12" height="12">&nbsp;<p>Some rights reserved.</p>
+            </a></div>
+      <p class="footer-powered"><span>Pwrd by </span><a href="https://github.com/MrGreensWorkshop/MrGreen-JekyllTheme" target="_blank" rel="noopener noreferrer">Mr. Green</a></p>
+    </footer>
+  </div>
+</div>
+<div class="scroll-to-top-container">
+        <a id="scroll-to-top" href="#main-wrapper" role="button" aria-label="Back to top" class="hover-effect"><i class="fa fa-angle-up"></i></a>
+      </div></div>
+
+    <div class="searchbox-container">
+  <form id="searchbox-form" autocomplete="off">
+    <input type="search" id="search-box" placeholder="Search"
+    onkeyup="if(this.value!==''){document.getElementById('search-results').style.display = 'block';}"
+    onfocusout="this.value='';"
+    onblur="setTimeout(function(){ document.getElementById('search-results').style.display = 'none'; }, 100);">
+    <ul id="search-results" ></ul>
+  </form>
+</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v0.4.1/dist/bootstrap-toc.min.js"></script>
+
+<script src="/assets/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script>
+      $('.imgViewer[data-no-image-viewer]').css("cursor", "unset");
+      $(function () {
+        $('.imgViewer:not([data-no-image-viewer])').magnificPopup({
+          type: 'image'
+          ,image: {
+            titleSrc: 'alt'
+            /* Error message */
+            ,tError: "The image could not be loaded.<br><br>%url%"
+            /* Set to null to disable zoom out cursor. */
+            /*,cursor: null */
+          }
+          ,closeOnContentClick: true
+          ,showCloseBtn: false
+          ,zoom: {
+            /* By default it's false, so don't forget to enable it */
+            enabled: true
+            /* duration of the effect, in milliseconds */
+            ,duration: 300
+            /* CSS transition easing function */
+            ,easing: 'ease-in-out'
+          }
+        });
+      });
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js"></script>
+    <script>
+      /* lazy loads elements with default selector as '.lozad' */
+      const observer = lozad();
+      observer.observe();
+    </script>
+
+<script>
+      PagerPageNumbers.setProperties({
+        paginatorListContainerName: ".pagination_wrapper .pagination"
+        ,pageList: ["/posts/2025-06-01-7-days-otel-day-7-visualization-and-analysis", "/posts/2025-05-31-7-days-otel-day-6-context-propagation-and-logs-correlation", "/posts/2025-05-30-7-days-otel-day-5-auto-instrumentation-and-framework-integration%20copy", "/posts/2025-05-29-7-days-otel-day-4-first-opentelemetry-instrumentation%20copy", "/posts/2025-05-28-7-days-otel-day-3-setting-up-collector", "/posts/2025-05-27-7-days-otel-day-2-understanding-distributed-tracing", "/posts/2025-05-26-7-days-otel-day-1-introduction-to-observability-and-opentelemetrytel", "/posts/2024-07-26-guia-contribuicao-otel-docs-pt"]
+        ,firstButtonName: "First"
+        ,lastButtonName: "Last"
+        ,prevButtonName: "«"
+        ,nextButtonName: "»"
+      });
+    </script>
+
+
+
+<script src="/assets/js/simple-jekyll-search-1.9.2.min.js"></script><script>
+  function loadSearch(jsonData, searchParam) {
+    if (!jsonData) jsonData = '/query/search.json';
+    var searchInput = document.getElementById('search-box');
+
+    const simpleJekyllSearch = SimpleJekyllSearch({
+      searchInput: searchInput
+      ,resultsContainer: document.getElementById('search-results')
+      ,json: jsonData
+      ,searchResultTemplate: '<li> <a href="{url}"> <div> <div class="title">{title}</div> <div class="date">{date}</div> <div style="clear: both;"></div> </div> </a></li>'
+      ,noResultsText: '<li>No results were found.</li>'
+      ,limit: 10
+      ,fuzzy: false
+      ,formSubmit: document.getElementById('searchbox-form')
+    });
+
+    if (searchParam) {
+      searchInput.value = searchParam;
+      searchInput.focus();
+      searchInput.disabled=false;
+      setTimeout(function(){
+        simpleJekyllSearch.search(searchParam);
+      }, 400);
+    }
+  }
+
+  </script>
+
+<script>
+    function isEmpty(value) {
+      if (value === "" || value === null || typeof value === "undefined") return true;
+      return false;
+    }
+
+    function getQueryParam (param, mach = true) {
+      var queryString = window.location.search.substring(1);
+      if (isEmpty(queryString)) return null;
+      var queries = queryString.split("&");
+      for (var i in queries) {
+        var pair = decodeURIComponent(queries[i]).split("=");
+        if (mach == true){
+          if (pair[0] == param) {
+            if (isEmpty(pair[1]) === false) return pair[1];
+          }
+        }else{
+          return pair;
+        }
+        break;
+      }
+      return null;
+    }
+
+    const searchParam = getQueryParam('search');
+
+    (async () => {
+      let resp = await fetch('/query/search.json');
+      if (!resp.ok) return;
+      let jsonData = await resp.json();
+      loadSearch(jsonData, searchParam);
+    })();
+  </script>
+
+
+
+<script>
+  CookieConsent.consentSettingHtml = "<div class=\"consent-settings\"> <h5>Cookie settings</h5> <br> <p class=\"info-text\">This website uses cookies to optimize site functionality. It will be activated with your approval. Please click each item below for cookie policy. Check <a href=\"/privacy-policy.html\">Privacy policy</a>.</p> <table> <tr> <td onclick=\"$('.info[data-consent-info=necessary]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Strictly necessary cookies</p> </td> <td> <span class=\"active_text\">Always active</span></td> </tr> </table> <div class=\"info\" data-consent-info=\"necessary\"> <p>These cookies are essential for the website function and cannot be disable. They are usually set when site function like color scheme etc. is changed. These cookies do not store any personally identifiable information. Enables storage related to security such as authentication functionality, fraud prevention, and other user protection. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=analytics]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Performance cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" checked=\"checked\" data-consent=\"analytics\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"analytics\"> <p>Enables storage (such as cookies) related to analytics e.g. visit duration. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=preferences]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Functionality cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" data-consent=\"preferences\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"preferences\"> <p>Enables storage that supports the functionality of the website or app e.g. language settings. Enables storage related to personalization e.g. video recommendations. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=advertising]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Targeting and advertising cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" data-consent=\"advertising\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"advertising\"> <p>Enables storage (such as cookies) related to advertising. </p> </div> <br> <div class=\"button-holder\"> <a href=\"javascript:void(0);\" class=\"btn-base btn-left\" onclick=\"CookieConsent.consentSettingDone('deny');\" role=\"button\" rel=\"nofollow\">Deny</a> <a href=\"javascript:void(0);\" class=\"btn-base btn-priority\" onclick=\"CookieConsent.consentSettingDone('accept');\" role=\"button\" rel=\"nofollow\">Allow all</a> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentSettingDone('save');\" role=\"button\" rel=\"nofollow\">Allow selection</a> </div> </div>";
+  CookieConsent.consentSettingSlideType = 'slideBoxTopToDown';
+  CookieConsent.consentBarHtml = "<div class=\"consent-bar\"> <a class=\"close-button\" href=\"javascript:void(0);\" onclick=\"CookieConsent.hideConsentBar();\" aria-label=\"Close\" role=\"button\" rel=\"nofollow\"><i class=\"fa-fw fa fa-times\"></i></a> <p>This website uses cookies to optimize site functionality. It will be activated with your approval. Check <a href=\"/privacy-policy.html\">Privacy policy</a>.</p> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentBarDone('deny');\" role=\"button\" rel=\"nofollow\">Deny</a> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentBarDone('settings');\" role=\"button\" rel=\"nofollow\">Customize</a> <a href=\"javascript:void(0);\" class=\"btn-base btn-priority\" onclick=\"CookieConsent.consentBarDone('accept');\" role=\"button\" rel=\"nofollow\">Allow all</a> </div>";
+  CookieConsent.consent_items = JSON.parse('{"necessary":{"group":["security_storage"],"value":"granted","wait_for_update":500,"cookie_domain":"","no_check_box":true},"analytics":{"group":["analytics_storage"],"value":"denied"},"preferences":{"group":["functionality_storage","personalization_storage"],"value":"denied"},"advertising":{"group":["ad_storage"],"value":"denied"}}');
+  CookieConsent.hideConsentBarWithSaveButton = true;
+
+  const consent_settings = CookieConsent.getConsentSettings();
+  const default_configs = JSON.parse('{"anonymize_ip":true,"ads_data_redaction":true,"cookie_flags":"SameSite=None;Secure"}');
+</script>
+<script>
+  SlidingMsgBox.html = "<div class=\"slideBox\"> <a class=\"close-button\" href=\"javascript:void(0);\" aria-label=\"Close\" role=\"button\" rel=\"nofollow\"><i class=\"fa-fw fa fa-times\"></i></a> </div>";
+</script>
+</body>
+</html>
+
