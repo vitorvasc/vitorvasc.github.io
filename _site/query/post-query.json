@@ -1,5 +1,17 @@
 [
     {
+    "title"     : "7 Days of OpenTelemetry: Day 02 - Understanding Distributed Tracing"
+    ,"title_sub": "Day 2: Understanding Distributed Tracing Welcome to Day 2 of our “7 Days of OpenTelemetry” challenge! Yesterday, we introduced the concept of observability and provided..."
+    ,"category" : ""
+    ,"tags"     : "opentelemetry, observability, 7-days-of-opentelemetry"
+    ,"url"      : "/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing"
+    ,"image"    : "/assets/img/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing.png"
+    ,"max_width": ""
+    ,"display"  : ""
+    ,"read_time": "6 min read"
+    ,"date"     : "May 27, 2025"
+    ,"year"     : "2025"
+    },{
     "title"     : "7 Days of OpenTelemetry: Day 01 - Introduction to Observability and OpenTelemetry"
     ,"title_sub": "Day 1: Introduction to Observability and OpenTelemetry Welcome to the first day of our “7 Days of OpenTelemetry” challenge! Over the next week, we’ll take..."
     ,"category" : ""

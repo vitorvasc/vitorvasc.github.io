@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>7 Days of OpenTelemetry: Day 02 - Understanding Distribut...</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+</noscript>
+
+
+
+<link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="manifest" href="/assets/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#f0f0f0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Vitor Vasconcellos's App">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="msapplication-starturl" content="/">
+  <meta name="application-name" content="Vitor Vasconcellos's App">
+  <meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml">
+
+    <meta name="keywords" content="opentelemetry, observability, 7-days-of-opentelemetry">
+
+  <meta name="description" content="Day 2: Understanding Distributed Tracing Welcome to Day 2 of our “7 Days of OpenTelemetry” challenge! Yesterday, we introduced the concept of obser...">
+  <meta name="robots" content="index, follow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7 Days of OpenTelemetry: Day 02 - Understanding Distributed Tracing">
+
+<meta name="twitter:description" content="Day 2: Understanding Distributed Tracing Welcome to Day 2 of our “7 Days of OpenTelemetry” challenge! Yesterday, we introduced the concept of observability and provided...">
+<meta name="twitter:image" content="http://0.0.0.0:4000/assets/img/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing.png">
+<meta property="og:site_name" content="Vitor Vasconcellos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7 Days of OpenTelemetry: Day 02 - Understanding...">
+<meta property="og:description" content="Day 2: Understanding Distributed Tracing Welcome to Day 2 of our “7 Days of OpenTelemetry” challenge! Yesterday, we introduced the concept of obser...">
+<meta property="og:url" content="http://0.0.0.0:4000/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing">
+<meta property="og:image" content="http://0.0.0.0:4000/assets/img/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing.png">
+  <meta property="article:author" content="Vitor Vasconcellos">
+  <meta property="article:section" content="">
+  <meta property="article:tag" content="opentelemetry">
+  <meta property="article:tag" content="observability">
+  <meta property="article:tag" content="7-days-of-opentelemetry">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org"
+  ,"@graph": [
+    {
+      "@type": "Person"
+      ,"@id": "http://0.0.0.0:4000/#person"
+      ,"name": "Vitor Vasconcellos"
+      ,"url": "http://0.0.0.0:4000/tabs/about.html"
+      ,"image": "http://0.0.0.0:4000/assets/img/about/about.jpg"
+      ,"description": "Vitor Vasconcellos is a Software Engineer, open-source contributor and observability enthusiast."
+  },{
+    "@type": "WebSite"
+    ,"@id": "http://0.0.0.0:4000/#website"
+    ,"url": "http://0.0.0.0:4000/"
+    ,"name": "Vitor Vasconcellos"
+    ,"description": "Vitor Vasconcellos is a Software Engineer, open-source contributor and observability enthusiast."
+    ,"publisher": {"@id": "http://0.0.0.0:4000/#person"}
+    ,"inLanguage": "en-US"
+    ,"sameAs": ["https://github.com/vitorvasc","https://www.linkedin.com/in/vvasconcellos","https://bsky.app/profile/vasconcellos.dev"]
+    ,"copyrightHolder" : {"@id": "http://0.0.0.0:4000/#person"}
+    ,"copyrightYear" : "2025"
+  },{
+    "@type": "WebPage"
+    ,"@id": "http://0.0.0.0:4000/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing#webpage"
+    ,"url": "http://0.0.0.0:4000/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing"
+    ,"name": "7 Days of OpenTelemetry: Day 02 - Understanding Distributed Tracing"
+    ,"isPartOf": {"@id": "http://0.0.0.0:4000/#website"}
+    ,"breadcrumb": {"@id": "http://0.0.0.0:4000/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing#breadcrumb"}
+    ,"primaryImageOfPage": "http://0.0.0.0:4000/assets/img/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing.png"
+    ,"description": "Day 2: Understanding Distributed Tracing Welcome to Day 2 of our “7 Days of OpenTelemetry” challenge! Yesterday, we introduced the concept of obser..."
+    ,"inLanguage": "en-US"
+    ,"potentialAction": {
+      "@type": "ReadAction"
+      ,"target": "http://0.0.0.0:4000/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing"
+    }
+  },{
+      "@type": "BreadcrumbList",
+      "@id": "http://0.0.0.0:4000/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem"
+          ,"position": 1
+          ,"name": "Home"
+          ,"item": "http://0.0.0.0:4000/"
+        },
+        {
+          "@type": "ListItem"
+          ,"position": 2
+          ,"name": "Blog"
+          ,"item": "http://0.0.0.0:4000/tabs/blog/"
+        },
+        {
+          "@type": "ListItem"
+          ,"position": 3
+          ,"name": "7 Days of OpenTelemetry: Day 02 - Understanding Distributed Tracing"
+        }
+      ]
+    },{
+      "@type": "BlogPosting"
+      ,"@id": "http://0.0.0.0:4000/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing#content"
+      ,"isPartOf": {"@id": "http://0.0.0.0:4000/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing#webpage"}
+      ,"mainEntityOfPage": {"@id": "http://0.0.0.0:4000/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing#webpage"}
+      ,"publisher": {"@id": "http://0.0.0.0:4000/#person"}
+      ,"author": {"@id": "http://0.0.0.0:4000/#person"}
+      ,"inLanguage": "en-US"
+      ,"headline": "7 Days of OpenTelemetry: Day 02 - Understanding Distributed Tracing"
+      ,"image": "http://0.0.0.0:4000/assets/img/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing.png"
+      ,"thumbnailUrl": "http://0.0.0.0:4000/assets/img/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing.png"
+      ,"articleSection": ["opentelemetry", "observability", "7-days-of-opentelemetry"]
+      ,"description": "Day 2: Understanding Distributed Tracing Welcome to Day 2 of our “7 Days of OpenTelemetry” challenge! Yesterday, we introduced the concept of obser..."
+      ,"copyrightHolder" : {"@id": "http://0.0.0.0:4000/#person"}
+      ,"copyrightYear" : "2025"
+      ,"wordCount": 1170
+      ,"articleBody": "Day 2: Understanding Distributed Tracing Welcome to Day 2 of our “7 Days of OpenTelemetry” challenge! Yesterday, we introduced the concept of observability and provided an overview of OpenTelemetry. Today, we’ll dive deeper into distributed tracing, which forms the foundation of OpenTelemetry’s approach to observability. What is Distributed Tracing? Distributed tracing is a method for tracking and visualizing requests as they flow through distributed systems. Unlike traditional logging or metrics, distributed tracing provides end-to-end visibility into the entire request lifecycle, spanning multiple services, databases, and external dependencies. Think of distributed tracing as a “breadcrumb trail” that follows a request from its entry point through all the services it touches until the final response is returned. This trail helps you understand: The path a request takes through your system How long each component takes to process the request Where bottlenecks or failures occur Dependencies between services Why is Distributed Tracing Important? In modern microservices architectures, a single user request might interact with dozens of services. When something goes wrong or performs poorly, traditional debugging approaches fall short: Logs are scattered across different services and lack context about the entire request flow Metrics show symptoms but not causes of problems Service-level monitoring doesn’t reveal cross-service issues Distributed tracing solves these problems by connecting the dots between services, providing a holistic view of the entire request journey. Core Concepts in Distributed Tracing To understand distributed tracing, you need to be familiar with several key concepts: 1. Traces A trace represents the complete journey of a request through your system. It’s composed of one or more spans that represent operations within that request. Each trace has a unique trace ID that’s propagated across service boundaries. 2. Spans A span represents a single operation within a trace. It could be an HTTP request, a database query, a function call, or any other unit of work. Each span contains: A name describing the operation A start and end time A set of attributes (key-value pairs) providing additional context Links to related spans Events that occurred during the span’s lifetime Status information (success, error, etc.) Spans are the building blocks of traces and provide the detailed information needed to understand system behavior. 3. Parent-Child Relationships Spans in a trace have parent-child relationships that represent the causal relationships between operations. For example: A span for an HTTP handler might be the parent of spans for database queries A span for a service call might be the parent of spans in the downstream service These relationships create a hierarchical structure that can be visualized as a trace timeline or tree. 4. Context Propagation For distributed tracing to work across service boundaries, trace context (trace ID, span ID, etc.) must be propagated from one service to another. This is typically done by passing context information in HTTP headers, message queues, or other inter-service communication mechanisms. Context propagation is what connects the dots between spans in different services, allowing them to be assembled into a complete trace. Distributed Tracing in Action Let’s look at a simplified example of how distributed tracing works in a microservices architecture: A user makes a request to the API Gateway The API Gateway creates a root span and forwards the request to the Order Service The Order Service creates a child span and makes a call to the Inventory Service The Inventory Service creates another child span and queries a database Each service propagates the trace context to the next service All spans are collected and assembled into a complete trace This process creates a comprehensive view of the request’s journey through the system, including timing information for each component. OpenTelemetry’s Tracing Data Model OpenTelemetry builds on these core concepts with a standardized tracing data model that includes: Span Context The span context contains the information that identifies a span in a trace: Trace ID: A globally unique identifier for the trace Span ID: A unique identifier for the span within the trace Trace Flags: Bit flags that control tracing behavior (e.g., sampling) Trace State: Additional vendor-specific trace information Span Data Beyond the span context, OpenTelemetry spans include: Span Name: A descriptive name for the operation Span Kind: The role of the span (client, server, producer, consumer, internal) Start and End Timestamp: When the operation started and completed Attributes: Key-value pairs providing additional context Events: Time-stamped logs within the span Links: References to related spans Status: The outcome of the operation (OK, ERROR, UNSET) Trace State OpenTelemetry includes a mechanism for vendors to add custom information to traces without conflicting with the core specification. This allows for extensibility while maintaining interoperability. A Simple Trace Example in Go Let’s look at a conceptual example of what trace data might look like in a Go application. This isn’t actual instrumentation code (we’ll get to that on Day 4), but it illustrates the structure of a trace: // Root span in API Gateway rootSpan := { TraceID: \"abcdef0123456789\", SpanID: \"0123456789abcdef\", Name: \"GET /orders/123\", StartTime: \"2023-05-20T10:00:00Z\", EndTime: \"2023-05-20T10:00:01Z\", Attributes: { \"http.method\": \"GET\", \"http.url\": \"/orders/123\", \"service.name\": \"api-gateway\" } } // Child span in Order Service orderSpan := { TraceID: \"abcdef0123456789\", // Same trace ID SpanID: \"9876543210fedcba\", ParentSpanID: \"0123456789abcdef\", // References the root span Name: \"GetOrder\", StartTime: \"2023-05-20T10:00:00.1Z\", EndTime: \"2023-05-20T10:00:00.8Z\", Attributes: { \"order.id\": \"123\", \"service.name\": \"order-service\" } } // Child span in Inventory Service inventorySpan := { TraceID: \"abcdef0123456789\", // Same trace ID SpanID: \"fedcba9876543210\", ParentSpanID: \"9876543210fedcba\", // References the order span Name: \"CheckInventory\", StartTime: \"2023-05-20T10:00:00.3Z\", EndTime: \"2023-05-20T10:00:00.7Z\", Attributes: { \"product.id\": \"456\", \"service.name\": \"inventory-service\" } } When visualized, these spans would show the flow of the request through the system, with timing information that helps identify where time is spent. Comparison with Traditional Monitoring To understand the value of distributed tracing, let’s compare it with traditional monitoring approaches: Aspect Traditional Monitoring Distributed Tracing Scope Service-level End-to-end request flow Granularity Aggregate metrics Individual requests Context Limited Rich contextual information Causality Inferred Explicitly captured Debugging Requires correlation across systems Built-in correlation Complexity Simpler to implement More complex but more powerful While traditional monitoring still has its place, distributed tracing provides the detailed, contextual information needed to understand and troubleshoot complex distributed systems. Preparing for OpenTelemetry Instrumentation Now that we understand the concepts behind distributed tracing, we’re ready to start implementing it with OpenTelemetry. In tomorrow’s installment, we’ll set up the OpenTelemetry Collector, which will receive, process, and export our telemetry data. The Collector will serve as the foundation for our observability pipeline, allowing us to see the results of our instrumentation immediately as we implement it in the following days. Conclusion Distributed tracing is a powerful technique for understanding the behavior of complex, distributed systems. By tracking requests as they flow through your services, you gain insights that would be impossible with traditional monitoring approaches. OpenTelemetry builds on these concepts with a standardized, vendor-neutral approach to distributed tracing that works across languages, frameworks, and backends. In Day 3, we’ll take our first practical step by setting up the OpenTelemetry Collector, which will form the foundation of our observability pipeline. Stay tuned, and happy tracing!"
+    }
+  ]
+}</script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="/assets/css/main.css" rel="stylesheet"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v0.4.1/dist/bootstrap-toc.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
+<link href="/assets/css/nav-media.css" rel="stylesheet">
+
+  </head>
+
+  <body >
+    <script src="/assets/js/color-scheme-attr-init.js" data-mode="false"></script>
+    <nav class="navbar navbar-default top-nav">
+  <div class="navbar-header">
+    <button type="button" aria-label="Side menu" class="navbar-toggle collapsed pull-left top-nav-menu-toggle" data-toggle="collapse" data-target="#id_top-nav-menu-toggle" aria-expanded="false">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand top-nav-brand" href="/" translate="no">Vitor Vasconcellos</a>
+    </div>
+  <div class="color_scheme_switch_top_holder" data-toggle="tooltip" data-placement="bottom" title="Color scheme">
+  <label class="color-scheme-switch hover-effect">
+    <input type="checkbox" class="checkbox_color_switch" />
+    <span></span>
+  </label>
+</div>
+
+  
+</nav>
+<nav id="side-nav-container">
+  <div class="side-nav">
+    <div class="side-nav-brand">
+      <img src="/assets/img/default/profile_pic.png" alt="">
+      <div class="brand-holder">
+        <a href="/" translate="no">Vitor Vasconcellos</a>
+        </div>
+      <p>&nbsp;Software Engineer at @mercadolibre. Open-source contributor. I like observability things.</p>
+      <br>
+    </div>
+    <br>
+    <a href="javascript:void(0);" class="side-nav-close" role="button" rel="nofollow">
+        <i class="fa fa-angle-double-left fa-2x" aria-hidden="true"></i>
+      </a>
+    <hr>
+    <br>
+    <div class="side-nav-buttons">
+      <ul class="nav nav-pills nav-stacked">
+        <li ><a href="/" class=" hover-effect"><i class="fa-fw fa fa-home" aria-hidden="true"></i>Home</a></li><li ><a href="/tabs/blog/" class="active-page hover-effect"><i class="fa-fw fa fa-pencil-square-o" aria-hidden="true"></i>Blog</a></li><li ><a href="/tabs/about.html" class=" hover-effect"><i class="fa-fw fa fa-user-o" aria-hidden="true"></i>About</a></li></ul>
+    </div>
+    <br>
+    <br><div class="contact-container">
+  <hr>
+  <h3>Contact</h3>
+  <ul><li><a href="https://github.com/vitorvasc" aria-label="github" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><i class="fa fa-github" aria-hidden="true"></i></a></li><li>
+      <a href="javascript:void(0);" aria-label="email" class="hover-effect-big" onclick="setAddress('hi', 'vasconcellos.dev');"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li><li><a href="https://www.linkedin.com/in/vvasconcellos" aria-label="linkedin" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li><li><a href="https://bsky.app/profile/vasconcellos.dev" aria-label="bluesky" class="hover-effect-big" target="_blank" rel="noopener noreferrer"><img src="/assets/img/default/bsky.svg" alt="bluesky"/></a></li></ul>
+</div>
+
+    <hr id="toc-view-top">
+    <div class="side-nav-footer" translate="no">
+        <p>&copy; 2025 Vitor Vasconcellos.</p>
+      </div>
+  </div>
+  <div class="side-nav-bottom-buttons-container">
+    <hr>
+    <ul>
+      <li><div class="color_scheme_switch_side_holder" data-toggle="tooltip" data-placement="top" title="Color scheme">
+  <label class="color-scheme-switch hover-effect">
+    <input type="checkbox" class="checkbox_color_switch" />
+    <span></span>
+  </label>
+</div>
+</li><li><div class="cookie-icon hover-effect" onclick="CookieConsent.showSettings();" data-toggle="tooltip" data-placement="top" title="Cookie settings">
+  <div class="cookie-wrapper">
+    <i class="fa fa-circle bitten-cookie" aria-hidden="true"></i>
+    <i class="fa fa-circle small-ellipse-icon" aria-hidden="true"></i>
+    <i class="fa fa-spinner inner-icon" aria-hidden="true"></i>
+    <i class="fa fa-circle-thin outer-icon" aria-hidden="true"></i>
+  </div>
+</div>
+</li></ul>
+  </div></nav>
+<div id="toc-container" class="movable">
+  <div class="panel panel-default">
+    <div class="panel-heading" data-toggle="tooltip" data-placement="top" title="Drag to move">
+      Contents
+      <span class="pull-right">
+        <a href="javascript:void(0);" aria-label="Close" role="button" rel="nofollow" class="close-button" onclick="document.getElementById('toc-container').style.display = 'none';">
+          <i class="fa fa-times" data-toggle="tooltip" data-placement="bottom" title="Close"></i>
+        </a>
+      </span>
+    </div>
+    <div class="panel-body">
+      <nav id="table-of-contents"></nav>
+    </div>
+  </div>
+</div>
+<div id="main-wrapper">
+      <div class="main-container"><div class="multipurpose-container post-container">
+  <div class="post-title"><h1>7 Days of OpenTelemetry: Day 02 - Understanding Distributed Tracing</h1></div><div class="meta">
+  <small>
+    &nbsp;<i class="fa fa-calendar"></i>&nbsp;&nbsp;May 27, 2025
+  </small>
+  <small>
+    &nbsp;&nbsp;&nbsp;<span><i class="fa fa-clock-o"></i>&nbsp;6 min read</span>
+  </small>
+  </div>
+<hr/>
+  <div class="markdown-style">
+    <h2 id="day-2-understanding-distributed-tracing">Day 2: Understanding Distributed Tracing</h2>
+
+<p>Welcome to Day 2 of our “7 Days of OpenTelemetry” challenge! Yesterday, we introduced the concept of observability and provided an overview of OpenTelemetry. Today, we’ll dive deeper into distributed tracing, which forms the foundation of OpenTelemetry’s approach to observability.</p>
+
+<h3 id="what-is-distributed-tracing">What is Distributed Tracing?</h3>
+
+<p>Distributed tracing is a method for tracking and visualizing requests as they flow through distributed systems. Unlike traditional logging or metrics, distributed tracing provides end-to-end visibility into the entire request lifecycle, spanning multiple services, databases, and external dependencies.</p>
+
+<p>Think of distributed tracing as a “breadcrumb trail” that follows a request from its entry point through all the services it touches until the final response is returned. This trail helps you understand:</p>
+
+<ul>
+  <li>The path a request takes through your system</li>
+  <li>How long each component takes to process the request</li>
+  <li>Where bottlenecks or failures occur</li>
+  <li>Dependencies between services</li>
+</ul>
+
+<h3 id="why-is-distributed-tracing-important">Why is Distributed Tracing Important?</h3>
+
+<p>In modern microservices architectures, a single user request might interact with dozens of services. When something goes wrong or performs poorly, traditional debugging approaches fall short:</p>
+
+<ul>
+  <li><strong>Logs</strong> are scattered across different services and lack context about the entire request flow</li>
+  <li><strong>Metrics</strong> show symptoms but not causes of problems</li>
+  <li><strong>Service-level monitoring</strong> doesn’t reveal cross-service issues</li>
+</ul>
+
+<p>Distributed tracing solves these problems by connecting the dots between services, providing a holistic view of the entire request journey.</p>
+
+<h3 id="core-concepts-in-distributed-tracing">Core Concepts in Distributed Tracing</h3>
+
+<p>To understand distributed tracing, you need to be familiar with several key concepts:</p>
+
+<h4 id="1-traces">1. Traces</h4>
+
+<p>A trace represents the complete journey of a request through your system. It’s composed of one or more spans that represent operations within that request. Each trace has a unique trace ID that’s propagated across service boundaries.</p>
+
+<h4 id="2-spans">2. Spans</h4>
+
+<p>A span represents a single operation within a trace. It could be an HTTP request, a database query, a function call, or any other unit of work. Each span contains:</p>
+
+<ul>
+  <li>A name describing the operation</li>
+  <li>A start and end time</li>
+  <li>A set of attributes (key-value pairs) providing additional context</li>
+  <li>Links to related spans</li>
+  <li>Events that occurred during the span’s lifetime</li>
+  <li>Status information (success, error, etc.)</li>
+</ul>
+
+<p>Spans are the building blocks of traces and provide the detailed information needed to understand system behavior.</p>
+
+<h4 id="3-parent-child-relationships">3. Parent-Child Relationships</h4>
+
+<p>Spans in a trace have parent-child relationships that represent the causal relationships between operations. For example:</p>
+
+<ul>
+  <li>A span for an HTTP handler might be the parent of spans for database queries</li>
+  <li>A span for a service call might be the parent of spans in the downstream service</li>
+</ul>
+
+<p>These relationships create a hierarchical structure that can be visualized as a trace timeline or tree.</p>
+
+<h4 id="4-context-propagation">4. Context Propagation</h4>
+
+<p>For distributed tracing to work across service boundaries, trace context (trace ID, span ID, etc.) must be propagated from one service to another. This is typically done by passing context information in HTTP headers, message queues, or other inter-service communication mechanisms.</p>
+
+<p>Context propagation is what connects the dots between spans in different services, allowing them to be assembled into a complete trace.</p>
+
+<h3 id="distributed-tracing-in-action">Distributed Tracing in Action</h3>
+
+<p>Let’s look at a simplified example of how distributed tracing works in a microservices architecture:</p>
+
+<ol>
+  <li>A user makes a request to the API Gateway</li>
+  <li>The API Gateway creates a root span and forwards the request to the Order Service</li>
+  <li>The Order Service creates a child span and makes a call to the Inventory Service</li>
+  <li>The Inventory Service creates another child span and queries a database</li>
+  <li>Each service propagates the trace context to the next service</li>
+  <li>All spans are collected and assembled into a complete trace</li>
+</ol>
+
+<p>This process creates a comprehensive view of the request’s journey through the system, including timing information for each component.</p>
+
+<h3 id="opentelemetrys-tracing-data-model">OpenTelemetry’s Tracing Data Model</h3>
+
+<p>OpenTelemetry builds on these core concepts with a standardized tracing data model that includes:</p>
+
+<h4 id="span-context">Span Context</h4>
+
+<p>The span context contains the information that identifies a span in a trace:</p>
+
+<ul>
+  <li>Trace ID: A globally unique identifier for the trace</li>
+  <li>Span ID: A unique identifier for the span within the trace</li>
+  <li>Trace Flags: Bit flags that control tracing behavior (e.g., sampling)</li>
+  <li>Trace State: Additional vendor-specific trace information</li>
+</ul>
+
+<h4 id="span-data">Span Data</h4>
+
+<p>Beyond the span context, OpenTelemetry spans include:</p>
+
+<ul>
+  <li>Span Name: A descriptive name for the operation</li>
+  <li>Span Kind: The role of the span (client, server, producer, consumer, internal)</li>
+  <li>Start and End Timestamp: When the operation started and completed</li>
+  <li>Attributes: Key-value pairs providing additional context</li>
+  <li>Events: Time-stamped logs within the span</li>
+  <li>Links: References to related spans</li>
+  <li>Status: The outcome of the operation (OK, ERROR, UNSET)</li>
+</ul>
+
+<h4 id="trace-state">Trace State</h4>
+
+<p>OpenTelemetry includes a mechanism for vendors to add custom information to traces without conflicting with the core specification. This allows for extensibility while maintaining interoperability.</p>
+
+<h3 id="a-simple-trace-example-in-go">A Simple Trace Example in Go</h3>
+
+<p>Let’s look at a conceptual example of what trace data might look like in a Go application. This isn’t actual instrumentation code (we’ll get to that on Day 4), but it illustrates the structure of a trace:</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Root span in API Gateway</span>
+<span class="n">rootSpan</span> <span class="o">:=</span> <span class="p">{</span>
+    <span class="n">TraceID</span><span class="o">:</span>    <span class="s">"abcdef0123456789"</span><span class="p">,</span>
+    <span class="n">SpanID</span><span class="o">:</span>     <span class="s">"0123456789abcdef"</span><span class="p">,</span>
+    <span class="n">Name</span><span class="o">:</span>       <span class="s">"GET /orders/123"</span><span class="p">,</span>
+    <span class="n">StartTime</span><span class="o">:</span>  <span class="s">"2023-05-20T10:00:00Z"</span><span class="p">,</span>
+    <span class="n">EndTime</span><span class="o">:</span>    <span class="s">"2023-05-20T10:00:01Z"</span><span class="p">,</span>
+    <span class="n">Attributes</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s">"http.method"</span><span class="o">:</span> <span class="s">"GET"</span><span class="p">,</span>
+        <span class="s">"http.url"</span><span class="o">:</span> <span class="s">"/orders/123"</span><span class="p">,</span>
+        <span class="s">"service.name"</span><span class="o">:</span> <span class="s">"api-gateway"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c">// Child span in Order Service</span>
+<span class="n">orderSpan</span> <span class="o">:=</span> <span class="p">{</span>
+    <span class="n">TraceID</span><span class="o">:</span>    <span class="s">"abcdef0123456789"</span><span class="p">,</span>  <span class="c">// Same trace ID</span>
+    <span class="n">SpanID</span><span class="o">:</span>     <span class="s">"9876543210fedcba"</span><span class="p">,</span>
+    <span class="n">ParentSpanID</span><span class="o">:</span> <span class="s">"0123456789abcdef"</span><span class="p">,</span> <span class="c">// References the root span</span>
+    <span class="n">Name</span><span class="o">:</span>       <span class="s">"GetOrder"</span><span class="p">,</span>
+    <span class="n">StartTime</span><span class="o">:</span>  <span class="s">"2023-05-20T10:00:00.1Z"</span><span class="p">,</span>
+    <span class="n">EndTime</span><span class="o">:</span>    <span class="s">"2023-05-20T10:00:00.8Z"</span><span class="p">,</span>
+    <span class="n">Attributes</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s">"order.id"</span><span class="o">:</span> <span class="s">"123"</span><span class="p">,</span>
+        <span class="s">"service.name"</span><span class="o">:</span> <span class="s">"order-service"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c">// Child span in Inventory Service</span>
+<span class="n">inventorySpan</span> <span class="o">:=</span> <span class="p">{</span>
+    <span class="n">TraceID</span><span class="o">:</span>    <span class="s">"abcdef0123456789"</span><span class="p">,</span>  <span class="c">// Same trace ID</span>
+    <span class="n">SpanID</span><span class="o">:</span>     <span class="s">"fedcba9876543210"</span><span class="p">,</span>
+    <span class="n">ParentSpanID</span><span class="o">:</span> <span class="s">"9876543210fedcba"</span><span class="p">,</span> <span class="c">// References the order span</span>
+    <span class="n">Name</span><span class="o">:</span>       <span class="s">"CheckInventory"</span><span class="p">,</span>
+    <span class="n">StartTime</span><span class="o">:</span>  <span class="s">"2023-05-20T10:00:00.3Z"</span><span class="p">,</span>
+    <span class="n">EndTime</span><span class="o">:</span>    <span class="s">"2023-05-20T10:00:00.7Z"</span><span class="p">,</span>
+    <span class="n">Attributes</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s">"product.id"</span><span class="o">:</span> <span class="s">"456"</span><span class="p">,</span>
+        <span class="s">"service.name"</span><span class="o">:</span> <span class="s">"inventory-service"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>When visualized, these spans would show the flow of the request through the system, with timing information that helps identify where time is spent.</p>
+
+<h3 id="comparison-with-traditional-monitoring">Comparison with Traditional Monitoring</h3>
+
+<p>To understand the value of distributed tracing, let’s compare it with traditional monitoring approaches:</p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>Traditional Monitoring</th>
+      <th>Distributed Tracing</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Scope</td>
+      <td>Service-level</td>
+      <td>End-to-end request flow</td>
+    </tr>
+    <tr>
+      <td>Granularity</td>
+      <td>Aggregate metrics</td>
+      <td>Individual requests</td>
+    </tr>
+    <tr>
+      <td>Context</td>
+      <td>Limited</td>
+      <td>Rich contextual information</td>
+    </tr>
+    <tr>
+      <td>Causality</td>
+      <td>Inferred</td>
+      <td>Explicitly captured</td>
+    </tr>
+    <tr>
+      <td>Debugging</td>
+      <td>Requires correlation across systems</td>
+      <td>Built-in correlation</td>
+    </tr>
+    <tr>
+      <td>Complexity</td>
+      <td>Simpler to implement</td>
+      <td>More complex but more powerful</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>While traditional monitoring still has its place, distributed tracing provides the detailed, contextual information needed to understand and troubleshoot complex distributed systems.</p>
+
+<h3 id="preparing-for-opentelemetry-instrumentation">Preparing for OpenTelemetry Instrumentation</h3>
+
+<p>Now that we understand the concepts behind distributed tracing, we’re ready to start implementing it with OpenTelemetry. In tomorrow’s installment, we’ll set up the OpenTelemetry Collector, which will receive, process, and export our telemetry data.</p>
+
+<p>The Collector will serve as the foundation for our observability pipeline, allowing us to see the results of our instrumentation immediately as we implement it in the following days.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>Distributed tracing is a powerful technique for understanding the behavior of complex, distributed systems. By tracking requests as they flow through your services, you gain insights that would be impossible with traditional monitoring approaches.</p>
+
+<p>OpenTelemetry builds on these concepts with a standardized, vendor-neutral approach to distributed tracing that works across languages, frameworks, and backends.</p>
+
+<p>In Day 3, we’ll take our first practical step by setting up the OpenTelemetry Collector, which will form the foundation of our observability pipeline.</p>
+
+<p>Stay tuned, and happy tracing!</p>
+<hr>
+<div class="share-holder">
+  <span class="share-label">Share on: </span>
+  <ul class="share-buttons">
+    
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-27-7-days-otel-day-02-understanding-distributed-tracing&amp;text=7%20Days%20of%20OpenTelemetry:%20Day%2002%20-%20Understanding%20Distributed%20Tracing%20-%20Vitor%20Vasconcellos" aria-label="Twitter" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Twitter" class="hover-effect-big">
+          <i class="fa fa-twitter-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-27-7-days-otel-day-02-understanding-distributed-tracing" aria-label="Facebook" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Facebook" class="hover-effect-big">
+          <i class="fa fa-facebook-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://t.me/share/url?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-27-7-days-otel-day-02-understanding-distributed-tracing&amp;text=7%20Days%20of%20OpenTelemetry:%20Day%2002%20-%20Understanding%20Distributed%20Tracing%20-%20Vitor%20Vasconcellos" aria-label="Telegram" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Telegram" class="hover-effect-big">
+          <i class="fa fa-telegram fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-27-7-days-otel-day-02-understanding-distributed-tracing" aria-label="LinkedIn" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="LinkedIn" class="hover-effect-big">
+          <i class="fa fa-linkedin-square fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="mailto:?subject=7%20Days%20of%20OpenTelemetry:%20Day%2002%20-%20Understanding%20Distributed%20Tracing%20-%20Vitor%20Vasconcellos&amp;body=7%20Days%20of%20OpenTelemetry:%20Day%2002%20-%20Understanding%20Distributed%20Tracing%20-%20Vitor%20Vasconcellos%20http%3A%2F%2F0.0.0.0%3A4000%2Fposts%2F2025-05-27-7-days-otel-day-02-understanding-distributed-tracing" aria-label="Email" role="button" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" title="Email" class="hover-effect-big">
+          <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+      <li>
+        <a href="javascript:void(0);" aria-label="Copy link" role="button" onclick="copyToClipboard('http://0.0.0.0:4000/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing', 'Link copied!')" id="copytoclipboard" data-toggle="tooltip" data-placement="top" title="Copy link" class="hover-effect-big">
+          <i class="fa fa-link fa-fw" aria-hidden="true"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+</div>
+</div>
+
+    <div class="pagination_wrapper">
+  <nav aria-label="Page navigation">
+    <ul class="pagination" style="opacity:0">
+    <li><a href="javascript:void(0);" role="button">1</a></li></ul>
+  </nav>
+</div>
+
+</div><div class="footer-wrapper">
+  <div class="footer-container">
+    <footer translate="no">
+      <div class="footer-text footer-text-centered long-copyright">
+          <p>&copy; 2025 Vitor Vasconcellos. </p><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="top" data-tooltip-no-hide title="Except where otherwise noted, content on this web site is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.">
+              <img src="/assets/img/default/cc/cc.svg" alt="cc" width="12" height="12">&nbsp;<img src="/assets/img/default/cc/by.svg" alt="by" width="12" height="12">&nbsp;<img src="/assets/img/default/cc/sa.svg" alt="sa" width="12" height="12">&nbsp;<p>Some rights reserved.</p>
+            </a></div>
+      <p class="footer-powered"><span>Pwrd by </span><a href="https://github.com/MrGreensWorkshop/MrGreen-JekyllTheme" target="_blank" rel="noopener noreferrer">Mr. Green</a></p>
+    </footer>
+  </div>
+</div>
+<div class="scroll-to-top-container">
+        <a id="scroll-to-top" href="#main-wrapper" role="button" aria-label="Back to top" class="hover-effect"><i class="fa fa-angle-up"></i></a>
+      </div></div>
+
+    <div class="searchbox-container">
+  <form id="searchbox-form" autocomplete="off">
+    <input type="search" id="search-box" placeholder="Search"
+    onkeyup="if(this.value!==''){document.getElementById('search-results').style.display = 'block';}"
+    onfocusout="this.value='';"
+    onblur="setTimeout(function(){ document.getElementById('search-results').style.display = 'none'; }, 100);">
+    <ul id="search-results" ></ul>
+  </form>
+</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v0.4.1/dist/bootstrap-toc.min.js"></script>
+
+<script src="/assets/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script>
+      $('.imgViewer[data-no-image-viewer]').css("cursor", "unset");
+      $(function () {
+        $('.imgViewer:not([data-no-image-viewer])').magnificPopup({
+          type: 'image'
+          ,image: {
+            titleSrc: 'alt'
+            /* Error message */
+            ,tError: "The image could not be loaded.<br><br>%url%"
+            /* Set to null to disable zoom out cursor. */
+            /*,cursor: null */
+          }
+          ,closeOnContentClick: true
+          ,showCloseBtn: false
+          ,zoom: {
+            /* By default it's false, so don't forget to enable it */
+            enabled: true
+            /* duration of the effect, in milliseconds */
+            ,duration: 300
+            /* CSS transition easing function */
+            ,easing: 'ease-in-out'
+          }
+        });
+      });
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js"></script>
+    <script>
+      /* lazy loads elements with default selector as '.lozad' */
+      const observer = lozad();
+      observer.observe();
+    </script>
+
+<script>
+      PagerPageNumbers.setProperties({
+        paginatorListContainerName: ".pagination_wrapper .pagination"
+        ,pageList: ["/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing", "/posts/2025-05-26-7-days-otel-day-01-introduction-to-observability-and-otel", "/posts/2024-07-26-guia-contribuicao-otel-docs-pt"]
+        ,firstButtonName: "First"
+        ,lastButtonName: "Last"
+        ,prevButtonName: "«"
+        ,nextButtonName: "»"
+      });
+    </script>
+
+
+
+<script src="/assets/js/simple-jekyll-search-1.9.2.min.js"></script><script>
+  function loadSearch(jsonData, searchParam) {
+    if (!jsonData) jsonData = '/query/search.json';
+    var searchInput = document.getElementById('search-box');
+
+    const simpleJekyllSearch = SimpleJekyllSearch({
+      searchInput: searchInput
+      ,resultsContainer: document.getElementById('search-results')
+      ,json: jsonData
+      ,searchResultTemplate: '<li> <a href="{url}"> <div> <div class="title">{title}</div> <div class="date">{date}</div> <div style="clear: both;"></div> </div> </a></li>'
+      ,noResultsText: '<li>No results were found.</li>'
+      ,limit: 10
+      ,fuzzy: false
+      ,formSubmit: document.getElementById('searchbox-form')
+    });
+
+    if (searchParam) {
+      searchInput.value = searchParam;
+      searchInput.focus();
+      searchInput.disabled=false;
+      setTimeout(function(){
+        simpleJekyllSearch.search(searchParam);
+      }, 400);
+    }
+  }
+
+  </script>
+
+<script>
+    function isEmpty(value) {
+      if (value === "" || value === null || typeof value === "undefined") return true;
+      return false;
+    }
+
+    function getQueryParam (param, mach = true) {
+      var queryString = window.location.search.substring(1);
+      if (isEmpty(queryString)) return null;
+      var queries = queryString.split("&");
+      for (var i in queries) {
+        var pair = decodeURIComponent(queries[i]).split("=");
+        if (mach == true){
+          if (pair[0] == param) {
+            if (isEmpty(pair[1]) === false) return pair[1];
+          }
+        }else{
+          return pair;
+        }
+        break;
+      }
+      return null;
+    }
+
+    const searchParam = getQueryParam('search');
+
+    (async () => {
+      let resp = await fetch('/query/search.json');
+      if (!resp.ok) return;
+      let jsonData = await resp.json();
+      loadSearch(jsonData, searchParam);
+    })();
+  </script>
+
+
+
+<script>
+  CookieConsent.consentSettingHtml = "<div class=\"consent-settings\"> <h5>Cookie settings</h5> <br> <p class=\"info-text\">This website uses cookies to optimize site functionality. It will be activated with your approval. Please click each item below for cookie policy. Check <a href=\"/privacy-policy.html\">Privacy policy</a>.</p> <table> <tr> <td onclick=\"$('.info[data-consent-info=necessary]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Strictly necessary cookies</p> </td> <td> <span class=\"active_text\">Always active</span></td> </tr> </table> <div class=\"info\" data-consent-info=\"necessary\"> <p>These cookies are essential for the website function and cannot be disable. They are usually set when site function like color scheme etc. is changed. These cookies do not store any personally identifiable information. Enables storage related to security such as authentication functionality, fraud prevention, and other user protection. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=analytics]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Performance cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" checked=\"checked\" data-consent=\"analytics\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"analytics\"> <p>Enables storage (such as cookies) related to analytics e.g. visit duration. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=preferences]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Functionality cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" data-consent=\"preferences\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"preferences\"> <p>Enables storage that supports the functionality of the website or app e.g. language settings. Enables storage related to personalization e.g. video recommendations. </p> </div> <table> <tr> <td onclick=\"$('.info[data-consent-info=advertising]').slideToggle();$(this).children('i').toggleClass('fa-plus-square-o').toggleClass('fa-minus-square-o')\"> <i class=\"fa-fw fa fa-plus-square-o\" aria-hidden=\"true\"></i> <p>Targeting and advertising cookies</p> </td> <td> <label class=\"slide-switch\"> <input type=\"checkbox\" class=\"checkbox_switch\" data-consent=\"advertising\"> <span class=\"slider\"></span> </label></td> </tr> </table> <div class=\"info\" data-consent-info=\"advertising\"> <p>Enables storage (such as cookies) related to advertising. </p> </div> <br> <div class=\"button-holder\"> <a href=\"javascript:void(0);\" class=\"btn-base btn-left\" onclick=\"CookieConsent.consentSettingDone('deny');\" role=\"button\" rel=\"nofollow\">Deny</a> <a href=\"javascript:void(0);\" class=\"btn-base btn-priority\" onclick=\"CookieConsent.consentSettingDone('accept');\" role=\"button\" rel=\"nofollow\">Allow all</a> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentSettingDone('save');\" role=\"button\" rel=\"nofollow\">Allow selection</a> </div> </div>";
+  CookieConsent.consentSettingSlideType = 'slideBoxTopToDown';
+  CookieConsent.consentBarHtml = "<div class=\"consent-bar\"> <a class=\"close-button\" href=\"javascript:void(0);\" onclick=\"CookieConsent.hideConsentBar();\" aria-label=\"Close\" role=\"button\" rel=\"nofollow\"><i class=\"fa-fw fa fa-times\"></i></a> <p>This website uses cookies to optimize site functionality. It will be activated with your approval. Check <a href=\"/privacy-policy.html\">Privacy policy</a>.</p> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentBarDone('deny');\" role=\"button\" rel=\"nofollow\">Deny</a> <a href=\"javascript:void(0);\" class=\"btn-base \" onclick=\"CookieConsent.consentBarDone('settings');\" role=\"button\" rel=\"nofollow\">Customize</a> <a href=\"javascript:void(0);\" class=\"btn-base btn-priority\" onclick=\"CookieConsent.consentBarDone('accept');\" role=\"button\" rel=\"nofollow\">Allow all</a> </div>";
+  CookieConsent.consent_items = JSON.parse('{"necessary":{"group":["security_storage"],"value":"granted","wait_for_update":500,"cookie_domain":"","no_check_box":true},"analytics":{"group":["analytics_storage"],"value":"denied"},"preferences":{"group":["functionality_storage","personalization_storage"],"value":"denied"},"advertising":{"group":["ad_storage"],"value":"denied"}}');
+  CookieConsent.hideConsentBarWithSaveButton = true;
+
+  const consent_settings = CookieConsent.getConsentSettings();
+  const default_configs = JSON.parse('{"anonymize_ip":true,"ads_data_redaction":true,"cookie_flags":"SameSite=None;Secure"}');
+</script>
+<script>
+  SlidingMsgBox.html = "<div class=\"slideBox\"> <a class=\"close-button\" href=\"javascript:void(0);\" aria-label=\"Close\" role=\"button\" rel=\"nofollow\"><i class=\"fa-fw fa fa-times\"></i></a> </div>";
+</script>
+</body>
+</html>
+

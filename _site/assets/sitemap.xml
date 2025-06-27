@@ -6,6 +6,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
 xmlns:xhtml="http://www.w3.org/1999/xhtml"
 xmlns:image="https://www.google.com/schemas/sitemap-image/1.1">
   <url>
+    <loc>http://0.0.0.0:4000/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing</loc>
+    <image:image>
+      <image:loc>http://0.0.0.0:4000/assets/img/posts/2025-05-27-7-days-otel-day-02-understanding-distributed-tracing.png</image:loc>
+      <image:title>7 Days of OpenTelemetry: Day 02 - Understanding Distributed Tracing</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>http://0.0.0.0:4000/posts/2025-05-26-7-days-otel-day-01-introduction-to-observability-and-otel</loc>
     <image:image>
       <image:loc>http://0.0.0.0:4000/assets/img/posts/2025-05-26-7-days-otel-day-01-introduction-to-observability-and-otel.png</image:loc>
